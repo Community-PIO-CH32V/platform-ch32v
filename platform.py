@@ -83,7 +83,7 @@ class Ch32vPlatform(PlatformBase):
                 "init_cmds": reset_cmds + [
                     "set mem inaccessible-by-default off",
                     "set arch riscv:rv32",
-                    "set remotetimeout 250",
+                    "set remotetimeout unlimited",
                     "target extended-remote $DEBUG_PORT",
                     "$INIT_BREAK",
                     "$LOAD_CMDS",

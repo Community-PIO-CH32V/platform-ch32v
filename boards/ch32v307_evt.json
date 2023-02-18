@@ -4,8 +4,8 @@
     "extra_flags": "-DCH32V30x_D8C",
     "hwids": [
       [
-        "0x0403",
-        "0x6010"
+        "0x1A86",
+        "0x8010"
       ]
     ],
     "mabi": "ilp32",
@@ -16,7 +16,8 @@
     "onboard_tools": [
       "wch-link"
     ],
-    "openocd_config": "wch-riscv.cfg"
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32V307xx.svd"
   },
   "frameworks": [],
   "name": "CH32V307 EVT",

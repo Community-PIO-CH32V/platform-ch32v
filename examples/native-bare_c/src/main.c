@@ -47,7 +47,8 @@ int main(void)
 
 	while(1)
     {
-
+		Delay_Ms(1000);
+		printf("Program over, press reset button\r\n");
 	}
 }
 
