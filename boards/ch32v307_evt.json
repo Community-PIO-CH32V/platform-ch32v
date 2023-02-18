@@ -1,0 +1,33 @@
+{
+  "build": {
+    "f_cpu": "144000000L",
+    "extra_flags": "-DCH32V30x_D8C",
+    "hwids": [
+      [
+        "0x0403",
+        "0x6010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imacxw",
+    "mcu": "ch32v307vct6"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg"
+  },
+  "frameworks": [],
+  "name": "CH32V307 EVT",
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 294912,
+    "protocols": [
+      "wch-link"
+    ],
+    "protocol": "wch-link"
+  },
+  "url": "https://www.tindie.com/products/adz1122/ch32v307v-evt-r1-risc-v-development-board/",
+  "vendor": "Digilent"
+}

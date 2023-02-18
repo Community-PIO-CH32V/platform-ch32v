@@ -1,0 +1,34 @@
+{
+  "name": "ch32v",
+  "version": "1.0.0",
+  "title": "WCH CH32V",
+  "description": "CH32V series are industrial-grade general-purpose microcontrollers designed based on QingKe 32-bit RISC-V.",
+  "homepage": "https://www.wch.cn/",
+  "license": "Apache-2.0",
+  "keywords": [
+    "dev-platform",
+    "WCH",
+    "RISC-V"
+  ],
+  "engines": {
+    "platformio": "^6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Community-PIO-CH32V/platform-ch32v"
+  },
+  "frameworks": {
+  },
+  "packages": {
+    "toolchain-riscv": {
+      "type": "toolchain",
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/toolchain-riscv-windows.git"
+    },
+    "tool-openocd-riscv-wch": {
+      "type": "uploader",
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/tool-openocd-riscv-wch.git"
+    }
+  }
+}

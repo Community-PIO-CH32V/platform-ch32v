@@ -1,0 +1,4 @@
+*.pyc
+.pio
+.vscode
+__pychache__
