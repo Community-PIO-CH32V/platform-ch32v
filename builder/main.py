@@ -118,10 +118,7 @@ if upload_protocol in debug_tools:
         [
             "-c", "init",
             "-c", "halt",
-            "-c", "load_image {$SOURCE} %s elf" % board_config.get(
-                "upload").get("image_offset", "0x0"),
-            "-c" "reset",
-            #"-c", "resume %s" % board_config.get("upload").get("image_offset", "0x0"),
+            "-c", "program {$SOURCE} verify reset",
             "-c", "shutdown"
         ]
     )
