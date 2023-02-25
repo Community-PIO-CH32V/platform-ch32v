@@ -22,7 +22,7 @@
   "frameworks": [
     "noneos-sdk"
   ],
-  "name": "CH32V307 EVT",
+  "name": "Generic CH32V307VCT6",
   "upload": {
     "maximum_ram_size": 65536,
     "maximum_size": 262144,
@@ -31,6 +31,6 @@
     ],
     "protocol": "wch-link"
   },
-  "url": "https://www.tindie.com/products/adz1122/ch32v307v-evt-r1-risc-v-development-board/",
-  "vendor": "SCDZ"
+  "url": "http://www.wch-ic.com/products/CH32V307.html",
+  "vendor": "W.CH"
 }

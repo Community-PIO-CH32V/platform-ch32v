@@ -1,7 +1,7 @@
 {
   "build": {
     "f_cpu": "144000000L",
-    "extra_flags": "-DCH32V307VC -DCH32V30x_D8C",
+    "extra_flags": "-DCH32V303RC -DCH32V30x_D8",
     "hwids": [
       [
         "0x1A86",
@@ -10,19 +10,19 @@
     ],
     "mabi": "ilp32",
     "march": "rv32imacxw",
-    "mcu": "ch32v307vct6"
+    "mcu": "ch32v303rct6"
   },
   "debug": {
     "onboard_tools": [
       "wch-link"
     ],
     "openocd_config": "wch-riscv.cfg",
-    "svd_path": "CH32V307xx.svd"
+    "svd_path": "CH32V303xx.svd"
   },
   "frameworks": [
     "noneos-sdk"
   ],
-  "name": "CH32V307 EVT",
+  "name": "Generic CH32V303RCT6",
   "upload": {
     "maximum_ram_size": 65536,
     "maximum_size": 262144,
@@ -31,6 +31,6 @@
     ],
     "protocol": "wch-link"
   },
-  "url": "https://www.tindie.com/products/adz1122/ch32v307v-evt-r1-risc-v-development-board/",
-  "vendor": "SCDZ"
+  "url": "http://www.wch-ic.com/products/CH32V303.html",
+  "vendor": "W.CH"
 }

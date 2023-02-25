@@ -21,14 +21,15 @@ def get_flag_value(flag_name:str, default_val:bool):
 # the linker script also uses $ on it, so we can't use that as the
 # variable identifier for the substitution engine.
 class CustomTemplate(Template):
-	delimiter = '%$%'
+	delimiter = "#"
 
 def get_linker_script(mcu):
     default_ldscript = join(env.subst("$BUILD_DIR"), "Link.ld")
 
     ram = board.get("upload.maximum_ram_size", 0)
     flash = board.get("upload.maximum_size", 0)
-    flash_start = int(board.get("upload.offset_address", "0x8000000"), 0)
+    flash_start = int(board.get("upload.offset_address", "0x00000000"), 0)
+    stack_size = 2048 # default value for now
     template_file = join(FRAMEWORK_DIR, "platformio",
                          "ldscripts", "Link.tpl")
     content = ""
@@ -38,7 +39,8 @@ def get_linker_script(mcu):
             stack=hex(0x20000000 + ram), # 0x20000000 - start address for RAM
             ram=str(int(ram/1024)) + "K",
             flash=str(int(flash/1024)) + "K",
-            flash_start=hex(flash_start)
+            flash_start=hex(flash_start),
+            stack_size=stack_size
         )
 
     with open(default_ldscript, "w") as fp:
