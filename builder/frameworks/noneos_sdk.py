@@ -49,8 +49,30 @@ def get_linker_script(mcu):
     return default_ldscript
 
 def get_startup_filename(board):
-    # todo generalize this
-    return "startup_ch32v30x_D8C.S"
+    # the gen_boarddefs.py already put the classification macro
+    # into the extra_flags. Read them again and map them onto the startup files.
+    extra_flags = str(board.get("build.extra_flags", "")).split(" ")
+    class_to_startup = {
+        "CH32V20x_D6": "startup_ch32v20x_D6.S",
+        "CH32V20x_D8": "startup_ch32v20x_D8.S",
+        "CH32V20x_D8W": "startup_ch32v20x_D8W.S",
+        "CH32V30x_D8": "startup_ch32v30x_D8.S",
+        "CH32V30x_D8C": "startup_ch32v30x_D8C.S"
+    }
+    startup_file = None
+    for k, v in class_to_startup.items():
+        if any([f"-D{k}" == flag for flag in extra_flags]):
+            startup_file = v
+    if startup_file is None:
+        chip_name = str(board.get("build.mcu", "")).lower()
+        if chip_name.startswith("ch32v0"):
+            return "startup_ch32v00x.S"
+        elif chip_name.startswith("ch32v1"):
+            return "startup_ch32v10x.S"
+    if startup_file is None:
+        print("Failed to find startup file for board " + str(board))
+        env.Exit(-1)
+    return startup_file
 
 if get_flag_value("use_lto", False):
     env.Append(LINKFLAGS=["-flto"], CCFLAGS=["-flto"])
