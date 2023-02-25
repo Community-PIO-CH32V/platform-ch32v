@@ -35,6 +35,8 @@ Since the MAC is on the MCU, the MCU needs to control the Ethernet LEDs. It does
 
 Further, you need connect an Ethernet cable to your board.
 
+![wireup](board.jpg)
+
 ## Configuration
 
 **The IPs and MAC addresses are hardcoded in this example and might not fit your network.** Edit the `lib/HTTP/HTTPS.c` file in regards to variable
