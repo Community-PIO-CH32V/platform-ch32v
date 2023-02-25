@@ -1,4 +1,6 @@
-#if defined(CH32V20X)
+#if defined(CH32V10X)
+#include <ch32v10x.h>
+#elif defined(CH32V20X)
 #include <ch32v20x.h>
 #elif defined(CH32V30X)
 #include <ch32v30x.h>
@@ -7,9 +9,6 @@
 #define BLINKY_GPIO_PORT GPIOA
 #define BLINKY_GPIO_PIN GPIO_Pin_1
 #define BLINKY_CLOCK_ENABLE RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE)
-
-static uint8_t p_us = 0;
-static uint16_t p_ms = 0;
 
 void NMI_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void HardFault_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
@@ -39,6 +38,11 @@ int main(void)
 	}
 }
 
+/* The CH32V10X impelmentation brings its own debug.h/c implementation with it */
+#ifndef CH32V10X
+static uint8_t p_us = 0;
+static uint16_t p_ms = 0;
+
 void Delay_Init(void)
 {
 	p_us = SystemCoreClock / 8000000;
@@ -60,6 +64,7 @@ void Delay_Ms(uint32_t n)
 		;
 	SysTick->CTLR &= ~(1 << 0);
 }
+#endif
 
 void NMI_Handler(void) {}
 void HardFault_Handler(void)

@@ -79,7 +79,7 @@ if get_flag_value("use_lto", False):
 
 env.Append(
     CPPPATH=[
-        join(FRAMEWORK_DIR, "Core"),
+        join(FRAMEWORK_DIR, "Core", chip_series),
         join(FRAMEWORK_DIR, "Peripheral", chip_series, "inc"),
         join(FRAMEWORK_DIR, "Peripheral", chip_series, "src")
         # Paths for startup and system are addeed later if wanted
@@ -94,7 +94,7 @@ libs = []
 
 env.BuildSources(
     join("$BUILD_DIR", "FrameworkNoneOSCore"),
-    join(FRAMEWORK_DIR, "Core")
+    join(FRAMEWORK_DIR, "Core", chip_series)
 )
 
 if get_flag_value("use_builtin_startup_file", True):
@@ -117,7 +117,10 @@ if get_flag_value("use_builtin_system_code", True):
     )
 
 # Do not include Debug.c/.h by default, bloats up firmware if unneeded
-if get_flag_value("use_builtin_debug_code", False):
+# Weirdly enough, the SDK code for V103 expects the debug.h file to be present
+# in the build for Delay_US shennanigans.
+include_debug_code_by_default = True if chip_series == "ch32v10x" else False
+if get_flag_value("use_builtin_debug_code", include_debug_code_by_default):
     env.Append(CPPPATH=[join(FRAMEWORK_DIR, "Debug", chip_series)])
     env.BuildSources(
         join("$BUILD_DIR", "FrameworkNoneOSDebug"),

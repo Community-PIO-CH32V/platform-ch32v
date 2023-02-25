@@ -1,0 +1,36 @@
+{
+  "build": {
+    "f_cpu": "72000000L",
+    "extra_flags": "-DCH32V103R8 -DCH32V10X -DCH32V103",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imac",
+    "mcu": "ch32v103r8t6"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32V103xx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk"
+  ],
+  "name": "Generic CH32V103R8T6",
+  "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 65536,
+    "protocols": [
+      "wch-link"
+    ],
+    "protocol": "wch-link"
+  },
+  "url": "http://www.wch-ic.com/products/CH32V103.html",
+  "vendor": "W.CH"
+}

@@ -30,6 +30,9 @@ class ChipInfo:
         for dev_class, devs in dev_classes.items():
             if any([self.name.upper().startswith(chip) for chip in devs]):
                 return dev_class
+        # the V103 series intentionally has no classification macro
+        if self.name.upper().startswith("CH32V103"):
+            return None
         print("ERROR: UNKNOWN CHIP / NO CLASSIFICATION KNOWN FOR " + self.name)
         exit(-1)
 
@@ -60,6 +63,11 @@ class ChipInfo:
         return self.name[0:len("ch32vxxx")]
 
 chip_db: List[ChipInfo] = [
+    # CH32V103
+    ChipInfo("CH32V103C6T6", 32, 10, 72, "LQFP48"),
+    ChipInfo("CH32V103C8U6", 64, 20, 72, "QFN48"),
+    ChipInfo("CH32V103C8T6", 64, 20, 72, "LQFP48"),
+    ChipInfo("CH32V103R8T6", 64, 20, 72, "LQFP64M"),
     # CH32V203
     ChipInfo("CH32V203F6T6", 32, 10, 144, "TSSOP20"),
     ChipInfo("CH32V203F8P6", 64, 20, 144, "TSSOP20"),
