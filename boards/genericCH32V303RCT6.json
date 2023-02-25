@@ -1,7 +1,7 @@
 {
   "build": {
     "f_cpu": "144000000L",
-    "extra_flags": "-DCH32V303RC -DCH32V30x_D8",
+    "extra_flags": "-DCH32V303RC -DCH32V30X -DCH32V303 -DCH32V30x_D8",
     "hwids": [
       [
         "0x1A86",

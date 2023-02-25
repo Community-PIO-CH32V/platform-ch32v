@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 from pathlib import Path
 import json
 
@@ -21,7 +21,7 @@ class ChipInfo:
             "CH32F20x_D8": ["CH32F203CB", "CH32F203RC", "CH32F203VC", "CH32F203RB"],
             "CH32F20x_D8C": ["CH32F205RB", "CH32F207VC"],
             "CH32F20x_D8W": ["CH32F208RB", "CH32F208WB"],
-            "CH32V20x_D6": ["CH32V203F6", "CH32V203G6", "CH32V203K6", "CH32V203F8", "CH32V203G8", "CH32V203K8", "CH32V203C6", "2CH32V203C8"],
+            "CH32V20x_D6": ["CH32V203F6", "CH32V203G6", "CH32V203K6", "CH32V203F8", "CH32V203G8", "CH32V203K8", "CH32V203C6", "CH32V203C8"],
             "CH32V20x_D8": ["CH32V203RB"],
             "CH32V20x_D8W": ["CH32V208GB", "CH32V208CB", "CH32V208RB", "CH32V208WB"],
             "CH32V30x_D8": ["CH32V303CB", "CH32V303RB", "CH32V303RC", "CH32V303VC"],
@@ -30,7 +30,28 @@ class ChipInfo:
         for dev_class, devs in dev_classes.items():
             if any([self.name.upper().startswith(chip) for chip in devs]):
                 return dev_class
-        print("ERROR: UNKNOWN CHIP / NO CLASSIFICATION KNOWN FOR IT")
+        print("ERROR: UNKNOWN CHIP / NO CLASSIFICATION KNOWN FOR " + self.name)
+        exit(-1)
+
+    def get_riscv_arch_and_abi(self) -> Tuple[str, str]:
+        # ch32v30x is capable of rv32imafcxw
+        # but SDK uses rv32imacxw (no floating point)
+        # ch32v208 is rv32imacxw (QingKe V4C)
+        # other ch32v20x is rv32imacxw (QingKe V4B)
+        # ch32v10x only rv32imac (RISC-V3A)
+        # ch32v00x only rv32ecxw (RISC-V2A)
+        if self.name.lower().startswith("ch32v3"):
+            return ("rv32imacxw", "ilp32")
+        elif self.name.lower().startswith("ch32v2"):
+            return ("rv32imacxw", "ilp32")
+        elif self.name.lower().startswith("ch32v1"):
+            return ("rv32imac", "ilp32")
+        elif self.name.lower().startswith("ch32v0"):
+            return ("rv32ecxw", "ilp32e")
+        else:
+            print("ERROR: UNKNOWN CHIP ABI/ARCH FOR " + self.name)
+            exit(-1)
+            return ("unknown", "unknown")
 
     def chip_without_package(self) -> str:
         return self.name[:-2]
@@ -39,6 +60,24 @@ class ChipInfo:
         return self.name[0:len("ch32vxxx")]
 
 chip_db: List[ChipInfo] = [
+    # CH32V203
+    ChipInfo("CH32V203F6T6", 32, 10, 144, "TSSOP20"),
+    ChipInfo("CH32V203F8P6", 64, 20, 144, "TSSOP20"),
+    ChipInfo("CH32V203F8U6", 64, 20, 144, "QFN20X3"),
+    ChipInfo("CH32V203G6U6", 32, 10, 144, "QFN28X4"),
+    ChipInfo("CH32V203G8R6", 64, 20, 144, "QSOP28"),
+    ChipInfo("CH32V203K6T6", 32, 10, 144, "LQFP32"),
+    ChipInfo("CH32V203K8T6", 64, 20, 144, "LQFP32"),
+    ChipInfo("CH32V203C6T6", 32, 10, 144, "LQFP48"),
+    ChipInfo("CH32V203C8T6", 64, 20, 144, "LQFP48"),
+    ChipInfo("CH32V203C8U6", 64, 20, 144, "QFN48X7"),
+    ChipInfo("CH32V203RBT6", 128, 64, 144, "LQFP64M"),
+    # CH32V208
+    ChipInfo("CH32V208GBU6", 128, 64, 144, "QFN28X4"),
+    ChipInfo("CH32V208CBU6", 128, 64, 144, "QFN48X5"),
+    ChipInfo("CH32V208RBT6", 128, 64, 144, "LQFP64M"),
+    ChipInfo("CH32V208WBU6", 128, 64, 144, "QFN68X8"),
+    # CH32V30x
     ChipInfo("CH32V303CBT6", 128, 32, 144, "LQFP58"),
     ChipInfo("CH32V303RBT6", 128, 32, 144, "LQFP64M"),
     ChipInfo("CH32V303RCT6", 256, 64, 144, "LQFP64M"),
@@ -71,6 +110,7 @@ known_boards: List[KnownBoard] = [
 ]
 
 def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_info: Optional[Dict[str, Any]] = None, addtl_extra_flags:List[str] = None):
+    arch, abi = info.get_riscv_arch_and_abi()
     base_json = {
         "build": {
             "f_cpu": str(info.freq_mhz * 1000_000) + "L",
@@ -81,8 +121,8 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
                     "0x8010"
                 ]
             ],
-            "mabi": "ilp32",
-            "march": "rv32imacxw",
+            "mabi": abi,
+            "march": arch,
             "mcu": info.name.lower()
         },
         "debug": {
@@ -108,7 +148,11 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         "vendor": "W.CH"
     }
     # add some classification macros
-    extra_flags = [f"-D{info.chip_without_package()}"]
+    extra_flags = [
+        f"-D{info.chip_without_package()}", 
+        f"-D{info.name[0:len('ch32vxx')]}X",
+        f"-D{info.name[0:len('ch32vxxx')]}",
+    ]
     classification_macro = info.get_classification_macro()
     if classification_macro is not None:
         extra_flags += ["-D" + classification_macro]

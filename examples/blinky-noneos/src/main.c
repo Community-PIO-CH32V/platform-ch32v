@@ -1,8 +1,12 @@
+#if defined(CH32V20X)
+#include <ch32v20x.h>
+#elif defined(CH32V30X)
 #include <ch32v30x.h>
+#endif
 
 #define BLINKY_GPIO_PORT GPIOA
 #define BLINKY_GPIO_PIN GPIO_Pin_1
-#define BLINKY_CLOCK_EABLE RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE)
+#define BLINKY_CLOCK_ENABLE RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE)
 
 static uint8_t p_us = 0;
 static uint16_t p_ms = 0;
@@ -20,7 +24,7 @@ int main(void)
 
 	GPIO_InitTypeDef GPIO_InitStructure = {0};
 
-	BLINKY_CLOCK_EABLE;
+	BLINKY_CLOCK_ENABLE;
 	GPIO_InitStructure.GPIO_Pin = BLINKY_GPIO_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;

@@ -1,7 +1,7 @@
 {
   "build": {
     "f_cpu": "144000000L",
-    "extra_flags": "-DCH32V307VC -DCH32V30X -DCH32V307 -DCH32V30x_D8C",
+    "extra_flags": "-DCH32V203C8 -DCH32V20X -DCH32V203 -DCH32V20x_D6",
     "hwids": [
       [
         "0x1A86",
@@ -10,27 +10,27 @@
     ],
     "mabi": "ilp32",
     "march": "rv32imacxw",
-    "mcu": "ch32v307vct6"
+    "mcu": "ch32v203c8t6"
   },
   "debug": {
     "onboard_tools": [
       "wch-link"
     ],
     "openocd_config": "wch-riscv.cfg",
-    "svd_path": "CH32V307xx.svd"
+    "svd_path": "CH32V203xx.svd"
   },
   "frameworks": [
     "noneos-sdk"
   ],
-  "name": "Generic CH32V307VCT6",
+  "name": "Generic CH32V203C8T6",
   "upload": {
-    "maximum_ram_size": 65536,
-    "maximum_size": 262144,
+    "maximum_ram_size": 20480,
+    "maximum_size": 65536,
     "protocols": [
       "wch-link"
     ],
     "protocol": "wch-link"
   },
-  "url": "http://www.wch-ic.com/products/CH32V307.html",
+  "url": "http://www.wch-ic.com/products/CH32V203.html",
   "vendor": "W.CH"
 }

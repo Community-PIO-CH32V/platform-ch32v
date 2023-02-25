@@ -6,6 +6,8 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
 
+data_limit = 0 if str(board.get("build.mcu", "")).lower().startswith("ch32v0") else 8
+
 env.Append(
     ASFLAGS=[
         "-march=%s" % board.get("build.march"),
@@ -23,7 +25,7 @@ env.Append(
         "-Os",
         "-g",
         "-Wall",
-        "-msmall-data-limit=8",
+        "-msmall-data-limit=%d" % data_limit,
         "-msave-restore",
         "-fmessage-length=0",
         "-fsigned-char",
