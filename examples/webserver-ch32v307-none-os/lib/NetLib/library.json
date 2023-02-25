@@ -1,0 +1,10 @@
+{
+    "name": "W.CH NetLib",
+    "version": "1.60.0",
+    "build": {
+      "flags": [
+        "-L.",
+        "-lwchnet"
+      ]
+    }
+  }
