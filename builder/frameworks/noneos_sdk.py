@@ -33,7 +33,7 @@ def get_linker_script(mcu: str):
     # always 2K.
     stack_size = 256 if mcu.startswith("ch32v003") else 2048
     # custom stack size wanted?
-    if board.get("build.stack_size", "") != 0:
+    if board.get("build.stack_size", "") != "":
         stack_size = int(board.get("build.stack_size"))
     template_file = join(FRAMEWORK_DIR, "platformio",
                          "ldscripts", "Link.tpl")
