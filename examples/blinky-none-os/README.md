@@ -8,7 +8,7 @@ How to build PlatformIO based project
 
 ```shell
 # Change directory to example
-$ cd platform-ch32v/examples/blinky-noneos
+$ cd platform-ch32v/examples/blinky-none-os
 
 # Build project
 $ pio run

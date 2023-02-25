@@ -10,8 +10,8 @@ jobs:
         os: [windows-latest]
         #os: [ubuntu-latest, windows-latest, macos-latest]
         example:
-          - "examples/native-bare_c"
-          - "examples/blinky-noneos"
+          - "examples/blinky-none-os"
+          - "examples/uart-printf-none-os"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
