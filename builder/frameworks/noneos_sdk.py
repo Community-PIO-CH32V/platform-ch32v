@@ -23,13 +23,18 @@ def get_flag_value(flag_name:str, default_val:bool):
 class CustomTemplate(Template):
 	delimiter = "#"
 
-def get_linker_script(mcu):
+def get_linker_script(mcu: str):
     default_ldscript = join(env.subst("$BUILD_DIR"), "Link.ld")
 
     ram = board.get("upload.maximum_ram_size", 0)
     flash = board.get("upload.maximum_size", 0)
     flash_start = int(board.get("upload.offset_address", "0x00000000"), 0)
-    stack_size = 2048 # default value for now
+    # linker scripts use 256 bytes of stack only for v003 series, otherwise
+    # always 2K.
+    stack_size = 256 if mcu.startswith("ch32v003") else 2048
+    # custom stack size wanted?
+    if board.get("build.stack_size", "") != 0:
+        stack_size = int(board.get("build.stack_size"))
     template_file = join(FRAMEWORK_DIR, "platformio",
                          "ldscripts", "Link.tpl")
     content = ""

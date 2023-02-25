@@ -1,4 +1,6 @@
-#if defined(CH32V10X)
+#if defined(CH32V00X)
+#include <ch32v00x.h>
+#elif defined(CH32V10X)
 #include <ch32v10x.h>
 #elif defined(CH32V20X)
 #include <ch32v20x.h>
@@ -38,7 +40,8 @@ int main(void)
 	}
 }
 
-/* The CH32V10X impelmentation brings its own debug.h/c implementation with it */
+/* The CH32V10X impelmentation brings its own sepcial debug.h/c implementation with it */
+/* All the others are the same as here. Use only this one if possible to minimize code size */
 #ifndef CH32V10X
 static uint8_t p_us = 0;
 static uint16_t p_ms = 0;
