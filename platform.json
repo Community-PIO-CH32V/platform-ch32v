@@ -18,8 +18,21 @@
     "url": "https://github.com/Community-PIO-CH32V/platform-ch32v"
   },
   "frameworks": {
+    "noneos-sdk": {
+      "package": "framework-wch-noneos-sdk",
+      "script": "builder/frameworks/noneos_sdk.py",
+      "description": "The W.CH CH32Vxxx Standard Peripheral Library without OS",
+      "homepage": "https://www.wch.cn/downloads/",
+      "title": "W.CH CH32Vxxx NoneOS SDK"
+    }
   },
   "packages": {
+    "framework-wch-noneos-sdk": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/framework-wch-noneos-sdk.git"
+    },
     "toolchain-riscv": {
       "type": "toolchain",
       "owner": "platformio",

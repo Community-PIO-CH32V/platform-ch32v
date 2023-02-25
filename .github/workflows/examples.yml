@@ -11,6 +11,7 @@ jobs:
         #os: [ubuntu-latest, windows-latest, macos-latest]
         example:
           - "examples/native-bare_c"
+          - "examples/blinky-noneos"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3

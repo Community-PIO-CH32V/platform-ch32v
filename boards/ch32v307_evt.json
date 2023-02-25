@@ -19,7 +19,9 @@
     "openocd_config": "wch-riscv.cfg",
     "svd_path": "CH32V307xx.svd"
   },
-  "frameworks": [],
+  "frameworks": [
+    "noneos-sdk"
+  ],
   "name": "CH32V307 EVT",
   "upload": {
     "maximum_ram_size": 32768,

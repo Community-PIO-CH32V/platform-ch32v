@@ -32,6 +32,7 @@ env.Append(
         "-fno-common",
         "-Wunused",
         "-Wuninitialized",
+        "-Wno-comment",
         "-march=%s" % board.get("build.march"),
         "-mabi=%s" % board.get("build.mabi"),
     ],
