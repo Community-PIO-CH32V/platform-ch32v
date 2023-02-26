@@ -38,6 +38,13 @@
       "description": "LiteOS is an open-source, lightweight IoT operating system (OS) released by Huawei in 2015",
       "homepage": "https://github.com/LiteOS/LiteOS",
       "title": "Harmony LiteOS-M"
+    },
+    "rt-thread": {
+      "package": "framework-wch-rtthread",
+      "script": "builder/frameworks/rt_thread.py",
+      "description": "RT-Thread is an open source IoT operating system",
+      "homepage": "https://github.com/RT-Thread/rt-thread",
+      "title": "RT-Thread"
     }
   },
   "packages": {
@@ -58,6 +65,12 @@
       "optional": true,
       "owner": "platformio",
       "version": "https://github.com/Community-PIO-CH32V/framework-wch-harmony-liteos.git"
+    },
+    "framework-wch-rtthread": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/framework-wch-rtthread.git"
     },
     "toolchain-riscv": {
       "type": "toolchain",

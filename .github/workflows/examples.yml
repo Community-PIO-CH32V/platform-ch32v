@@ -16,6 +16,7 @@ jobs:
           - "examples/webserver-ch32v307-none-os"
           - "examples/blinky-freertos"
           - "examples/hello-world-harmony-liteos"
+          - "examples/hello-world-rt-thread"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3

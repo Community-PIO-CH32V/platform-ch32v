@@ -22,7 +22,8 @@
   "frameworks": [
     "noneos-sdk",
     "freertos",
-    "harmony-liteos"
+    "harmony-liteos",
+    "rt-thread"
   ],
   "name": "CH32V307 EVT",
   "upload": {
