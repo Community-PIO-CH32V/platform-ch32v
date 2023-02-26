@@ -24,6 +24,13 @@
       "description": "The W.CH CH32Vxxx Standard Peripheral Library without OS",
       "homepage": "https://www.wch.cn/downloads/",
       "title": "W.CH CH32Vxxx NoneOS SDK"
+    },
+    "freertos": {
+      "package": "framework-wch-freertos",
+      "script": "builder/frameworks/freertos.py",
+      "description": "Real-time operating system for microcontrollers",
+      "homepage": "https://www.freertos.org/",
+      "title": "FreeRTOS"
     }
   },
   "packages": {
@@ -32,6 +39,12 @@
       "optional": true,
       "owner": "platformio",
       "version": "https://github.com/Community-PIO-CH32V/framework-wch-noneos-sdk.git"
+    },
+    "framework-wch-freertos": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/framework-wch-freertos.git"
     },
     "toolchain-riscv": {
       "type": "toolchain",

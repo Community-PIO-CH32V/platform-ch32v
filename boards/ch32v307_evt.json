@@ -20,7 +20,8 @@
     "svd_path": "CH32V307xx.svd"
   },
   "frameworks": [
-    "noneos-sdk"
+    "noneos-sdk",
+    "freertos"
   ],
   "name": "CH32V307 EVT",
   "upload": {

@@ -160,6 +160,9 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         "url": f"http://www.wch-ic.com/products/{info.exact_series().upper()}.html",
         "vendor": "W.CH"
     }
+    # every series but CH32V003 can do FreeRTOS (if RAM is big enough)
+    if not info.name.lower().startswith("ch32v00"):
+        base_json["frameworks"].append("freertos")
     # add some classification macros
     extra_flags = [
         f"-D{info.chip_without_package()}", 

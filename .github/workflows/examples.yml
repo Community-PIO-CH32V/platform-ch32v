@@ -14,6 +14,7 @@ jobs:
           - "examples/blinky-none-os"
           - "examples/uart-printf-none-os"
           - "examples/webserver-ch32v307-none-os"
+          - "examples/blinky-freertos"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
