@@ -10,6 +10,7 @@ jobs:
         os: [windows-latest]
         #os: [ubuntu-latest, windows-latest, macos-latest]
         example:
+          - "examples/adc-cpu-temp-none-os"
           - "examples/blinky-none-os"
           - "examples/uart-printf-none-os"
           - "examples/webserver-ch32v307-none-os"
