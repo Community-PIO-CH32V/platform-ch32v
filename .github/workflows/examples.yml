@@ -15,6 +15,7 @@ jobs:
           - "examples/uart-printf-none-os"
           - "examples/webserver-ch32v307-none-os"
           - "examples/blinky-freertos"
+          - "examples/hello-world-harmony-liteos"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3

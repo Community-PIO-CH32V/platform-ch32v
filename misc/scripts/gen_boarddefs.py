@@ -161,8 +161,11 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         "vendor": "W.CH"
     }
     # every series but CH32V003 can do FreeRTOS (if RAM is big enough)
-    if not info.name.lower().startswith("ch32v00"):
+    chip_l = info.name.lower()
+    if not chip_l.startswith("ch32v00"):
         base_json["frameworks"].append("freertos")
+        # same with harmony OS
+        base_json["frameworks"].append("harmony-liteos")
     # add some classification macros
     extra_flags = [
         f"-D{info.chip_without_package()}", 

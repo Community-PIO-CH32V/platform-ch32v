@@ -32,8 +32,10 @@ class Ch32vPlatform(PlatformBase):
     def configure_default_packages(self, variables, targets):
         if not variables.get("board"):
             return super().configure_default_packages(variables, targets)
-        # The FreeRTOS package needs the NoneSDK as a base package
-        if "freertos" in variables.get("pioframework", []):
+        selected_frameworks = variables.get("pioframework", [])
+        # The FreeRTOS and Harmony LiteOS package needs the 
+        # NoneSDK as a base package
+        if any([framework in selected_frameworks for framework in ("freertos", "harmony-liteos")]):
             self.packages["framework-wch-noneos-sdk"]["optional"] = False
         return super().configure_default_packages(variables, targets)
 

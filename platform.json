@@ -31,6 +31,13 @@
       "description": "Real-time operating system for microcontrollers",
       "homepage": "https://www.freertos.org/",
       "title": "FreeRTOS"
+    },
+    "harmony-liteos": {
+      "package": "framework-wch-harmony-liteos",
+      "script": "builder/frameworks/harmony_liteos.py",
+      "description": "LiteOS is an open-source, lightweight IoT operating system (OS) released by Huawei in 2015",
+      "homepage": "https://github.com/LiteOS/LiteOS",
+      "title": "Harmony LiteOS-M"
     }
   },
   "packages": {
@@ -45,6 +52,12 @@
       "optional": true,
       "owner": "platformio",
       "version": "https://github.com/Community-PIO-CH32V/framework-wch-freertos.git"
+    },
+    "framework-wch-harmony-liteos": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/framework-wch-harmony-liteos.git"
     },
     "toolchain-riscv": {
       "type": "toolchain",

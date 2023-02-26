@@ -21,7 +21,8 @@
   },
   "frameworks": [
     "noneos-sdk",
-    "freertos"
+    "freertos",
+    "harmony-liteos"
   ],
   "name": "Generic CH32V307RCT6",
   "upload": {
