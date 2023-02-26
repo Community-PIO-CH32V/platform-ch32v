@@ -36,10 +36,10 @@ void ADC_Function_Init(void)
     ADC_Init(ADC1, &ADC_InitStructure);
 
     ADC_Cmd(ADC1, ENABLE);
-    /* V10X does not have the buffer */
-    #if !defined(CH32V10X)
+/* V10X does not have the buffer */
+#if !defined(CH32V10X)
     ADC_BufferCmd(ADC1, DISABLE); // disable buffer
-    #endif
+#endif
     ADC_ResetCalibration(ADC1);
     while (ADC_GetResetCalibrationStatus(ADC1))
         ;
@@ -48,9 +48,9 @@ void ADC_Function_Init(void)
         ;
     Calibrattion_Val = Get_CalibrationValue(ADC1);
 
-    #if !defined(CH32V10X)
+#if !defined(CH32V10X)
     ADC_BufferCmd(ADC1, ENABLE); // enable buffer
-    #endif
+#endif
 
     ADC_TempSensorVrefintCmd(ENABLE);
 }
@@ -92,13 +92,13 @@ u16 Get_ConversionVal_3_3V(s16 val)
 {
     int32_t y;
     y = 6 * (val + Calibrattion_Val) / 1000 - 12;
-    if(val == 0 || val == 4095)
+    if (val == 0 || val == 4095)
         return val;
     else
     {
-        if((val + Calibrattion_Val - y) < 0)
+        if ((val + Calibrattion_Val - y) < 0)
             return 0;
-        if((Calibrattion_Val + val - y) > 4095||val==4095)
+        if ((Calibrattion_Val + val - y) > 4095 || val == 4095)
             return 4095;
         return (val + Calibrattion_Val);
     }
@@ -122,13 +122,13 @@ int main(void)
     SystemCoreClockUpdate();
     Delay_Init();
     USART_Printf_Init(115200);
-	Delay_Ms(1000); // give serial monitor time to open
-    printf("SystemClk:%u\r\n", (unsigned) SystemCoreClock);
-	#if defined(CH32V30X)
-	printf("ChipID: %08x\r\n", (unsigned)DBGMCU_GetCHIPID());
-	#else
-	printf("DeviceID: %08x\r\n", (unsigned)DBGMCU_GetDEVID());
-	#endif
+    Delay_Ms(1000); // give serial monitor time to open
+    printf("SystemClk:%u\r\n", (unsigned)SystemCoreClock);
+#if defined(CH32V30X)
+    printf("ChipID: %08x\r\n", (unsigned)DBGMCU_GetCHIPID());
+#else
+    printf("DeviceID: %08x\r\n", (unsigned)DBGMCU_GetDEVID());
+#endif
     ADC_Function_Init();
     printf("CalibrationValue: %d\n", Calibrattion_Val);
 
@@ -136,11 +136,11 @@ int main(void)
     {
         ADC_val = Get_ADC_Average(ADC_Channel_TempSensor, 10);
         Delay_Ms(500);
-        #if defined(CH32V10X)
+#if defined(CH32V10X)
         ADC_val = Get_ConversionVal_3_3V(ADC_val);
-        #else
+#else
         ADC_val = Get_ConversionVal(ADC_val);
-        #endif
+#endif
         val_mv = (ADC_val * 3300 / 4096);
         printf("ADC Value: %04d, %ld mV, Temperature: %0ld *C\r\n", ADC_val, val_mv, TempSensor_Volt_To_Temper(val_mv));
         Delay_Ms(2);
