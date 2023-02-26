@@ -55,7 +55,6 @@ filter_expr = "+<*>"
 for excl in folder_exclude_list:
     filter_expr += f" -<{excl}>"
 
-print("Filter: " + filter_expr)
 env.BuildSources(
     join("$BUILD_DIR", "FrameworkHarmonyLiteOSCore"),
     join(FRAMEWORK_DIR, liteos_subseries),
