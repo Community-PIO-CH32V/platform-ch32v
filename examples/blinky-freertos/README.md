@@ -8,7 +8,7 @@ How to build PlatformIO based project
 
 ```shell
 # Change directory to example
-$ cd platform-ch32v/examples/uart-printf-none-os
+$ cd platform-ch32v/examples/blinky-freertos
 
 # Build project
 $ pio run
