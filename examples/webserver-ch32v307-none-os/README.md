@@ -31,7 +31,7 @@ This example opens both a webserver and runs a TCP client with configurable IP a
 
 ## Wireup
 
-Since the MAC is on the MCU, the MCU needs to control the Ethernet LEDs. It does so on its GPIO pins PC0 and PC1. The development board has "ELED1" and "ELED2" pins. If you want the Ethernet LEDs to function properly, connect ELED1 to PC0 and ELED2 to PC2.
+Since the MAC is on the MCU, the MCU needs to control the Ethernet LEDs. It does so on its GPIO pins PC0 and PC1. The development board has "ELED1" and "ELED2" pins. If you want the Ethernet LEDs to function properly, connect ELED1 to PC0 (LINK) and ELED2 to PC1 (DATA).
 
 Further, you need connect an Ethernet cable to your board.
 
