@@ -29,6 +29,14 @@ class Ch32vPlatform(PlatformBase):
                 result[key] = self._add_default_debug_tools(result[key])
         return result
 
+    def configure_default_packages(self, variables, targets):
+        if not variables.get("board"):
+            return super().configure_default_packages(variables, targets)
+        # The FreeRTOS package needs the NoneSDK as a base package
+        if "freertos" in variables.get("pioframework", []):
+            self.packages["framework-wch-noneos-sdk"]["optional"] = False
+        return super().configure_default_packages(variables, targets)
+
     def _add_default_debug_tools(self, board):
         debug = board.manifest.get("debug", {})
         if "tools" not in debug:
