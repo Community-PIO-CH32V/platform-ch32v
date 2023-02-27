@@ -45,6 +45,13 @@
       "description": "RT-Thread is an open source IoT operating system",
       "homepage": "https://github.com/RT-Thread/rt-thread",
       "title": "RT-Thread"
+    },
+    "tencent-os": {
+      "package": "framework-wch-tencentos",
+      "script": "builder/frameworks/tencent_os.py",
+      "description": "TencentOS tiny is a real-time operating system developed by Tencent for the IoT field",
+      "homepage": "https://github.com/OpenAtomFoundation/TencentOS-tiny",
+      "title": "TencentOS Tiny"
     }
   },
   "packages": {
@@ -71,6 +78,12 @@
       "optional": true,
       "owner": "platformio",
       "version": "https://github.com/Community-PIO-CH32V/framework-wch-rtthread.git"
+    },
+    "framework-wch-tencentos": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/framework-wch-tencentos.git"
     },
     "toolchain-riscv": {
       "type": "toolchain",

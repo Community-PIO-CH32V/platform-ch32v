@@ -23,7 +23,8 @@
     "noneos-sdk",
     "freertos",
     "harmony-liteos",
-    "rt-thread"
+    "rt-thread",
+    "tencent-os"
   ],
   "name": "Generic CH32V303VCT6",
   "upload": {

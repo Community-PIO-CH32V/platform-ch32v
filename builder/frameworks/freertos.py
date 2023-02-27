@@ -12,7 +12,7 @@ env.SConscript("noneos_sdk.py")
 
 FRAMEWORK_DIR = platform.get_package_dir("framework-wch-freertos")
 assert isdir(FRAMEWORK_DIR)
-# e.g., FreeRTOS_ch30x
+# e.g., FreeRTOS_ch32v30x
 freertos_subseries = f"FreeRTOS_{chip_series}"
 
 env.Append(

@@ -13,7 +13,7 @@ env.SConscript("noneos_sdk.py")
 
 FRAMEWORK_DIR = platform.get_package_dir("framework-wch-harmony-liteos")
 assert isdir(FRAMEWORK_DIR)
-# e.g., LiteOS_ch30x
+# e.g., LiteOS_ch32v30x
 liteos_subseries = f"LiteOS_{chip_series}"
 
 env.Append(

@@ -13,7 +13,7 @@ env.SConscript("noneos_sdk.py")
 
 FRAMEWORK_DIR = platform.get_package_dir("framework-wch-rtthread")
 assert isdir(FRAMEWORK_DIR)
-# e.g., LiteOS_ch30x
+# e.g., rtthread_ch32v30x
 rtthread_subseries = f"rtthread_{chip_series}"
 
 env.Append(

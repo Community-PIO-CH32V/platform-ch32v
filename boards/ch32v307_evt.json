@@ -23,7 +23,8 @@
     "noneos-sdk",
     "freertos",
     "harmony-liteos",
-    "rt-thread"
+    "rt-thread",
+    "tencent-os"
   ],
   "name": "CH32V307 EVT",
   "upload": {

@@ -17,6 +17,7 @@ jobs:
           - "examples/blinky-freertos"
           - "examples/hello-world-harmony-liteos"
           - "examples/hello-world-rt-thread"
+          - "examples/hello-world-tencent-os"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
