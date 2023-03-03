@@ -6,10 +6,13 @@ CH32V series are industrial-grade general-purpose microcontrollers designed base
 
 This repository is a PlatformIO platform. Just like [platform-ststm32](https://github.com/platformio/platform-ststm32/) etc., it enables the PlatformIO core to work with W.CH CH32V chips. This means in all the IDEs that PlatformIO supports ([VSCode, CLion, etc.](https://docs.platformio.org/en/latest/integration/ide/index.html)), developing and debugging firmwares for CH32V chips is easily possible.
 
+Head over to https://github.com/Community-PIO-CH32V/ch32-pio-projects to see more example projects and detailed starting instructions.
+
 # Media
 ![vscode debugging](docs/debugging_ch32v003.png)
 
 ![platform](docs/platform.png)
+
 
 # Support
 - chips
@@ -20,6 +23,10 @@ This repository is a PlatformIO platform. Just like [platform-ststm32](https://g
     - [x] CH32V303 (QingKe V4F)
     - [x] CH32V305 (QingKe V4F)
     - [x] CH32V307 (QingKe V4F)
+- development boards
+    - [x] CH32V003F4P6-EVT-R0 (official by W.CH)
+    - [x] CH32V203C8T6-EVT-R0 (official by W.CH)
+    - [x] CH32V307 EVT (by SCDZ, close to official W.CH board)
 - frameworks
     - [x] None OS ("Simple Peripheral Library" / native SDK)
     - [x] FreeRTOS
@@ -44,4 +51,10 @@ board = ...
 
 # Configuration
 
-The configuration in regards to the builder scripts etc. are still in progress.
+The configuration in regards to the builder scripts etc. are still in progress. See the above mentioned projects repository for now.
+
+# Media Supported Development Boards
+
+![ch32v307 evt board](docs/ch307_evt.jpg)
+![ch32v003 evt board](docs/ch32v003_evt.jpg)
+![ch32v203 evt board](docs/ch32v203_evt.jpg)
