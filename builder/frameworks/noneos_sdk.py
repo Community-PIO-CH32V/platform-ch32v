@@ -121,11 +121,9 @@ if get_flag_value("use_builtin_system_code", True):
         join(FRAMEWORK_DIR, "System", chip_series)
     )
 
-# Do not include Debug.c/.h by default, bloats up firmware if unneeded
-# Weirdly enough, the SDK code for V103 expects the debug.h file to be present
-# in the build for Delay_US shennanigans.
-include_debug_code_by_default = True if chip_series == "ch32v10x" else False
-if get_flag_value("use_builtin_debug_code", include_debug_code_by_default):
+# By default, include the Debug.h/.c code.
+# practically every example needs it. Can be turned of in the platformio.ini.
+if get_flag_value("use_builtin_debug_code", True):
     env.Append(CPPPATH=[join(FRAMEWORK_DIR, "Debug", chip_series)])
     env.BuildSources(
         join("$BUILD_DIR", "FrameworkNoneOSDebug"),

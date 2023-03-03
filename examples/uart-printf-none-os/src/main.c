@@ -8,7 +8,7 @@
 #include <ch32v30x.h>
 #endif
 #include <stdio.h>
-#include "debug.h" // available due to platformio.ini setting
+#include "debug.h"
 
 int main(void)
 {
