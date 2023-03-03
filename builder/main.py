@@ -14,6 +14,7 @@
 
 import sys
 import os
+from typing import List
 
 from SCons.Script import (
     ARGUMENTS,
@@ -138,6 +139,73 @@ else:
 
 env.AddPlatformTarget("upload", upload_target, upload_actions, "Upload")
 
+#
+# Target: Disable / Enable / Check Code Read Protection, Erase
+#
+def generate_openocd_action(args: List[str], action_name:str):
+    # OpenOCD commands only supported through debugging adapters,
+    # naturally.
+    # Stuff like erasing / disabling code protection can still be done via
+    # USB DFU / Serial bootloader tools, but we haven't integrated these yet.
+    if not upload_protocol in debug_tools:
+        print("Currently these actions require a debugging probe (e.g., WCH-Link(E)).")
+        env.Exit(-1)
+    openocd_path = os.path.join(
+        platform.get_package_dir("tool-openocd-riscv-wch") or "",
+        "bin",
+        "openocd"
+    )
+
+    cmd = [
+        "\"%s\"" % openocd_path
+    ]
+    cmd.extend(debug_tools.get(upload_protocol).get("server").get("arguments", []))
+    cmd.extend([
+        "-c",
+        "\"debug_level %d\"" % (3 if int(ARGUMENTS.get("PIOVERBOSE", 0)) else 2),
+        "-c", "\"gdb_port disabled\"",
+        "-c", "\"tcl_port disabled\"",
+        "-c", "\"telnet_port disabled\"",
+        "-c", "init",
+        "-c", "halt"
+    ])
+    cmd.extend(args)
+    cmd.extend([
+        "-c", "shutdown"
+    ])
+    return env.VerboseAction(" ".join(cmd), action_name)
+
+env.AddPlatformTarget(
+    "disable_flash_protection", None, generate_openocd_action([
+        "-c", "\"flash probe 0\"",
+        "-c", "\"flash protect 0 0 last off\"",
+    ], "Disabling Flash Protection"),
+    "Disable Flash Protection"
+)
+
+env.AddPlatformTarget(
+    "enable_flash_protection", None, generate_openocd_action([
+        "-c", "\"flash probe 0\"",
+        "-c", "\"flash protect 0 0 last on\"",
+    ], "Enabling Flash Protection"),
+    "Enable Flash Protection"
+)
+
+env.AddPlatformTarget(
+    "check_flash_protection", None, generate_openocd_action([
+        "-c", "\"flash probe 0\"",
+        "-c", "\"flash protect_check 0\"",
+    ], "Checking Flash Protection"),
+    "Check Flash Protection"
+)
+
+env.AddPlatformTarget(
+    "erase", None, generate_openocd_action([
+        "-c", "\"flash probe 0\"",
+        "-c", "\"flash erase_sector 0 0 last\"",
+    ], "Erasing Flash"),
+    "Erase Flash"
+)
 
 #
 # Setup default targets
