@@ -118,8 +118,12 @@ class KnownBoard:
     add_info: Optional[Dict[str, Any]] = None
 
 known_boards: List[KnownBoard] = [
+    KnownBoard("ch32v003f4p6_evt_r0", "CH32V003F4P6-EVT-R0", get_chip("CH32V003F4P6"),
+               "https://www.aliexpress.com/item/1005004895791296.html", "W.CH"),
+    KnownBoard("ch32v203c8t6_evt_r0", "CH32V203C8T6-EVT-R0", get_chip("CH32V203C8T6"),
+               "https://www.aliexpress.com/item/1005004895791296.html", "W.CH"),
     KnownBoard("ch32v307_evt", "CH32V307 EVT", get_chip("CH32V307VCT6"),
-               "https://www.tindie.com/products/adz1122/ch32v307v-evt-r1-risc-v-development-board/", "SCDZ")
+               "https://www.aliexpress.com/item/1005004511264952.html", "SCDZ")
 ]
 
 def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_info: Optional[Dict[str, Any]] = None, addtl_extra_flags:List[str] = None):

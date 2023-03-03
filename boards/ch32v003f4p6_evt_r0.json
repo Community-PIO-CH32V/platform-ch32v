@@ -1,0 +1,36 @@
+{
+  "build": {
+    "f_cpu": "48000000L",
+    "extra_flags": "-DCH32V003F4 -DCH32V00X -DCH32V003",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32e",
+    "march": "rv32ecxw",
+    "mcu": "ch32v003f4p6"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32V003xx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk"
+  ],
+  "name": "CH32V003F4P6-EVT-R0",
+  "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 16384,
+    "protocols": [
+      "wch-link"
+    ],
+    "protocol": "wch-link"
+  },
+  "url": "https://www.aliexpress.com/item/1005004895791296.html",
+  "vendor": "W.CH"
+}
