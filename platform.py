@@ -13,9 +13,11 @@
 # limitations under the License.
 
 import os
-
+import sys
 from platformio.public import PlatformBase
 
+IS_WINDOWS = sys.platform.startswith("win")
+IS_LINUX = sys.platform.startswith("linux")
 
 class Ch32vPlatform(PlatformBase):
     def get_boards(self, id_=None):
@@ -30,6 +32,9 @@ class Ch32vPlatform(PlatformBase):
         return result
 
     def configure_default_packages(self, variables, targets):
+        # until toolchain is not yet approved in PIO registry: redirect packages at will here
+        if IS_LINUX:
+            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-linux.git"
         if not variables.get("board"):
             return super().configure_default_packages(variables, targets)
         selected_frameworks = variables.get("pioframework", [])
