@@ -21,6 +21,16 @@ env.Append(
         "-std=gnu99"
     ],
 
+    CXXFLAGS=[
+        # compiler goes up to gnu++2a but is EXPERIMENTAL
+        "-std=gnu++17",
+        # standard embedded flags to reduce firmware size
+        "-fno-threadsafe-statics",
+        "-fno-rtti",
+        "-fno-exceptions",
+        "-fno-use-cxa-atexit"
+    ],
+
     CCFLAGS=[
         "-Os",
         "-g",

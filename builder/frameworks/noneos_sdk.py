@@ -130,6 +130,14 @@ if get_flag_value("use_builtin_debug_code", True):
         join(FRAMEWORK_DIR, "Debug", chip_series)
     )
 
+# Auto-compile in empty _init() and _fini() functions for C++ support 
+if get_flag_value("cpp_support", True):
+    env.Append(CPPDEFINES=["__PIO_CPP_SUPPORT__"])
+    env.BuildSources(
+        join("$BUILD_DIR", "FrameworkInitFini"),
+        join(FRAMEWORK_DIR, "CPP_Support")
+    )
+
 libs.append(env.BuildLibrary(
     join("$BUILD_DIR", "FrameworkNoneOSVariant"),
     join(FRAMEWORK_DIR, "Peripheral", chip_series, "src")
