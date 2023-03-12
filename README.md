@@ -35,7 +35,14 @@ Head over to https://github.com/Community-PIO-CH32V/ch32-pio-projects to see mor
     - [x] (Huawei) Harmony LiteOS
     - [x] RT-Thread
     - [x] TencentOS Lite-M
-
+- debuggers (also implicitly uploaders)
+    - [x] WCH-Link(E)
+       - note: does not work on Linux + WCH-LinkE (for CH32V003), OpenOCD update pending, see #22
+    - [ ] ST-Link
+    - [ ] J-Link
+    - [ ] GDB-UART stub for debug-probe-less debugging?
+- uploaders (no debugging)
+  - [x] USB ISP bootloader (supported via [wchisp](https://github.com/ch32-rs/wchisp))
 # Installation
 
 1. [Install PlatformIO](https://platformio.org)
