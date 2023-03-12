@@ -19,6 +19,7 @@ jobs:
           - "examples/hello-world-tencent-os"
           - "examples/blinky-cpp-none-os"
           - "examples/baremetal-ch32v003"
+          - "examples/usb-cdc-wch32v307-none-os"
         exclude:
           # needs further investigation on Mac on why this
           # does not work for now..
