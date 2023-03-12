@@ -94,6 +94,12 @@
       "type": "uploader",
       "owner": "community-ch32v",
       "version": "~2.1100.0"
+    },
+    "tool-wchisp": {
+      "type": "uploader",
+      "owner": "community-ch32v",
+      "version": "https://github.com/Community-PIO-CH32V/tool-wchisp/raw/main/tool-wchisp-windows_x86-0.22.230228.tar.gz",
+      "optional": true
     }
   }
 }

@@ -18,6 +18,7 @@ from platformio.public import PlatformBase
 
 IS_WINDOWS = sys.platform.startswith("win")
 IS_LINUX = sys.platform.startswith("linux")
+IS_MAC = sys.platform.startswith("darwin")
 
 class Ch32vPlatform(PlatformBase):
     def get_boards(self, id_=None):
@@ -33,8 +34,13 @@ class Ch32vPlatform(PlatformBase):
 
     def configure_default_packages(self, variables, targets):
         # until toolchain is not yet approved in PIO registry: redirect packages at will here
+        # (temporary)
         if IS_LINUX:
             self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-linux.git"
+            self.packages["tool-wchisp"]["version"] = "https://github.com/Community-PIO-CH32V/tool-wchisp/raw/main/tool-wchisp-linux_x86_64-0.22.230228.tar.gz"
+        elif IS_MAC:
+            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-mac.git"
+            self.packages["tool-wchisp"]["version"] = "https://github.com/Community-PIO-CH32V/tool-wchisp/raw/main/tool-wchisp-darwin_x86_64-0.22.230228.tar.gz"            
         if not variables.get("board"):
             return super().configure_default_packages(variables, targets)
         selected_frameworks = variables.get("pioframework", [])
@@ -42,6 +48,13 @@ class Ch32vPlatform(PlatformBase):
         # NoneSDK as a base package
         if any([framework in selected_frameworks for framework in ("freertos", "harmony-liteos", "rt-thread", "tencent-os")]):
             self.packages["framework-wch-noneos-sdk"]["optional"] = False
+        # upload via USB bootloader wanted? (called "isp" in our platform)
+        # then activate package
+        board = variables.get("board")
+        board_config = self.board_config(board)
+        default_protocol = board_config.get("upload.protocol") or ""
+        if variables.get("upload_protocol", default_protocol) == "isp":
+            self.packages["tool-wchisp"]["optional"] = False
         return super().configure_default_packages(variables, targets)
 
     def _add_default_debug_tools(self, board):

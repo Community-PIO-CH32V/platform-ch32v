@@ -133,6 +133,14 @@ if upload_protocol in debug_tools:
     )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 
+# WCHISP
+elif upload_protocol == "isp":
+    env.Replace(
+        UPLOADER="wchisp",
+        UPLOADERFLAGS="",
+        UPLOADCMD="$UPLOADER $UPLOADERFLAGS flash $SOURCE",
+    )
+    upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 # custom upload tool
 elif upload_protocol == "custom":
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
@@ -145,6 +153,15 @@ env.AddPlatformTarget("upload", upload_target, upload_actions, "Upload")
 #
 # Target: Disable / Enable / Check Code Read Protection, Erase
 #
+def generate_wchisp_action(args: List[str], action_name:str):
+    wchisp_path = os.path.join(
+        platform.get_package_dir("tool-wchisp") or "",
+        "wchisp"
+    )
+    cmd = ["\"%s\"" % wchisp_path]
+    cmd.extend(args)
+    return env.VerboseAction(" ".join(cmd), action_name)
+
 def generate_openocd_action(args: List[str], action_name:str):
     # OpenOCD commands only supported through debugging adapters,
     # naturally.
@@ -152,7 +169,7 @@ def generate_openocd_action(args: List[str], action_name:str):
     # USB DFU / Serial bootloader tools, but we haven't integrated these yet.
     if not upload_protocol in debug_tools:
         print("Currently these actions require a debugging probe (e.g., WCH-Link(E)).")
-        env.Exit(-1)
+        return None
     openocd_path = os.path.join(
         platform.get_package_dir("tool-openocd-riscv-wch") or "",
         "bin",
@@ -178,37 +195,70 @@ def generate_openocd_action(args: List[str], action_name:str):
     ])
     return env.VerboseAction(" ".join(cmd), action_name)
 
-env.AddPlatformTarget(
-    "disable_flash_protection", None, generate_openocd_action([
-        "-c", "\"flash probe 0\"",
-        "-c", "\"flash protect 0 0 last off\"",
-    ], "Disabling Flash Protection"),
-    "Disable Flash Protection"
-)
+access_via_openocd = upload_protocol in debug_tools
+if access_via_openocd:
+    env.AddPlatformTarget(
+        "disable_flash_protection", None, generate_openocd_action([
+            "-c", "\"flash probe 0\"",
+            "-c", "\"flash protect 0 0 last off\"",
+        ], "Disabling Flash Protection"),
+        "Disable Flash Protection"
+    )
 
-env.AddPlatformTarget(
-    "enable_flash_protection", None, generate_openocd_action([
-        "-c", "\"flash probe 0\"",
-        "-c", "\"flash protect 0 0 last on\"",
-    ], "Enabling Flash Protection"),
-    "Enable Flash Protection"
-)
+    env.AddPlatformTarget(
+        "enable_flash_protection", None, generate_openocd_action([
+            "-c", "\"flash probe 0\"",
+            "-c", "\"flash protect 0 0 last on\"",
+        ], "Enabling Flash Protection"),
+        "Enable Flash Protection"
+    )
 
-env.AddPlatformTarget(
-    "check_flash_protection", None, generate_openocd_action([
-        "-c", "\"flash probe 0\"",
-        "-c", "\"flash protect_check 0\"",
-    ], "Checking Flash Protection"),
-    "Check Flash Protection"
-)
+    env.AddPlatformTarget(
+        "check_flash_protection", None, generate_openocd_action([
+            "-c", "\"flash probe 0\"",
+            "-c", "\"flash protect_check 0\"",
+        ], "Checking Flash Protection"),
+        "Check Flash Protection"
+    )
 
-env.AddPlatformTarget(
-    "erase", None, generate_openocd_action([
-        "-c", "\"flash probe 0\"",
-        "-c", "\"flash erase_sector 0 0 last\"",
-    ], "Erasing Flash"),
-    "Erase Flash"
-)
+    env.AddPlatformTarget(
+        "erase", None, generate_openocd_action([
+            "-c", "\"flash probe 0\"",
+            "-c", "\"flash erase_sector 0 0 last\"",
+        ], "Erasing Flash"),
+        "Erase Flash"
+    )
+elif upload_protocol == "isp":
+    env.AddPlatformTarget(
+        "info", None, generate_wchisp_action([
+            "info"
+        ], "Getting Device Info"),
+        "Device Info (ISP)"
+    )
+    env.AddPlatformTarget(
+        "disable_flash_protection", None, generate_wchisp_action([
+            "config unprotect"
+        ], "Disabling Flash Protection"),
+        "Disable Flash Protection (ISP)"
+    )
+    env.AddPlatformTarget(
+        "reset_cfg", None, generate_wchisp_action([
+            "config reset"
+        ], "Resetting Configuration Registers"),
+        "Reset Configuration Registers (ISP)"
+    )
+    env.AddPlatformTarget(
+        "erase", None, generate_wchisp_action([
+            "erase"
+        ], "Erasing Device"),
+        "Erase (ISP)"
+    )
+    env.AddPlatformTarget(
+        "reset", None, generate_wchisp_action([
+            "reset"
+        ], "Restting Device"),
+        "Reset (ISP)"
+    )
 
 #
 # Setup default targets

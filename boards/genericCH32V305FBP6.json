@@ -31,7 +31,8 @@
     "maximum_ram_size": 32768,
     "maximum_size": 131072,
     "protocols": [
-      "wch-link"
+      "wch-link",
+      "isp"
     ],
     "protocol": "wch-link"
   },
