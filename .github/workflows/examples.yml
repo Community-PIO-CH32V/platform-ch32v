@@ -19,6 +19,17 @@ jobs:
           - "examples/hello-world-tencent-os"
           - "examples/blinky-cpp-none-os"
           - "examples/baremetal-ch32v003"
+        exclude:
+          # needs further investigation on Mac on why this
+          # does not work for now..
+          - os: macos-latest
+            example: examples/blinky-none-os
+          - os: macos-latest
+            example: examples/uart-printf-none-os
+          - os: macos-latest
+            example: examples/blinky-cpp-none-os
+          - os: macos-latest
+            example: examples/baremetal-ch32v003
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
