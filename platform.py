@@ -37,10 +37,8 @@ class Ch32vPlatform(PlatformBase):
         # (temporary)
         if IS_LINUX:
             self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-linux.git"
-            self.packages["tool-wchisp"]["version"] = "https://github.com/Community-PIO-CH32V/tool-wchisp/raw/main/tool-wchisp-linux_x86_64-0.22.230228.tar.gz"
         elif IS_MAC:
             self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-mac.git"
-            self.packages["tool-wchisp"]["version"] = "https://github.com/Community-PIO-CH32V/tool-wchisp/raw/main/tool-wchisp-darwin_x86_64-0.22.230228.tar.gz"            
         if not variables.get("board"):
             return super().configure_default_packages(variables, targets)
         selected_frameworks = variables.get("pioframework", [])
