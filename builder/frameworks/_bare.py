@@ -57,6 +57,8 @@ env.Append(
         "-Os",
         "-march=%s" % board.get("build.march"),
         "-mabi=%s" % board.get("build.mabi"),
+        "-ffunction-sections",
+        "-fdata-sections",
         "-Wl,-gc-sections",
         "--specs=nano.specs",
         "--specs=nosys.specs",
