@@ -1,6 +1,6 @@
 # CH32V: development platform for [PlatformIO](https://platformio.org)
 
-[![Build Status](https://github.com/Community-PIO-CH32V/platform-ch32v/workflows/Examples/badge.svg)](https://github.com/Community-PIO-CH32V/platform-ch32v/actions)
+[![Build Status](https://github.com/Community-PIO-CH32V/platform-ch32v/workflows/Examples/badge.svg)](https://github.com/Community-PIO-CH32V/platform-ch32v/actions) [![Documentation Status](https://readthedocs.org/projects/pio-ch32v/badge/?version=latest)](https://pio-ch32v.readthedocs.io/en/latest/?badge=latest)
 
 The CH32V series offers industrial-grade, general-purpose microcontrollers based on a range of QingKe 32-bit RISC-V cores. All devices feature a DMA and a hardware stack area, which greatly improves interrupt latency. The family ranges from ultra-cheap, low-end CH32V003 with 2kB RAM / 16kB flash, up to high speed, ultra-connected CH32V307 with 64kB RAM / 256kB flash, hardware FPU, USB, CAN, Ethernet, etc.. For a list of available devices see the [CH32V product selector](http://www.wch-ic.com/products/categories/47.html?pid=5) page.
 
@@ -9,6 +9,12 @@ Note: [WCH](http://www.wch-ic.com) also offers the CH32**F** family with identic
 This repository is a PlatformIO platform. Just like [platform-ststm32](https://github.com/platformio/platform-ststm32/) etc., it enables the PlatformIO core to work with W.CH CH32V chips. This means in all the IDEs that PlatformIO supports ([VSCode, CLion, etc.](https://docs.platformio.org/en/latest/integration/ide/index.html)), developing and debugging firmwares for CH32V chips is easily possible.
 
 Head over to https://github.com/Community-PIO-CH32V/ch32-pio-projects to see more example projects and detailed starting instructions.
+
+# Documentation
+
+Please visit https://readthedocs.org/projects/pio-ch32v/ for the most recent documention.
+
+**This page is a work in progress at the moment.**
 
 # Media
 ![vscode debugging](docs/debugging_ch32v003.png)
