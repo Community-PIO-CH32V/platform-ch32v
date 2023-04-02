@@ -39,6 +39,9 @@ class Ch32vPlatform(PlatformBase):
             self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-linux.git"
         elif IS_MAC:
             self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-mac.git"
+        # temporary fix for deleted OpenOCD windows version :(
+        if not IS_WINDOWS:
+            self.packages["tool-openocd-riscv-wch"]["version"] = "~2.1100.0"
         if not variables.get("board"):
             return super().configure_default_packages(variables, targets)
         selected_frameworks = variables.get("pioframework", [])

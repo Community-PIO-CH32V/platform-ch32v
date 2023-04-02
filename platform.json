@@ -93,7 +93,7 @@
     "tool-openocd-riscv-wch": {
       "type": "uploader",
       "owner": "community-ch32v",
-      "version": "~2.1100.0"
+      "version": "https://github.com/Community-PIO-CH32V/tool-openocd-riscv-wch.git"
     },
     "tool-wchisp": {
       "type": "uploader",
