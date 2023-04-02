@@ -14,7 +14,7 @@
  * INCLUDES
  */
 #include "ch32v20x_it.h"
-#include "CONFIG.h"
+#include "config.h"
 
 /*********************************************************************
  * LOCAL FUNCTIONS

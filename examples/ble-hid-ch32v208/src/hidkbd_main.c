@@ -12,7 +12,7 @@
 
 /******************************************************************************/
 /* Header file contains */
-#include "CONFIG.h"
+#include "config.h"
 #include "HAL.h"
 #include "hiddev.h"
 #include "hidkbd.h"

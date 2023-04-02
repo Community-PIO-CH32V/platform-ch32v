@@ -13,7 +13,7 @@
 /*********************************************************************
  * INCLUDES
  */
-#include "CONFIG.h"
+#include "config.h"
 #include "hidkbdservice.h"
 #include "hiddev.h"
 #include "battservice.h"

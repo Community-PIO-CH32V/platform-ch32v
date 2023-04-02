@@ -14,7 +14,7 @@
  * INCLUDES
  */
 
-#include "CONFIG.h"
+#include "config.h"
 #include "battservice.h"
 #include "scanparamservice.h"
 #include "devinfoservice.h"
