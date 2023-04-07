@@ -11,16 +11,20 @@ jobs:
         example:
           - "examples/adc-cpu-temp-none-os"
           - "examples/blinky-none-os"
+          - "examples/blinky-none-os-ch5xx"
           - "examples/uart-printf-none-os"
           - "examples/webserver-ch32v307-none-os"
           - "examples/blinky-freertos"
+          - "examples/blinky-freertos-ch58x"
           - "examples/hello-world-harmony-liteos"
           - "examples/hello-world-rt-thread"
+          - "examples/hello-world-rt-thread-ch5xx"
           - "examples/hello-world-tencent-os"
           - "examples/blinky-cpp-none-os"
           - "examples/baremetal-ch32v003"
           - "examples/usb-cdc-wch32v307-none-os"
           - "examples/ble-hid-ch32v208"
+          - "examples/ble-usb-cdc-ch5xx"
         exclude:
           # needs further investigation on Mac on why this
           # does not work for now..
