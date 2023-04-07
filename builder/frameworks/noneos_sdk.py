@@ -6,12 +6,16 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
 # convert MCU name (e.g. "ch32v307") to series (e.g. "ch32v30x")
-chip_series = board.get("build.mcu")[0:len("ch32vxx")] + "x"
+chip_series: str = board.get("build.series", "")[0:-1].lower() + "x"
 # import default build settings
 env.SConscript("_bare.py")
 
 FRAMEWORK_DIR = platform.get_package_dir("framework-wch-noneos-sdk")
 assert isdir(FRAMEWORK_DIR)
+
+# helper vars
+has_system_code = not chip_series.startswith("ch5")
+has_debug_code = not chip_series.startswith("ch5")
 
 def get_flag_value(flag_name:str, default_val:bool):
     flag_val = board.get("build.%s" % flag_name, default_val)
@@ -26,6 +30,9 @@ class CustomTemplate(Template):
 def get_linker_script(mcu: str):
     default_ldscript = join(env.subst("$BUILD_DIR"), "Link.ld")
 
+    # for now, when building for ch56x, ch57x, ch58x, use the original linker scripts..
+    if mcu.lower().startswith("ch5"):
+        return join(FRAMEWORK_DIR, "platformio", "ldscripts", "Link_" + board.get("build.series", "")[0:-1].upper() + "x") + ".ld"
     ram = board.get("upload.maximum_ram_size", 0)
     flash = board.get("upload.maximum_size", 0)
     flash_start = int(board.get("upload.offset_address", "0x00000000"), 0)
@@ -74,6 +81,8 @@ def get_startup_filename(board):
             return "startup_ch32v00x.S"
         elif chip_name.startswith("ch32v1"):
             return "startup_ch32v10x.S"
+        elif chip_name.startswith("ch5"):
+            return "startup_" + board.get("build.series").lower()[0:len("ch5xx")] + ".S"
     if startup_file is None:
         print("Failed to find startup file for board " + str(board))
         env.Exit(-1)
@@ -114,7 +123,7 @@ if get_flag_value("use_builtin_startup_file", True):
     )
 
 # for clock init etc.
-if get_flag_value("use_builtin_system_code", True):
+if get_flag_value("use_builtin_system_code", True) and has_system_code:
     env.Append(CPPPATH=[join(FRAMEWORK_DIR, "System", chip_series)])
     env.BuildSources(
         join("$BUILD_DIR", "FrameworkNoneOSSSystem"),
@@ -123,7 +132,7 @@ if get_flag_value("use_builtin_system_code", True):
 
 # By default, include the Debug.h/.c code.
 # practically every example needs it. Can be turned of in the platformio.ini.
-if get_flag_value("use_builtin_debug_code", True):
+if get_flag_value("use_builtin_debug_code", True) and has_debug_code:
     env.Append(CPPPATH=[join(FRAMEWORK_DIR, "Debug", chip_series)])
     env.BuildSources(
         join("$BUILD_DIR", "FrameworkNoneOSDebug"),
@@ -142,5 +151,13 @@ libs.append(env.BuildLibrary(
     join("$BUILD_DIR", "FrameworkNoneOSVariant"),
     join(FRAMEWORK_DIR, "Peripheral", chip_series, "src")
 ))
+
+# mandatory for compilation
+if chip_series.startswith("ch57") or chip_series.startswith("ch58"):
+    env.Append(LIBPATH=[join(FRAMEWORK_DIR, "Peripheral", chip_series, "src")])
+    if chip_series.startswith("ch57"):
+        libs += ["ISP573"]
+    else:
+        libs += ["ISP583"]
 
 env.Append(LIBS=libs)

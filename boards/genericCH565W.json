@@ -1,0 +1,38 @@
+{
+  "build": {
+    "f_cpu": "120000000L",
+    "extra_flags": "-DCH56 -DCH56X -DCH565",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imac",
+    "mcu": "ch565w",
+    "series": "ch56x"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH56Xxx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk"
+  ],
+  "name": "Generic CH565W",
+  "upload": {
+    "maximum_ram_size": 49152,
+    "maximum_size": 491520,
+    "protocols": [
+      "wch-link",
+      "isp"
+    ],
+    "protocol": "wch-link"
+  },
+  "url": "http://www.wch-ic.com/products/CH56X.html",
+  "vendor": "W.CH"
+}

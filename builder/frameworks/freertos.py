@@ -5,7 +5,11 @@ from SCons.Script import DefaultEnvironment
 env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
-chip_series = board.get("build.mcu")[0:len("ch32vxx")] + "x"
+chip_series: str = board.get("build.series", "")[0:-1].lower() + "x"
+
+if chip_series.startswith("ch5"):
+    # we need to make use of that special startup file which redirects all interrupts speciall
+    board.update("build.use_builtin_startup_file", "no")
 
 # import NoneOS SDK settings
 env.SConscript("noneos_sdk.py")
@@ -33,6 +37,9 @@ env.Append(
         "__PIO_BUILD_FREERTOS__"
     ]
 )
+
+if chip_series.startswith("ch5"):
+    env.Append(CPPDEFINES=[("ENABLE_INTERRUPT_NEST", 1)])
 
 env.BuildSources(
     join("$BUILD_DIR", "FrameworkFreeRTOSCore"),

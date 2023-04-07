@@ -6,7 +6,8 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
 
-data_limit = 0 if str(board.get("build.mcu", "")).lower().startswith("ch32v0") else 8
+mcu = str(board.get("build.mcu", "")).lower()
+data_limit = 0 if mcu.startswith("ch32v0") else 8
 
 env.Append(
     ASFLAGS=[
@@ -36,7 +37,7 @@ env.Append(
         "-g",
         "-Wall",
         "-msmall-data-limit=%d" % data_limit,
-        "-msave-restore",
+        "-mno-save-restore" if mcu.startswith("ch5") else "-msave-restore",
         "-fmessage-length=0",
         "-fsigned-char",
         "-ffunction-sections",

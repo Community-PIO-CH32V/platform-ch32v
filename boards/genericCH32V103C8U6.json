@@ -10,7 +10,8 @@
     ],
     "mabi": "ilp32",
     "march": "rv32imac",
-    "mcu": "ch32v103c8u6"
+    "mcu": "ch32v103c8u6",
+    "series": "ch32v103"
   },
   "debug": {
     "onboard_tools": [

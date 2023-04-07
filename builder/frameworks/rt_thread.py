@@ -6,7 +6,11 @@ from SCons.Script import DefaultEnvironment
 env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
-chip_series = board.get("build.mcu")[0:len("ch32vxx")] + "x"
+chip_series: str = board.get("build.series", "")[0:-1].lower() + "x"
+
+if chip_series.startswith("ch5"):
+    # we need to make use of that special startup file which redirects all interrupts speciall
+    board.update("build.use_builtin_startup_file", "no")
 
 # import NoneOS SDK settings
 env.SConscript("noneos_sdk.py")
@@ -18,16 +22,11 @@ rtthread_subseries = f"rtthread_{chip_series}"
 
 env.Append(
     CPPPATH=[
-        join(FRAMEWORK_DIR, rtthread_subseries, "drivers"),
         join(FRAMEWORK_DIR, rtthread_subseries, "include"),
         join(FRAMEWORK_DIR, rtthread_subseries, "include", "libc"),
-        join(FRAMEWORK_DIR, rtthread_subseries, "libcpu", "risc-v"),
-        join(FRAMEWORK_DIR, rtthread_subseries, "libcpu", "risc-v", "common"),
         join(FRAMEWORK_DIR, rtthread_subseries, "src"),
         join(FRAMEWORK_DIR, rtthread_subseries),
         join(FRAMEWORK_DIR, rtthread_subseries, "components", "drivers", "include"),
-        join(FRAMEWORK_DIR, rtthread_subseries, "components", "drivers", "misc"),
-        join(FRAMEWORK_DIR, rtthread_subseries, "components", "drivers", "serial"),
         join(FRAMEWORK_DIR, rtthread_subseries, "components", "finsh"),
         # ch32v_it.h is mandatory for RT-Thread to build, this will likely be included
         # in the user's directory.
@@ -40,6 +39,21 @@ env.Append(
         "__PIO_BUILD_RT_THREAD__"
     ]
 )
+if chip_series.startswith("ch5"):
+    env.Append(CPPPATH=[
+        # exists for ch5xx
+        join(FRAMEWORK_DIR, rtthread_subseries, "libcpu", "WCH", "Qingke_V4A"),
+        join(FRAMEWORK_DIR, rtthread_subseries, "components", "drivers", "ipc"),
+        join(FRAMEWORK_DIR, rtthread_subseries, "bsp"),
+    ])
+else:
+    env.Append(CPPPATH=[
+        join(FRAMEWORK_DIR, rtthread_subseries, "drivers"),
+        join(FRAMEWORK_DIR, rtthread_subseries, "libcpu", "risc-v"),
+        join(FRAMEWORK_DIR, rtthread_subseries, "libcpu", "risc-v", "common"),
+        join(FRAMEWORK_DIR, rtthread_subseries, "components", "drivers", "misc"),
+        join(FRAMEWORK_DIR, rtthread_subseries, "components", "drivers", "serial"),
+    ])
 
 env.BuildSources(
     join("$BUILD_DIR", "FrameworkRTThreadCore"),

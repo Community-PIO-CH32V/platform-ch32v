@@ -1,0 +1,10 @@
+{
+    "name": "W.CH BLE LIB",
+    "version": "1.50.0",
+    "build": {
+      "flags": [
+        "-L.",
+        "-lCH58xBLE"
+      ]
+    }
+  }

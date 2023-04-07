@@ -1,0 +1,38 @@
+{
+  "build": {
+    "f_cpu": "20000000L",
+    "extra_flags": "-DCH57 -DCH57X -DCH573",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imac",
+    "mcu": "ch573q",
+    "series": "ch57x"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH57Xxx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk"
+  ],
+  "name": "Generic CH573Q",
+  "upload": {
+    "maximum_ram_size": 18432,
+    "maximum_size": 229376,
+    "protocols": [
+      "wch-link",
+      "isp"
+    ],
+    "protocol": "wch-link"
+  },
+  "url": "http://www.wch-ic.com/products/CH57X.html",
+  "vendor": "W.CH"
+}

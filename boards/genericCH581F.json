@@ -1,0 +1,40 @@
+{
+  "build": {
+    "f_cpu": "20000000L",
+    "extra_flags": "-DCH58 -DCH58X -DCH581",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imac",
+    "mcu": "ch581f",
+    "series": "ch58x"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH58Xxx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "freertos",
+    "rt-thread"
+  ],
+  "name": "Generic CH581F",
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 229376,
+    "protocols": [
+      "wch-link",
+      "isp"
+    ],
+    "protocol": "wch-link"
+  },
+  "url": "http://www.wch-ic.com/products/CH58X.html",
+  "vendor": "W.CH"
+}
