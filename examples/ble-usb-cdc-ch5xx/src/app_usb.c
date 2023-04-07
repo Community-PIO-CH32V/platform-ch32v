@@ -12,7 +12,7 @@
  * INCLUDES
  */
 
-#include "CONFIG.h"
+#include "config.h"
 #include "gattprofile.h"
 #include "stdint.h"
 #include "ble_usb_service.h"

@@ -3,14 +3,14 @@
  * Author             : WCH
  * Version            : V1.1
  * Date               : 2020/08/06
- * Description        : ÍâÉè´Ó»úÓ¦ÓÃÖ÷º¯Êý¼°ÈÎÎñÏµÍ³³õÊ¼»¯
+ * Description        : ï¿½ï¿½ï¿½ï¿½Ó»ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½Ê¼ï¿½ï¿½
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
  * SPDX-License-Identifier: Apache-2.0
  *******************************************************************************/
 
 /******************************************************************************/
-/* Í·ÎÄ¼þ°üº¬ */
-#include "CONFIG.h"
+/* Í·ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ */
+#include "config.h"
 #include "HAL.h"
 #include "gattprofile.h"
 #include "peripheral.h"
@@ -28,7 +28,7 @@ const uint8_t MacAddr[6] = {0x84, 0xC2, 0xE4, 0x03, 0x02, 0x02};
 /*********************************************************************
  * @fn      Main_Circulation
  *
- * @brief   Ö÷Ñ­»·
+ * @brief   ï¿½ï¿½Ñ­ï¿½ï¿½
  *
  * @return  none
  */
@@ -45,7 +45,7 @@ void Main_Circulation()
 /*********************************************************************
  * @fn      main
  *
- * @brief   Ö÷º¯Êý
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  *
  * @return  none
  */
