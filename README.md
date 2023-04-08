@@ -31,6 +31,9 @@ Please visit https://readthedocs.org/projects/pio-ch32v/ for the most recent doc
     - [x] CH32V303 (QingKe V4F)
     - [x] CH32V305 (QingKe V4F)
     - [x] CH32V307 (QingKe V4F)
+    - [x] CH56x (QingKe V3A)
+    - [x] CH57x (QingKe V3A)
+    - [x] CH58x (QingKe V4A)
 - development boards
     - [x] CH32V003F4P6-EVT-R0 (official by W.CH)
     - [x] CH32V203C8T6-EVT-R0 (official by W.CH)
