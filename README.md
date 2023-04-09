@@ -12,7 +12,7 @@ Head over to https://github.com/Community-PIO-CH32V/ch32-pio-projects to see mor
 
 # Documentation
 
-Please visit https://readthedocs.org/projects/pio-ch32v/ for the most recent documention.
+Please visit https://pio-ch32v.readthedocs.io/ for the most recent documention.
 
 **This page is a work in progress at the moment.**
 
