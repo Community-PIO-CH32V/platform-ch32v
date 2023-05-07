@@ -9,7 +9,7 @@
       ]
     ],
     "mabi": "ilp32e",
-    "march": "rv32ec",
+    "march": "rv32ecxw",
     "mcu": "ch32v003j4m6",
     "series": "ch32v003"
   },
