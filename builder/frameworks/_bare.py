@@ -56,7 +56,7 @@ env.Append(
         "-Wunused",
         "-Wuninitialized",
         "-Wno-comment",
-        "-march=%s" % board.get("build.march"),
+        "-march=%s" % machine_arch,
         "-mabi=%s" % board.get("build.mabi"),
     ],
 
@@ -66,7 +66,7 @@ env.Append(
 
     LINKFLAGS=[
         "-Os",
-        "-march=%s" % board.get("build.march"),
+        "-march=%s" % machine_arch,
         "-mabi=%s" % board.get("build.mabi"),
         "-ffunction-sections",
         "-fdata-sections",
