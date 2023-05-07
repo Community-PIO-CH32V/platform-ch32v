@@ -1,6 +1,9 @@
 import os
+import sys
 
 from SCons.Script import DefaultEnvironment
+
+IS_MAC = sys.platform.startswith("darwin")
 
 env = DefaultEnvironment()
 platform = env.PioPlatform()
@@ -9,9 +12,15 @@ board = env.BoardConfig()
 mcu = str(board.get("build.mcu", "")).lower()
 data_limit = 0 if mcu.startswith("ch32v0") else 8
 
+machine_arch = board.get("build.march")
+# "fix" Mac toolchain being incapable of linking against libgcc
+# by downgrading instructions to EC (without extensions for some instructions)
+if IS_MAC and machine_arch == "rv32ecxw":
+    machine_arch = "rv32ec"
+
 env.Append(
     ASFLAGS=[
-        "-march=%s" % board.get("build.march"),
+        "-march=%s" % machine_arch,
         "-mabi=%s" % board.get("build.mabi"),
     ],
     ASPPFLAGS=[
