@@ -12,7 +12,7 @@ board = env.BoardConfig()
 mcu = str(board.get("build.mcu", "")).lower()
 data_limit = 0 if mcu.startswith("ch32v0") else 8
 
-machine_arch = board.get("build.march")
+machine_arch = str(board.get("build.march"))
 # "fix" Mac toolchain being incapable of linking against libgcc
 # by downgrading instructions to EC (without extensions for some instructions)
 print("Is mac: " + str(IS_MAC) + " and arch is " + str(machine_arch))
