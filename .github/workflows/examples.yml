@@ -40,4 +40,4 @@ jobs:
           pio pkg install --global --platform symlink://.
       - name: Build examples
         run: |
-          pio run -d ${{ matrix.example }}
+          pio run -d ${{ matrix.example }} -v
