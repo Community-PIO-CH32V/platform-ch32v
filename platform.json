@@ -52,6 +52,13 @@
       "description": "TencentOS tiny is a real-time operating system developed by Tencent for the IoT field",
       "homepage": "https://github.com/OpenAtomFoundation/TencentOS-tiny",
       "title": "TencentOS Tiny"
+    },
+    "arduino": {
+      "package": "framework-arduinoch32v003",
+      "script": "builder/frameworks/arduino.py",
+      "description": "Arduino Wiring-based Framework allows writing cross-platform software to control devices attached to a wide range of Arduino boards to create all kinds of creative coding, interactive objects, spaces or physical experiences",
+      "homepage": "http://arduino.cc/en/Reference/HomePage",
+      "title": "Arduino"
     }
   },
   "packages": {
@@ -84,6 +91,12 @@
       "optional": true,
       "owner": "platformio",
       "version": "https://github.com/Community-PIO-CH32V/framework-wch-tencentos.git"
+    },
+    "framework-arduinoch32v003": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/arduino-wch32v003"
     },
     "toolchain-riscv": {
       "type": "toolchain",

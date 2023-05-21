@@ -11,7 +11,8 @@
     "mabi": "ilp32e",
     "march": "rv32ecxw",
     "mcu": "ch32v003a4m6",
-    "series": "ch32v003"
+    "series": "ch32v003",
+    "variant": "WCH32V003"
   },
   "debug": {
     "onboard_tools": [
@@ -21,7 +22,8 @@
     "svd_path": "CH32V003xx.svd"
   },
   "frameworks": [
-    "noneos-sdk"
+    "noneos-sdk",
+    "arduino"
   ],
   "name": "Generic CH32V003A4M6",
   "upload": {
