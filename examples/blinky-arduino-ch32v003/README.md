@@ -8,7 +8,7 @@ How to build PlatformIO based project
 
 ```shell
 # Change directory to example
-$ cd platform-ch32v/examples/blinky-none-os
+$ cd platform-ch32v/examples/blinky-arduino-ch32v003
 
 # Build project
 $ pio run
@@ -17,7 +17,7 @@ $ pio run
 $ pio run --target upload
 
 # Upload firmware for the specific environment
-$ pio run -e ch32v307_evt --target upload
+$ pio run -e ch32v003f4p6_evt_r0 --target upload
 
 # Clean build files
 $ pio run --target clean
