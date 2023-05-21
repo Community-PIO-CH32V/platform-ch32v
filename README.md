@@ -40,13 +40,15 @@ Please visit https://pio-ch32v.readthedocs.io/ for the most recent documention.
     - [x] CH32V307 EVT (by SCDZ, close to official W.CH board)
 - frameworks
     - [x] None OS ("Simple Peripheral Library" / native SDK)
+    - [ ] Arduino
+      - [x] for CH32V003
+      - [ ] for all else
     - [x] FreeRTOS
     - [x] (Huawei) Harmony LiteOS
     - [x] RT-Thread
     - [x] TencentOS Lite-M
 - debuggers (also implicitly uploaders)
     - [x] WCH-Link(E)
-       - note: does not work on Linux + WCH-LinkE (for CH32V003), OpenOCD update pending, see #22
     - [ ] ST-Link
     - [ ] J-Link
     - [ ] GDB-UART stub for debug-probe-less debugging?
