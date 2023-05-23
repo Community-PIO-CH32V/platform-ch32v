@@ -208,7 +208,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         base_json["frameworks"].append("rt-thread")
     if chip_l.startswith("ch32v003"):
         base_json["frameworks"].append("arduino")
-        base_json["build"]["core"] = "ch32v03"
+        base_json["build"]["core"] = "ch32v003"
         base_json["build"]["variant"] = "WCH32V003"
         base_json["build"]["extra_flags"] += "-DARDUINO_ARCH_WCH32V003"
     if chip_l.startswith("ch32v307"):
