@@ -53,6 +53,13 @@ class Ch32vPlatform(PlatformBase):
         default_protocol = board_config.get("upload.protocol") or ""
         if variables.get("upload_protocol", default_protocol) == "isp":
             self.packages["tool-wchisp"]["optional"] = False
+
+        frameworks = variables.get("pioframework", [])
+        if "arduino" in frameworks:
+            if board_config.get("build.mcu", "").lower().startswith("ch32v003"): 
+                self.frameworks["arduino"]["package"] = "framework-arduinoch32v003"
+            else:
+                self.frameworks["arduino"]["package"] = "framework-arduinoch32v"
         return super().configure_default_packages(variables, targets)
 
     def _add_default_debug_tools(self, board):

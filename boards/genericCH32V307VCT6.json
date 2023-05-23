@@ -11,7 +11,9 @@
     "mabi": "ilp32",
     "march": "rv32imacxw",
     "mcu": "ch32v307vct6",
-    "series": "ch32v307"
+    "series": "ch32v307",
+    "core": "ch32v",
+    "variant": "ch32v307_evt"
   },
   "debug": {
     "onboard_tools": [
@@ -25,7 +27,8 @@
     "freertos",
     "harmony-liteos",
     "rt-thread",
-    "tencent-os"
+    "tencent-os",
+    "arduino"
   ],
   "name": "Generic CH32V307VCT6",
   "upload": {

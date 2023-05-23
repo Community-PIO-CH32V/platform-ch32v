@@ -20,6 +20,7 @@ control devices attached to a wide range of Arduino boards to create all
 kinds of creative coding, interactive objects, spaces or physical experiences.
 
 https://github.com/AlexanderMandera/arduino-wch32v003
+https://github.com/Community-PIO-CH32V/ArduinoCore-CH32V
 """
 
 import sys
@@ -31,9 +32,13 @@ env = DefaultEnvironment()
 mcu = env.BoardConfig().get("build.mcu")
 core = env.BoardConfig().get("build.core", "")
 
-if str(mcu).lower().startswith("ch32v003"):
+if core == "ch32v003":
     build_script = join(
         env.PioPlatform().get_package_dir("framework-arduinoch32v003"),
+        "tools", "platformio-build.py")
+elif core == "ch32v":
+    build_script = join(
+        env.PioPlatform().get_package_dir("framework-arduinoch32v"),
         "tools", "platformio-build.py")
 else:
     sys.stderr.write("Error: Don't know which Arduino core to use for %s!\n" % mcu)

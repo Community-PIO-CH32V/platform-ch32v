@@ -98,6 +98,12 @@
       "owner": "platformio",
       "version": "https://github.com/Community-PIO-CH32V/arduino-wch32v003"
     },
+    "framework-arduinoch32v": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/ArduinoCore-CH32V.git"
+    },
     "toolchain-riscv": {
       "type": "toolchain",
       "owner": "platformio",
