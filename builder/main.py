@@ -110,7 +110,7 @@ debug_tools = board_config.get("debug.tools", {})
 upload_actions = []
 upload_target = target_elf
 
-if upload_protocol in debug_tools:
+if upload_protocol in debug_tools and upload_protocol != "minichlink":
     openocd_args = [
         "-c",
         "debug_level %d" % (2 if int(ARGUMENTS.get("PIOVERBOSE", 0)) else 1),
@@ -140,6 +140,16 @@ elif upload_protocol == "isp":
         UPLOADERFLAGS="",
         UPLOADCMD="$UPLOADER $UPLOADERFLAGS flash $SOURCE",
     )
+    upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
+elif upload_protocol == "minichlink":
+    flash_start = board_config.get("upload.offset_address", "0x08000000")
+    env.Replace(
+        UPLOADER="minichlink",
+        UPLOADERFLAGS="-w", # write binary
+        UPLOADERPOSTFLAGS="%s -b" % str(flash_start), # address, (re)boot from halt
+        UPLOADCMD="$UPLOADER $UPLOADERFLAGS $SOURCE $UPLOADERPOSTFLAGS",
+    )
+    upload_target = target_bin
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 # custom upload tool
 elif upload_protocol == "custom":

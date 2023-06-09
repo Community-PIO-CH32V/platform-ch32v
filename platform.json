@@ -119,6 +119,12 @@
       "owner": "community-ch32v",
       "version": "~0.22.230228",
       "optional": true
+    },
+    "tool-minichlink": {
+      "type": "uploader",
+      "owner": "community-ch32v",
+      "version": "https://github.com/Community-PIO-CH32V/tool-minichlink.git#master",
+      "optional": true
     }
   }
 }

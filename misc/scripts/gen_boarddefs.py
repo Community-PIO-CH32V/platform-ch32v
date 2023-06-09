@@ -188,6 +188,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
             "maximum_size": info.flash_kb * 1024,
             "protocols": [
                 "wch-link",
+                "minichlink",
                 "isp"
             ],
             "protocol": "wch-link"

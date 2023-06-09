@@ -53,7 +53,14 @@ class Ch32vPlatform(PlatformBase):
         default_protocol = board_config.get("upload.protocol") or ""
         if variables.get("upload_protocol", default_protocol) == "isp":
             self.packages["tool-wchisp"]["optional"] = False
-
+        elif variables.get("upload_protocol", default_protocol) == "minichlink":
+            self.packages["tool-minichlink"]["optional"] = False
+            if IS_WINDOWS:
+                self.packages["tool-minichlink"]["version"] = "https://github.com/Community-PIO-CH32V/tool-minichlink.git#windows"
+            elif IS_LINUX:
+                self.packages["tool-minichlink"]["version"] = "https://github.com/Community-PIO-CH32V/tool-minichlink.git#linux"
+            elif IS_MAC:
+                self.packages["tool-minichlink"]["version"] = "https://github.com/Community-PIO-CH32V/tool-minichlink.git#mac"
         frameworks = variables.get("pioframework", [])
         if "arduino" in frameworks:
             if board_config.get("build.mcu", "").lower().startswith("ch32v003"): 
@@ -69,66 +76,89 @@ class Ch32vPlatform(PlatformBase):
 
         tools = (
             "wch-link",
+            "minichlink",
         )
+        openocd_reset_cmds = [
+            "define pio_reset_halt_target",
+            "   load",
+            "   monitor reset halt",
+            "end",
+            "define pio_reset_run_target",
+            "   load",
+            "   monitor reset",
+            "end",
+        ]
+        minichlink_reset_cmds = [
+            "define pio_reset_halt_target",
+            "end",
+            "define pio_reset_run_target",
+            "end",
+        ]
+        init_cmds = [
+            "set mem inaccessible-by-default off",
+            "set arch riscv:rv32",
+            "set remotetimeout unlimited",
+            "target extended-remote $DEBUG_PORT",
+            "$INIT_BREAK",
+            "$LOAD_CMDS",
+        ]
         for tool in tools:
             if tool in debug["tools"]:
                 continue
-            server_executable = "bin/openocd"
-            server_package = "tool-openocd-riscv-wch"
-            server_args = [
-                "-s",
-                os.path.join(
-                    self.get_package_dir("tool-openocd-riscv-wch") or "",
-                    "bin"
-                ),
-                "-s",
-                os.path.join(
-                    self.get_package_dir("tool-openocd-riscv-wch") or "",
-                    "scripts"
-                )
-            ]
-            reset_cmds = [
-                "define pio_reset_halt_target",
-                "   load",
-                "   monitor reset halt",
-                "end",
-                "define pio_reset_run_target",
-                "   load",
-                "   monitor reset",
-                "end",
-            ]
-            if debug.get("openocd_config", ""):
-                server_args.extend(["-f", debug.get("openocd_config")])
-            else:
-                assert debug.get("openocd_target"), (
-                    "Missing target configuration for %s" % board.id
-                )
-                # All tools are FTDI based
-                server_args.extend(
-                    [
-                        "-f",
-                        "interface/ftdi/%s.cfg" % tool,
-                        "-f",
-                        "target/%s.cfg" % debug.get("openocd_target"),
-                    ]
-                )
-            debug["tools"][tool] = {
-                "init_cmds": reset_cmds + [
-                    "set mem inaccessible-by-default off",
-                    "set arch riscv:rv32",
-                    "set remotetimeout unlimited",
-                    "target extended-remote $DEBUG_PORT",
-                    "$INIT_BREAK",
-                    "$LOAD_CMDS",
-                ],
-                "server": {
-                    "package": server_package,
-                    "executable": server_executable,
-                    "arguments": server_args,
-                },
-                "onboard": tool in debug.get("onboard_tools", [])
-            }
-
+            if tool == "wch-link":
+                server_args = [
+                    "-s",
+                    os.path.join(
+                        self.get_package_dir("tool-openocd-riscv-wch") or "",
+                        "bin"
+                    ),
+                    "-s",
+                    os.path.join(
+                        self.get_package_dir("tool-openocd-riscv-wch") or "",
+                        "scripts"
+                    )
+                ]
+                if debug.get("openocd_config", ""):
+                    server_args.extend(["-f", debug.get("openocd_config")])
+                else:
+                    assert debug.get("openocd_target"), (
+                        "Missing target configuration for %s" % board.id
+                    )
+                    # All tools are FTDI based
+                    server_args.extend(
+                        [
+                            "-f",
+                            "interface/ftdi/%s.cfg" % tool,
+                            "-f",
+                            "target/%s.cfg" % debug.get("openocd_target"),
+                        ]
+                    )
+                debug["tools"][tool] = {
+                    "init_cmds": openocd_reset_cmds + init_cmds,
+                    "server": {
+                        "package": "tool-openocd-riscv-wch",
+                        "executable": "bin/openocd",
+                        "arguments": server_args,
+                    }
+                }
+            elif tool == "minichlink":
+                debug["tools"][tool] = {
+                    "server": {
+                        "package": "tool-minichlink",
+                        "executable": "minichlink",
+                        "arguments": [
+                            "-G"  # "Terminal + GDB"
+                        ]
+                    },
+                    # The minichlink GDB server does not support the "load" command
+                    # So, we have to tell PIO to preflash the binary using the regular upload command
+                    "load_cmds": "preload",
+                    "init_cmds": minichlink_reset_cmds + init_cmds,
+                    "port": "localhost:2000", # default port of that tool
+                    "read_pattern": "GDBServer Running",
+                }
+            debug["tools"][tool]["onboard"] = tool in debug.get("onboard_tools", [])
+            debug["tools"][tool]["default"] = tool in debug.get("default_tools", [])
         board.manifest["debug"] = debug
         return board
 

@@ -33,6 +33,7 @@
     "maximum_size": 32768,
     "protocols": [
       "wch-link",
+      "minichlink",
       "isp"
     ],
     "protocol": "wch-link"
