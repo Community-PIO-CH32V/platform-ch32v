@@ -104,6 +104,12 @@
       "owner": "platformio",
       "version": "https://github.com/Community-PIO-CH32V/ArduinoCore-CH32V.git"
     },
+    "framework-arduino-openwch-ch32": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/arduino_core_ch32.git"
+    },
     "toolchain-riscv": {
       "type": "toolchain",
       "owner": "platformio",

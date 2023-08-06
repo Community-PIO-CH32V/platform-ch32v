@@ -62,11 +62,14 @@ class Ch32vPlatform(PlatformBase):
             elif IS_MAC:
                 self.packages["tool-minichlink"]["version"] = "https://github.com/Community-PIO-CH32V/tool-minichlink.git#mac"
         frameworks = variables.get("pioframework", [])
+        build_core = variables.get("board_build.core", board_config.get("build.core", "arduino"))
         if "arduino" in frameworks:
-            if board_config.get("build.mcu", "").lower().startswith("ch32v003"): 
+            if build_core == "ch32v003":
                 self.frameworks["arduino"]["package"] = "framework-arduinoch32v003"
-            else:
+            elif build_core == "ch32v":
                 self.frameworks["arduino"]["package"] = "framework-arduinoch32v"
+            elif build_core == "openwch":
+               self.frameworks["arduino"]["package"] = "framework-arduino-openwch-ch32"
         return super().configure_default_packages(variables, targets)
 
     def _add_default_debug_tools(self, board):

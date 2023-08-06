@@ -32,13 +32,20 @@ env = DefaultEnvironment()
 mcu = env.BoardConfig().get("build.mcu")
 core = env.BoardConfig().get("build.core", "")
 
+# https://github.com/AlexanderMandera/arduino-wch32v003
 if core == "ch32v003":
     build_script = join(
         env.PioPlatform().get_package_dir("framework-arduinoch32v003"),
         "tools", "platformio-build.py")
+# https://github.com/Community-PIO-CH32V/ArduinoCore-CH32V
 elif core == "ch32v":
     build_script = join(
         env.PioPlatform().get_package_dir("framework-arduinoch32v"),
+        "tools", "platformio-build.py")
+# https://github.com/openwch/arduino_core_ch32
+elif core == "openwch":
+    build_script = join(
+        env.PioPlatform().get_package_dir("framework-arduino-openwch-ch32"),
         "tools", "platformio-build.py")
 else:
     sys.stderr.write("Error: Don't know which Arduino core to use for %s!\n" % mcu)

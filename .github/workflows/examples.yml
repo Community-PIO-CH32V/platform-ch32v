@@ -10,6 +10,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         example:
           - "examples/adc-cpu-temp-none-os"
+          - "examples/blinky-arduino"
           - "examples/blinky-arduino-ch32v003"
           - "examples/blinky-arduino-ch32v307"
           - "examples/blinky-none-os"
