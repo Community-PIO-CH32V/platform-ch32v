@@ -53,7 +53,14 @@
       "homepage": "https://github.com/OpenAtomFoundation/TencentOS-tiny",
       "title": "TencentOS Tiny"
     },
-    "arduino": {
+    "arduino-openwch": {
+      "package": "framework-arduino-openwch-ch32",
+      "script": "builder/frameworks/arduino.py",
+      "description": "Arduino Wiring-based Framework allows writing cross-platform software to control devices attached to a wide range of Arduino boards to create all kinds of creative coding, interactive objects, spaces or physical experiences",
+      "homepage": "http://arduino.cc/en/Reference/HomePage",
+      "title": "Arduino"
+    },
+    "arduino-ch32v003": {
       "package": "framework-arduinoch32v003",
       "script": "builder/frameworks/arduino.py",
       "description": "Arduino Wiring-based Framework allows writing cross-platform software to control devices attached to a wide range of Arduino boards to create all kinds of creative coding, interactive objects, spaces or physical experiences",
@@ -108,7 +115,7 @@
       "type": "framework",
       "optional": true,
       "owner": "platformio",
-      "version": "https://github.com/Community-PIO-CH32V/arduino_core_ch32.git"
+      "version": "https://github.com/Community-PIO-CH32V/arduino_core_ch32"
     },
     "toolchain-riscv": {
       "type": "toolchain",

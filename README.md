@@ -42,6 +42,7 @@ Please visit https://pio-ch32v.readthedocs.io/ for the most recent documention.
     - [x] None OS ("Simple Peripheral Library" / native SDK)
     - [ ] Arduino
       - [x] for CH32V003 ([thanks to arduino-wch32v003](https://github.com/AlexanderMandera/arduino-wch32v003))
+      - [x] for CH32V203 ([thanks to arduino_core_ch3](https://github.com/openwch/arduino_core_ch32))
       - [ ] for all else
     - [x] FreeRTOS
     - [x] (Huawei) Harmony LiteOS

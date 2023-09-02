@@ -25,7 +25,8 @@
     "freertos",
     "harmony-liteos",
     "rt-thread",
-    "tencent-os"
+    "tencent-os",
+    "arduino-openwch"
   ],
   "name": "Generic CH32V203C8U6",
   "upload": {

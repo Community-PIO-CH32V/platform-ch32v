@@ -11,7 +11,14 @@
     "mabi": "ilp32",
     "march": "rv32imacxw",
     "mcu": "ch32v203c6t6",
-    "series": "ch32v203"
+    "core": "openwch",
+    "series": "ch32v203",
+    "variant":"CH32V20x/CH32V203C6",
+    "arduino":{
+      "openwch":{
+        "variant_h":"variant_CH32V203C6.h"
+      }
+    }
   },
   "debug": {
     "onboard_tools": [
@@ -25,7 +32,8 @@
     "freertos",
     "harmony-liteos",
     "rt-thread",
-    "tencent-os"
+    "tencent-os",
+    "arduino-openwch"
   ],
   "name": "Generic CH32V203C6T6",
   "upload": {

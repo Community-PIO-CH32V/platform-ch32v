@@ -30,7 +30,7 @@
   },
   "frameworks": [
     "noneos-sdk",
-    "arduino"
+    "arduino-ch32v003"
   ],
   "name": "CH32V003F4P6-EVT-R0",
   "upload": {

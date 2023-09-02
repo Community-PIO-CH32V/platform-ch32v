@@ -24,7 +24,7 @@
   },
   "frameworks": [
     "noneos-sdk",
-    "arduino"
+    "arduino-ch32v003"
   ],
   "name": "Generic CH32V003J4M6",
   "upload": {
