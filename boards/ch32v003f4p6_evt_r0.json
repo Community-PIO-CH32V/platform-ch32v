@@ -19,7 +19,7 @@
     "mcu": "ch32v003f4p6",
     "series": "ch32v003",
     "core": "ch32v003",
-    "variant": "WCH32V003"
+    "variant": "CH32V003"
   },
   "debug": {
     "onboard_tools": [
