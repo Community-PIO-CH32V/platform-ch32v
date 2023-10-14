@@ -6,7 +6,10 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
 # convert MCU name (e.g. "ch32v307") to series (e.g. "ch32v30x")
-chip_series: str = board.get("build.series", "")[0:-1].lower() + "x"
+if board.get("build.series", "") in ("ch32x035"):
+    chip_series: str = board.get("build.series", "")
+else:
+    chip_series = board.get("build.series", "")[0:-1].lower() + "x"
 # import default build settings
 env.SConscript("_bare.py")
 
@@ -69,7 +72,8 @@ def get_startup_filename(board):
         "CH32V20x_D8": "startup_ch32v20x_D8.S",
         "CH32V20x_D8W": "startup_ch32v20x_D8W.S",
         "CH32V30x_D8": "startup_ch32v30x_D8.S",
-        "CH32V30x_D8C": "startup_ch32v30x_D8C.S"
+        "CH32V30x_D8C": "startup_ch32v30x_D8C.S",
+        "CH32X035": "startup_ch32x035.S",
     }
     startup_file = None
     for k, v in class_to_startup.items():
