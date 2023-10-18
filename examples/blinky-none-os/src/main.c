@@ -6,6 +6,8 @@
 #include <ch32v20x.h>
 #elif defined(CH32V30X)
 #include <ch32v30x.h>
+#elif defined (CH32X035)
+#include <ch32x035.h>
 #endif
 #include <debug.h>
 
