@@ -31,6 +31,7 @@ Please visit https://pio-ch32v.readthedocs.io/ for the most recent documention.
     - [x] CH32V303 (QingKe V4F)
     - [x] CH32V305 (QingKe V4F)
     - [x] CH32V307 (QingKe V4F)
+    - [x] CH32X035 (QingKe V4C)
     - [x] CH56x (QingKe V3A)
     - [x] CH57x (QingKe V3A)
     - [x] CH58x (QingKe V4A)
@@ -38,6 +39,7 @@ Please visit https://pio-ch32v.readthedocs.io/ for the most recent documention.
     - [x] CH32V003F4P6-EVT-R0 (official by W.CH)
     - [x] CH32V203C8T6-EVT-R0 (official by W.CH)
     - [x] CH32V307 EVT (by SCDZ, close to official W.CH board)
+    - [x] CH32X035C8T6-EVT-R0, CH32X035G8U6-EVT-R0, CH32X035F8U6-EVT-R0  (official by W.CH)
 - frameworks
     - [x] None OS ("Simple Peripheral Library" / native SDK)
     - [ ] Arduino

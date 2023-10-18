@@ -1,6 +1,6 @@
 {
   "name": "ch32v",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "WCH CH32V",
   "description": "CH32V series are industrial-grade general-purpose microcontrollers designed based on QingKe 32-bit RISC-V.",
   "homepage": "https://www.wch.cn/",

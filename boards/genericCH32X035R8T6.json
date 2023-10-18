@@ -1,0 +1,39 @@
+{
+  "build": {
+    "f_cpu": "144000000L",
+    "extra_flags": "-DCH32X035G6 -DCH32X035",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imacxw",
+    "mcu": "ch32x035r8t6",
+    "series": "ch32x035"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32X035.svd"
+  },
+  "frameworks": [
+    "noneos-sdk"
+  ],
+  "name": "Generic CH32X035R8T6",
+  "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 63488,
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp"
+    ],
+    "protocol": "wch-link"
+  },
+  "url": "http://www.wch-ic.com/products/CH32X035.html",
+  "vendor": "W.CH"
+}
