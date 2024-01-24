@@ -1,7 +1,8 @@
 {
   "build": {
-    "f_cpu": "144000000L",
+    "core": "ch32v",
     "extra_flags": "-DCH32V307WC -DCH32V30X -DCH32V307 -DCH32V30x_D8C",
+    "f_cpu": "144000000L",
     "hwids": [
       [
         "0x1A86",
@@ -12,7 +13,6 @@
     "march": "rv32imacxw",
     "mcu": "ch32v307wcu6",
     "series": "ch32v307",
-    "core": "ch32v",
     "variant": "ch32v307_evt"
   },
   "debug": {
@@ -34,12 +34,12 @@
   "upload": {
     "maximum_ram_size": 65536,
     "maximum_size": 262144,
+    "protocol": "wch-link",
     "protocols": [
       "wch-link",
       "minichlink",
       "isp"
-    ],
-    "protocol": "wch-link"
+    ]
   },
   "url": "http://www.wch-ic.com/products/CH32V307.html",
   "vendor": "W.CH"

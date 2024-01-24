@@ -1,7 +1,7 @@
 {
   "build": {
-    "f_cpu": "144000000L",
     "extra_flags": "-DCH32V208CB -DCH32V20X -DCH32V208 -DCH32V20x_D8W",
+    "f_cpu": "144000000L",
     "hwids": [
       [
         "0x1A86",
@@ -31,12 +31,12 @@
   "upload": {
     "maximum_ram_size": 65536,
     "maximum_size": 131072,
+    "protocol": "wch-link",
     "protocols": [
       "wch-link",
       "minichlink",
       "isp"
-    ],
-    "protocol": "wch-link"
+    ]
   },
   "url": "http://www.wch-ic.com/products/CH32V208.html",
   "vendor": "W.CH"

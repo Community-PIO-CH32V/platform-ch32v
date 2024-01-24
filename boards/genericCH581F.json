@@ -1,7 +1,7 @@
 {
   "build": {
-    "f_cpu": "20000000L",
     "extra_flags": "-DCH58 -DCH58X -DCH581",
+    "f_cpu": "20000000L",
     "hwids": [
       [
         "0x1A86",
@@ -29,12 +29,12 @@
   "upload": {
     "maximum_ram_size": 32768,
     "maximum_size": 229376,
+    "protocol": "wch-link",
     "protocols": [
       "wch-link",
       "minichlink",
       "isp"
-    ],
-    "protocol": "wch-link"
+    ]
   },
   "url": "http://www.wch-ic.com/products/CH58X.html",
   "vendor": "W.CH"

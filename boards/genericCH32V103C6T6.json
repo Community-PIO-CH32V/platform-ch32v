@@ -1,7 +1,7 @@
 {
   "build": {
-    "f_cpu": "72000000L",
     "extra_flags": "-DCH32V103C6 -DCH32V10X -DCH32V103",
+    "f_cpu": "72000000L",
     "hwids": [
       [
         "0x1A86",
@@ -31,12 +31,12 @@
   "upload": {
     "maximum_ram_size": 10240,
     "maximum_size": 32768,
+    "protocol": "wch-link",
     "protocols": [
       "wch-link",
       "minichlink",
       "isp"
-    ],
-    "protocol": "wch-link"
+    ]
   },
   "url": "http://www.wch-ic.com/products/CH32V103.html",
   "vendor": "W.CH"

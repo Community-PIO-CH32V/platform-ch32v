@@ -1,7 +1,7 @@
 {
   "build": {
-    "f_cpu": "120000000L",
     "extra_flags": "-DCH56 -DCH56X -DCH569",
+    "f_cpu": "120000000L",
     "hwids": [
       [
         "0x1A86",
@@ -27,12 +27,12 @@
   "upload": {
     "maximum_ram_size": 49152,
     "maximum_size": 491520,
+    "protocol": "wch-link",
     "protocols": [
       "wch-link",
       "minichlink",
       "isp"
-    ],
-    "protocol": "wch-link"
+    ]
   },
   "url": "http://www.wch-ic.com/products/CH56X.html",
   "vendor": "W.CH"

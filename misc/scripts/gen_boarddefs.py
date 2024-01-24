@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 from pathlib import Path
 import json
@@ -37,7 +37,8 @@ class ChipInfo:
                 name_upper.startswith("CH32V003"),
                 name_upper.startswith("CH56"),
                 name_upper.startswith("CH57"),
-                name_upper.startswith("CH58")
+                name_upper.startswith("CH58"),
+                name_upper.startswith("CH32X03")
                 ]):
             return None
         print("ERROR: UNKNOWN CHIP / NO CLASSIFICATION KNOWN FOR " + self.name)
@@ -62,6 +63,8 @@ class ChipInfo:
         # applies to ch56x, ch57x, ch58x
         elif name_lower.startswith("ch5"):
             return ("rv32imac", "ilp32")
+        elif name_lower.startswith("ch32x03"):
+            return ("rv32imacxw", "ilp32")
         else:
             print("ERROR: UNKNOWN CHIP ABI/ARCH FOR " + self.name)
             exit(-1)
@@ -129,6 +132,14 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH32V307RCT6", 256, 64, 144, "LQFP64M"),
     ChipInfo("CH32V307WCU6", 256, 64, 144, "QFN64X8"),
     ChipInfo("CH32V307VCT6", 256, 64, 144, "LQFP100"),
+    # CH32X035/3
+    ChipInfo("CH32X035R8T6", 62, 20, 48, "LQFP64M"),
+    ChipInfo("CH32X035C8T6", 62, 20, 48, "LQFP48"),
+    ChipInfo("CH32X035G8U6", 62, 20, 48, "QFN28"),
+    ChipInfo("CH32X035G8R6", 62, 20, 48, "QSOP28"),
+    ChipInfo("CH32X035F8U6", 62, 20, 48, "QFN20"),
+    ChipInfo("CH32X035F7P6", 62, 20, 48, "TSSOP20"),
+    ChipInfo("CH32X033F8P6", 62, 20, 48, "TSSOP20"),
 ]
 
 def get_chip(name: str) -> Optional[ChipInfo]:
@@ -144,11 +155,18 @@ class KnownBoard:
     chip: ChipInfo
     url: str
     vendor: str
-    add_info: Optional[Dict[str, Any]] = None
+    add_info: Optional[Dict[str, Any]] = field(default_factory=dict)
 
 known_boards: List[KnownBoard] = [
     KnownBoard("ch32v003f4p6_evt_r0", "CH32V003F4P6-EVT-R0", get_chip("CH32V003F4P6"),
-               "https://www.aliexpress.com/item/1005004895791296.html", "W.CH"),
+               "https://www.aliexpress.com/item/1005004895791296.html", "W.CH", {
+                       "build.arduino": { 
+                            "openwch": { 
+                                "variant": "CH32V00x/CH32V003F4", 
+                                "variant_h": "variant_CH32V003F4.h"
+                            }
+                        }
+                   }),
     KnownBoard("ch32v203c8t6_evt_r0", "CH32V203C8T6-EVT-R0", get_chip("CH32V203C8T6"),
                "https://www.aliexpress.com/item/1005004895791296.html", "W.CH"),
     KnownBoard("ch32v307_evt", "CH32V307 EVT", get_chip("CH32V307VCT6"),
@@ -199,7 +217,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
     # every series but CH32V003 can do FreeRTOS (if RAM is big enough)
     # same with Harmony LiteOS, RT-Thread and TencentOS
     chip_l = info.name.lower()
-    if not chip_l.startswith("ch32v00") and not chip_l.startswith("ch5"):
+    if not chip_l.startswith("ch32v00") and not chip_l.startswith("ch5") and not chip_l.startswith("ch32x03"):
         base_json["frameworks"].append("freertos")
         base_json["frameworks"].append("harmony-liteos")
         base_json["frameworks"].append("rt-thread")
@@ -210,7 +228,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
     if chip_l.startswith("ch32v003"):
         base_json["frameworks"].append("arduino")
         base_json["build"]["core"] = "ch32v003"
-        base_json["build"]["variant"] = "WCH32V003"
+        base_json["build"]["variant"] = "CH32V003"
         base_json["build"]["extra_flags"] += "-DARDUINO_ARCH_WCH32V003"
     if chip_l.startswith("ch32v307"):
         base_json["frameworks"].append("arduino")
@@ -246,7 +264,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
             if k.count(".") == 1:
                 k1, k2 = k.split(".")
                 base_json[k1][k2] = v
-    as_str = json.dumps(base_json, indent=2)
+    as_str = json.dumps(base_json, indent=2, sort_keys=True)
     print("DEFINITION FOR %s:\n%s" % (board_name, as_str))
     try:
         Path(output_path).write_text(as_str, encoding='utf-8')
@@ -266,8 +284,9 @@ def main():
     # all known boards now
     for known_board in known_boards:
         output_path = base_path / f"{known_board.file_name}.json"
-        create_board_json(known_board.chip, known_board.board_name, output_path, {
-                          "url": known_board.url, "vendor": known_board.vendor})
+        patch_dict = {"url": known_board.url, "vendor": known_board.vendor}
+        patch_dict.update(known_board.add_info)
+        create_board_json(known_board.chip, known_board.board_name, output_path, patch_dict)
     pass
 
 

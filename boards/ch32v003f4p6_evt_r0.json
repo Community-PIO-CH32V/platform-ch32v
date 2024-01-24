@@ -6,8 +6,9 @@
         "variant_h": "variant_CH32V003F4.h"
       }
     },
-    "f_cpu": "48000000L",
+    "core": "ch32v003",
     "extra_flags": "-DCH32V003F4 -DCH32V00X -DCH32V003",
+    "f_cpu": "48000000L",
     "hwids": [
       [
         "0x1A86",
@@ -18,7 +19,6 @@
     "march": "rv32ecxw",
     "mcu": "ch32v003f4p6",
     "series": "ch32v003",
-    "core": "ch32v003",
     "variant": "CH32V003"
   },
   "debug": {
@@ -36,12 +36,12 @@
   "upload": {
     "maximum_ram_size": 2048,
     "maximum_size": 16384,
+    "protocol": "wch-link",
     "protocols": [
       "wch-link",
       "minichlink",
       "isp"
-    ],
-    "protocol": "wch-link"
+    ]
   },
   "url": "https://www.aliexpress.com/item/1005004895791296.html",
   "vendor": "W.CH"
