@@ -28,6 +28,7 @@ jobs:
           - "examples/usb-cdc-wch32v307-none-os"
           - "examples/ble-hid-ch32v208"
           - "examples/ble-usb-cdc-ch5xx"
+          - "examples/usb-pd-ch32x035"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
