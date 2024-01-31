@@ -173,7 +173,15 @@ known_boards: List[KnownBoard] = [
                "https://www.aliexpress.com/item/1005004511264952.html", "SCDZ")
 ]
 
+def get_arduino_info(info:ChipInfo, board_name: str) -> Optional[Tuple[str, str]]:
+    if info.name.lower().startswith("ch32x035g8u"):
+        return ("openwch", "CH32X035G8U")
+    return None
+
 def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_info: Optional[Dict[str, Any]] = None, addtl_extra_flags:List[str] = None):
+    # simplifies things later
+    if patch_info is None:
+        patch_info = dict()
     arch, abi = info.get_riscv_arch_and_abi()
     base_json = {
         "build": {
@@ -235,6 +243,19 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         base_json["build"]["core"] = "ch32v"
         base_json["build"]["variant"] = "ch32v307_evt"
         base_json["build"]["extra_flags"] += "-DARDUINO_ARCH_CH32V"
+    if chip_l.startswith("ch32x035g8u"):
+        base_json["frameworks"].append("arduino")
+        base_json["build"]["core"] = "openwch"
+        patch_info.update( {
+            "build.arduino": { 
+                "openwch": { 
+                    "variant": "CH32X035/CH32X035G8U", 
+                    "variant_h": "variant_CH32X035G8U.h"
+                }
+            }   
+        })
+        base_json["build"]["extra_flags"] += "-DARDUINO_ARCH_CH32V"
+
     # add some classification macros
     extra_flags = [
         f"-D{info.chip_without_package()}"
@@ -255,7 +276,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
     if addtl_extra_flags is not None:
         extra_flags.extend(addtl_extra_flags)
     base_json["build"]["extra_flags"] = " ".join(extra_flags)
-    if patch_info is not None:
+    if patch_info is not None and len(patch_info.keys()) > 0:
         for k, v in patch_info.items():
             # upmost level
             if k.count(".") == 0:
