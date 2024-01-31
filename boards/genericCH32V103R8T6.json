@@ -1,6 +1,13 @@
 {
   "build": {
-    "extra_flags": "-DCH32V103R8 -DCH32V10X -DCH32V103",
+    "arduino": {
+      "openwch": {
+        "variant": "CH32V10x/CH32V103R8T6",
+        "variant_h": "variant_CH32V103R8T6.h"
+      }
+    },
+    "core": "openwch",
+    "extra_flags": "-DCH32V10x_3V3 -DCH32V103R8 -DCH32V10X -DCH32V103",
     "f_cpu": "72000000L",
     "hwids": [
       [
@@ -25,7 +32,8 @@
     "freertos",
     "harmony-liteos",
     "rt-thread",
-    "tencent-os"
+    "tencent-os",
+    "arduino"
   ],
   "name": "Generic CH32V103R8T6",
   "upload": {

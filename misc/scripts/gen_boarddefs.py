@@ -237,12 +237,10 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         base_json["frameworks"].append("arduino")
         base_json["build"]["core"] = "ch32v003"
         base_json["build"]["variant"] = "CH32V003"
-        base_json["build"]["extra_flags"] += "-DARDUINO_ARCH_WCH32V003"
     if chip_l.startswith("ch32v307"):
         base_json["frameworks"].append("arduino")
         base_json["build"]["core"] = "ch32v"
         base_json["build"]["variant"] = "ch32v307_evt"
-        base_json["build"]["extra_flags"] += "-DARDUINO_ARCH_CH32V"
     if chip_l.startswith("ch32x035g8u"):
         base_json["frameworks"].append("arduino")
         base_json["build"]["core"] = "openwch"
@@ -254,7 +252,31 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
                 }
             }   
         })
-        base_json["build"]["extra_flags"] += "-DARDUINO_ARCH_CH32V"
+    if chip_l.startswith("ch32v103r8t6"):
+        base_json["frameworks"].append("arduino")
+        base_json["build"]["core"] = "openwch"
+        patch_info.update( {
+            "build.arduino": { 
+                "openwch": { 
+                    "variant": "CH32V10x/CH32V103R8T6", 
+                    "variant_h": "variant_CH32V103R8T6.h"
+                }
+            }   
+        })
+        # TODO: generalize CH32V10x_3V3 vs CH32V10x_5V
+        base_json["build"]["extra_flags"] += "-DCH32V10x_3V3"
+    if chip_l.startswith("ch32v307vct6"):
+        base_json["frameworks"].append("arduino")
+        base_json["build"]["core"] = "openwch"
+        patch_info.update( {
+            "build.arduino": { 
+                "openwch": { 
+                    "variant": "CH32V30x/CH32V307VCT6", 
+                    "variant_h": "variant_CH32V307VCT6.h"
+                }
+            }   
+        })
+        base_json["build"]["extra_flags"] += "-DCH32V30x_C"
 
     # add some classification macros
     extra_flags = [
@@ -275,6 +297,8 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         extra_flags += ["-D" + classification_macro]
     if addtl_extra_flags is not None:
         extra_flags.extend(addtl_extra_flags)
+    if "extra_flags" in base_json["build"] and len(base_json["build"]["extra_flags"]) > 0:
+        extra_flags.insert(0, base_json["build"]["extra_flags"])
     base_json["build"]["extra_flags"] = " ".join(extra_flags)
     if patch_info is not None and len(patch_info.keys()) > 0:
         for k, v in patch_info.items():

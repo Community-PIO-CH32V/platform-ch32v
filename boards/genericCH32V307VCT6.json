@@ -1,7 +1,13 @@
 {
   "build": {
-    "core": "ch32v",
-    "extra_flags": "-DCH32V307VC -DCH32V30X -DCH32V307 -DCH32V30x_D8C",
+    "arduino": {
+      "openwch": {
+        "variant": "CH32V30x/CH32V307VCT6",
+        "variant_h": "variant_CH32V307VCT6.h"
+      }
+    },
+    "core": "openwch",
+    "extra_flags": "-DCH32V30x_C -DCH32V307VC -DCH32V30X -DCH32V307 -DCH32V30x_D8C",
     "f_cpu": "144000000L",
     "hwids": [
       [
@@ -28,6 +34,7 @@
     "harmony-liteos",
     "rt-thread",
     "tencent-os",
+    "arduino",
     "arduino"
   ],
   "name": "Generic CH32V307VCT6",

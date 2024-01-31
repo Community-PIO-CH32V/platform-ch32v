@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-/* PC3 as blinky LED, change here as needed */
-#define LED PC3
+/* PA1 as blinky LED, change here as needed */
+#define LED PA1
 void setup() {
   pinMode(LED, OUTPUT);
 }
