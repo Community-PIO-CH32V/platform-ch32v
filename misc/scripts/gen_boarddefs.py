@@ -170,7 +170,13 @@ known_boards: List[KnownBoard] = [
     KnownBoard("ch32v203c8t6_evt_r0", "CH32V203C8T6-EVT-R0", get_chip("CH32V203C8T6"),
                "https://www.aliexpress.com/item/1005004895791296.html", "W.CH"),
     KnownBoard("ch32v307_evt", "CH32V307 EVT", get_chip("CH32V307VCT6"),
-               "https://www.aliexpress.com/item/1005004511264952.html", "SCDZ")
+               "https://www.aliexpress.com/item/1005004511264952.html", "SCDZ"),
+    KnownBoard("ch32x035c8t6_evt_r0", "CH32X035C8T6-EVT-R0", get_chip("CH32X035C8T6"), 
+               "https://www.aliexpress.com/item/1005005793197807.html", "W.CH"),
+    KnownBoard("ch32x035f8u6_evt_r0", "CH32X035F8U6-EVT-R0", get_chip("CH32X035F8U6"), 
+               "https://www.aliexpress.com/item/1005005793197807.html", "W.CH"),
+    KnownBoard("ch32x035g8u6_evt_r0", "CH32X035G8U6-EVT-R0", get_chip("CH32X035G8U6"), 
+               "https://www.aliexpress.com/item/1005005793197807.html", "W.CH"),
 ]
 
 # Describe known OpenWCH Arduino variants so that we can auto-add them

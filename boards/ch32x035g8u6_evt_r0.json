@@ -1,7 +1,14 @@
 {
   "build": {
-    "f_cpu": "144000000L",
-    "extra_flags": "-DCH32X035G6 -DCH32X035",
+    "arduino": {
+      "openwch": {
+        "variant": "CH32X035/CH32X035G8U",
+        "variant_h": "variant_CH32X035G8U.h"
+      }
+    },
+    "core": "openwch",
+    "extra_flags": "-DCH32X035G8 -DCH32X03X -DCH32X035",
+    "f_cpu": "48000000L",
     "hwids": [
       [
         "0x1A86",
@@ -18,22 +25,23 @@
       "wch-link"
     ],
     "openocd_config": "wch-riscv.cfg",
-    "svd_path": "CH32X035.svd"
+    "svd_path": "CH32X035xx.svd"
   },
   "frameworks": [
-    "noneos-sdk"
+    "noneos-sdk",
+    "arduino"
   ],
   "name": "CH32X035G8U6-EVT-R0",
   "upload": {
     "maximum_ram_size": 20480,
     "maximum_size": 63488,
+    "protocol": "wch-link",
     "protocols": [
       "wch-link",
       "minichlink",
       "isp"
-    ],
-    "protocol": "wch-link"
+    ]
   },
-  "url": "http://www.wch-ic.com/products/CH32X035.html",
+  "url": "https://www.aliexpress.com/item/1005005793197807.html",
   "vendor": "W.CH"
 }
