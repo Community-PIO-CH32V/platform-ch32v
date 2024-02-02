@@ -72,7 +72,11 @@ void EXTI0_INT_INIT(void)
     EXTI_InitStructure.EXTI_LineCmd = ENABLE;
     EXTI_Init(&EXTI_InitStructure);
 
+#if defined(CH32X035) || defined(CH32X033)
+    NVIC_InitStructure.NVIC_IRQChannel = EXTI7_0_IRQn;
+#else
     NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
+#endif
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 4;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;

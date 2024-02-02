@@ -49,6 +49,8 @@ extern "C" {
 #include <ch32v20x.h>
 #elif defined(CH32V30X)
 #include <ch32v30x.h>
+#elif defined(CH32X035) || defined(CH32X033)
+#include <ch32x035.h>
 #endif
 extern uint32_t SystemCoreClock;
 /*=============================================================================
