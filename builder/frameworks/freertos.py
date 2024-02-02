@@ -5,7 +5,11 @@ from SCons.Script import DefaultEnvironment
 env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
-chip_series: str = board.get("build.series", "")[0:-1].lower() + "x"
+mcu = env.BoardConfig().get("build.mcu")
+if mcu.startswith("ch32x035"):
+    chip_series: str = board.get("build.series", "")
+else:
+    chip_series: str = board.get("build.series", "")[0:-1] + "x"
 
 if chip_series.startswith("ch5"):
     # we need to make use of that special startup file which redirects all interrupts speciall

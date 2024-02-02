@@ -21,7 +21,8 @@
     "svd_path": "CH32X035xx.svd"
   },
   "frameworks": [
-    "noneos-sdk"
+    "noneos-sdk",
+    "freertos"
   ],
   "name": "CH32X035C8T6-EVT-R0",
   "upload": {
