@@ -76,6 +76,11 @@ class ChipInfo:
     def exact_series(self) -> str:
         if self.name.lower().startswith("ch5"):
             return self.name[0:len("ch58")].upper() + "X"
+        # Hack: Even ch32x033 is recognized as x035 series.
+        # This simplifies folder handling for frameworks like
+        # FreeRTOS.
+        if self.name.lower().startswith("ch32x03"):
+            return "ch32x035"
         return self.name[0:len("ch32vxxx")]
 
 chip_db: List[ChipInfo] = [
