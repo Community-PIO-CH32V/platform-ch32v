@@ -38,6 +38,7 @@ class ChipInfo:
                 name_upper.startswith("CH56"),
                 name_upper.startswith("CH57"),
                 name_upper.startswith("CH58"),
+                name_upper.startswith("CH59"),
                 name_upper.startswith("CH32X03")
                 ]):
             return None
@@ -100,6 +101,12 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH582M", 448+32, 32, 20, "QFN48"),
     ChipInfo("CH582F", 448+32, 32, 20, "QFN28"),
     ChipInfo("CH581F", 192+32, 32, 20, "QFN28"),
+    # CH59x (has +32K data flash, +24K bootloader)
+    ChipInfo("CH592X", 448+24+32, 24+2, 60, "QFN32"),
+    ChipInfo("CH592F", 448+24+32, 24+2, 60, "QFN28"),
+    ChipInfo("CH591F", 192+24+32, 24+2, 60, "QFN28"),
+    ChipInfo("CH591D", 192+24+32, 24+2, 60, "QFN20"),
+    ChipInfo("CH591R", 192+24+32, 24+2, 60, "TSSOP16"),
     # CH32V003
     ChipInfo("CH32V003F4P6", 16, 2, 48, "TSSOP20"),
     ChipInfo("CH32V003F4U6", 16, 2, 48, "QFN20"),

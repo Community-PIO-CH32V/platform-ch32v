@@ -1,0 +1,39 @@
+{
+  "build": {
+    "extra_flags": "-DCH59 -DCH59X -DCH591",
+    "f_cpu": "60000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imac",
+    "mcu": "ch591r",
+    "series": "ch59x"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH59Xxx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk"
+  ],
+  "name": "Generic CH591R",
+  "upload": {
+    "maximum_ram_size": 26624,
+    "maximum_size": 253952,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp"
+    ]
+  },
+  "url": "http://www.wch-ic.com/products/CH59X.html",
+  "vendor": "W.CH"
+}

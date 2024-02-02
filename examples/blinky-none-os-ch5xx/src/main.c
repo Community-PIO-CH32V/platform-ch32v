@@ -4,6 +4,8 @@
 #include <CH57x_common.h>
 #elif defined(CH58X)
 #include <CH58x_common.h>
+#elif defined(CH59X)
+#include <CH59x_common.h>
 #endif
 
 /* code hardcoded for GPIO bank A at the moment */
