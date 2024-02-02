@@ -34,7 +34,6 @@
     "harmony-liteos",
     "rt-thread",
     "tencent-os",
-    "arduino",
     "arduino"
   ],
   "name": "Generic CH32V307VCT6",

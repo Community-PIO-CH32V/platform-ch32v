@@ -34,7 +34,6 @@
     "harmony-liteos",
     "rt-thread",
     "tencent-os",
-    "arduino",
     "arduino"
   ],
   "name": "CH32V307 EVT",

@@ -1,6 +1,12 @@
 {
   "build": {
-    "core": "ch32v003",
+    "arduino": {
+      "openwch": {
+        "variant": "CH32V00x/CH32V003F4",
+        "variant_h": "variant_CH32V003F4.h"
+      }
+    },
+    "core": "openwch",
     "extra_flags": "-DCH32V003F4 -DCH32V00X -DCH32V003",
     "f_cpu": "48000000L",
     "hwids": [

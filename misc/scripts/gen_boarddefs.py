@@ -173,10 +173,46 @@ known_boards: List[KnownBoard] = [
                "https://www.aliexpress.com/item/1005004511264952.html", "SCDZ")
 ]
 
-def get_arduino_info(info:ChipInfo, board_name: str) -> Optional[Tuple[str, str]]:
-    if info.name.lower().startswith("ch32x035g8u"):
-        return ("openwch", "CH32X035G8U")
-    return None
+# Describe known OpenWCH Arduino variants so that we can auto-add them
+@dataclass
+class OpenWCHVariant:
+    mcu: str
+    variant_folder: str
+    variant_h: str
+    extra_macros: Optional[str] = None
+known_openwchcore_variants: List[OpenWCHVariant] = [
+    OpenWCHVariant("ch32v003f4", "CH32V00x/CH32V003F4", "variant_CH32V003F4.h"),
+    OpenWCHVariant("ch32v103r8t6", "CH32V10x/CH32V103R8T6", "variant_CH32V103R8T6.h", "-DCH32V10x_3V3"),
+    OpenWCHVariant("ch32v203c6", "CH32V20x/CH32V203C6", "variant_CH32V203C6.h"),
+    OpenWCHVariant("ch32v203c8", "CH32V20x/CH32V203C8", "variant_CH32V203C8.h"),
+    OpenWCHVariant("ch32v203g8", "CH32V20x/CH32V203G8", "variant_CH32V203G8.h"),
+    OpenWCHVariant("ch32v307vct6", "CH32V30x/CH32V307VCT6", "variant_CH32V307VCT6.h", "-DCH32V30x_C"),
+    OpenWCHVariant("ch32x035g8u", "CH32X035/CH32X035G8U", "variant_CH32X035G8U.h")
+]
+
+def add_openwch_arduino_info(base_json: dict[str, Any], patch_info: dict[str, Any], info:ChipInfo, board_name: str):
+    chip_l = info.name.lower()
+    matching_variants = list(filter(lambda candidate: chip_l.startswith(candidate.mcu), known_openwchcore_variants))
+    if len(matching_variants) == 0:
+        return 
+    if len(matching_variants) > 1:
+        print("Warning: Multiple matches for chip")
+        return
+    # only one match now
+    matching_variant = matching_variants[0]
+    if "arduino" not in base_json["frameworks"]:
+        base_json["frameworks"].append("arduino")
+    base_json["build"]["core"] = "openwch"
+    patch_info.update( {
+        "build.arduino": { 
+            "openwch": { 
+                "variant": matching_variant.variant_folder, 
+                "variant_h": matching_variant.variant_h
+            }
+        }   
+    })
+    if matching_variant.extra_macros is not None:
+        base_json["build"]["extra_flags"] += matching_variant.extra_macros
 
 def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_info: Optional[Dict[str, Any]] = None, addtl_extra_flags:List[str] = None):
     # simplifies things later
@@ -241,42 +277,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         base_json["frameworks"].append("arduino")
         base_json["build"]["core"] = "ch32v"
         base_json["build"]["variant"] = "ch32v307_evt"
-    if chip_l.startswith("ch32x035g8u"):
-        base_json["frameworks"].append("arduino")
-        base_json["build"]["core"] = "openwch"
-        patch_info.update( {
-            "build.arduino": { 
-                "openwch": { 
-                    "variant": "CH32X035/CH32X035G8U", 
-                    "variant_h": "variant_CH32X035G8U.h"
-                }
-            }   
-        })
-    if chip_l.startswith("ch32v103r8t6"):
-        base_json["frameworks"].append("arduino")
-        base_json["build"]["core"] = "openwch"
-        patch_info.update( {
-            "build.arduino": { 
-                "openwch": { 
-                    "variant": "CH32V10x/CH32V103R8T6", 
-                    "variant_h": "variant_CH32V103R8T6.h"
-                }
-            }   
-        })
-        # TODO: generalize CH32V10x_3V3 vs CH32V10x_5V
-        base_json["build"]["extra_flags"] += "-DCH32V10x_3V3"
-    if chip_l.startswith("ch32v307vct6"):
-        base_json["frameworks"].append("arduino")
-        base_json["build"]["core"] = "openwch"
-        patch_info.update( {
-            "build.arduino": { 
-                "openwch": { 
-                    "variant": "CH32V30x/CH32V307VCT6", 
-                    "variant_h": "variant_CH32V307VCT6.h"
-                }
-            }   
-        })
-        base_json["build"]["extra_flags"] += "-DCH32V30x_C"
+    add_openwch_arduino_info(base_json, patch_info, info, board_name)
 
     # add some classification macros
     extra_flags = [
@@ -297,6 +298,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         extra_flags += ["-D" + classification_macro]
     if addtl_extra_flags is not None:
         extra_flags.extend(addtl_extra_flags)
+    # account for previous extra flags modifications
     if "extra_flags" in base_json["build"] and len(base_json["build"]["extra_flags"]) > 0:
         extra_flags.insert(0, base_json["build"]["extra_flags"])
     base_json["build"]["extra_flags"] = " ".join(extra_flags)
