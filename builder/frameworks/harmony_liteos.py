@@ -7,7 +7,7 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
 mcu = env.BoardConfig().get("build.mcu")
-if mcu.startswith("ch32x035"):
+if mcu.startswith("ch32x03"):
     chip_series: str = board.get("build.series", "")
 else:
     chip_series: str = board.get("build.series", "")[0:-1] + "x"

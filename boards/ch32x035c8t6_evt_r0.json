@@ -24,7 +24,8 @@
     "noneos-sdk",
     "freertos",
     "harmony-liteos",
-    "rt-thread"
+    "rt-thread",
+    "tencent-os"
   ],
   "name": "CH32X035C8T6-EVT-R0",
   "upload": {

@@ -272,7 +272,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
     # every series but CH32V003 can do FreeRTOS (if RAM is big enough)
     # same with Harmony LiteOS, RT-Thread and TencentOS
     chip_l = info.name.lower()
-    if not chip_l.startswith("ch32v00") and not chip_l.startswith("ch5") and not chip_l.startswith("ch32x03"):
+    if not chip_l.startswith("ch32v00") and not chip_l.startswith("ch5"):
         base_json["frameworks"].append("freertos")
         base_json["frameworks"].append("harmony-liteos")
         base_json["frameworks"].append("rt-thread")
@@ -288,10 +288,6 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         base_json["frameworks"].append("arduino")
         base_json["build"]["core"] = "ch32v"
         base_json["build"]["variant"] = "ch32v307_evt"
-    if chip_l.startswith("ch32x03"):
-        base_json["frameworks"].append("freertos")
-        base_json["frameworks"].append("harmony-liteos")
-        base_json["frameworks"].append("rt-thread")
     add_openwch_arduino_info(base_json, patch_info, info, board_name)
 
     # add some classification macros
