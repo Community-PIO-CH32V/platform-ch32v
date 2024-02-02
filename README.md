@@ -35,6 +35,7 @@ Please visit https://pio-ch32v.readthedocs.io/ for the most recent documention.
     - [x] CH56x (QingKe V3A)
     - [x] CH57x (QingKe V3A)
     - [x] CH58x (QingKe V4A)
+    - [x] CH59x (QingKe V4C)
 - development boards
     - [x] CH32V003F4P6-EVT-R0 (official by W.CH)
     - [x] CH32V203C8T6-EVT-R0 (official by W.CH)
@@ -44,6 +45,7 @@ Please visit https://pio-ch32v.readthedocs.io/ for the most recent documention.
     - [x] None OS ("Simple Peripheral Library" / native SDK)
     - [ ] Arduino
       - [x] for CH32V003 ([thanks to arduino-wch32v003](https://github.com/AlexanderMandera/arduino-wch32v003))
+      - [x] for CH32V003, CH32V10x, CH32V20x, CH32V30x, CH32X035 ([thanks to openwch/arduino_core_ch32](https://github.com/openwch/arduino_core_ch32/))
       - [ ] for all else
     - [x] FreeRTOS
     - [x] (Huawei) Harmony LiteOS
