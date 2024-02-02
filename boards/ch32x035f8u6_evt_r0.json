@@ -22,7 +22,8 @@
   },
   "frameworks": [
     "noneos-sdk",
-    "freertos"
+    "freertos",
+    "harmony-liteos"
   ],
   "name": "CH32X035F8U6-EVT-R0",
   "upload": {

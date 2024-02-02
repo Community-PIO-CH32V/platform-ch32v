@@ -6,7 +6,11 @@ from SCons.Script import DefaultEnvironment
 env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
-chip_series = board.get("build.mcu")[0:len("ch32vxx")] + "x"
+mcu = env.BoardConfig().get("build.mcu")
+if mcu.startswith("ch32x035"):
+    chip_series: str = board.get("build.series", "")
+else:
+    chip_series: str = board.get("build.series", "")[0:-1] + "x"
 
 # import NoneOS SDK settings
 env.SConscript("noneos_sdk.py")

@@ -290,6 +290,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         base_json["build"]["variant"] = "ch32v307_evt"
     if chip_l.startswith("ch32x03"):
         base_json["frameworks"].append("freertos")
+        base_json["frameworks"].append("harmony-liteos")
     add_openwch_arduino_info(base_json, patch_info, info, board_name)
 
     # add some classification macros
