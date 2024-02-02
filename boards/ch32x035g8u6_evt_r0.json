@@ -31,6 +31,7 @@
     "noneos-sdk",
     "freertos",
     "harmony-liteos",
+    "rt-thread",
     "arduino"
   ],
   "name": "CH32X035G8U6-EVT-R0",

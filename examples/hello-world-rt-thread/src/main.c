@@ -15,6 +15,8 @@
 #include <ch32v20x.h>
 #elif defined(CH32V30X)
 #include <ch32v30x.h>
+#elif defined(CH32X035) || defined(CH32X033)
+#include <ch32x035.h>
 #endif
 #include <rtthread.h>
 #include <rthw.h>
@@ -91,7 +93,7 @@ int led(void)
     rt_uint8_t count;
 
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
-    printf("led_SP:%08x\r\n",__get_SP());
+    printf("led_SP:%08x\r\n", (unsigned) __get_SP());
     for(count = 0 ; count < 10 ;count++)
     {
         rt_pin_write(LED0_PIN, PIN_LOW);

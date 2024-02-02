@@ -23,7 +23,8 @@
   "frameworks": [
     "noneos-sdk",
     "freertos",
-    "harmony-liteos"
+    "harmony-liteos",
+    "rt-thread"
   ],
   "name": "Generic CH32X033F8P6",
   "upload": {
