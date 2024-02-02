@@ -8,7 +8,7 @@ How to build PlatformIO based project
 
 ```shell
 # Change directory to example
-$ cd platform-ch32v/examples/ble-usb-cdc-ch5xx
+$ cd platform-ch32v/examples/ble-hid-ch59x
 
 # Build project
 $ pio run
@@ -17,7 +17,7 @@ $ pio run
 $ pio run --target upload
 
 # Upload firmware for the specific environment
-$ pio run -e genericCH582F --target upload
+$ pio run -e genericCH592F --target upload
 
 # Clean build files
 $ pio run --target clean

@@ -27,7 +27,8 @@ jobs:
           - "examples/baremetal-ch32v003"
           - "examples/usb-cdc-wch32v307-none-os"
           - "examples/ble-hid-ch32v208"
-          - "examples/ble-usb-cdc-ch5xx"
+          - "examples/ble-usb-cdc-ch58x"
+          - "examples/ble-hid-ch59x"
           - "examples/usb-pd-ch32x035"
     runs-on: ${{ matrix.os }}
     steps:
