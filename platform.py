@@ -35,13 +35,19 @@ class Ch32vPlatform(PlatformBase):
     def configure_default_packages(self, variables, targets):
         # until toolchain is not yet approved in PIO registry: redirect packages at will here
         # (temporary)
+        selected_frameworks = variables.get("pioframework", [])
+        gcc_branch = "#gcc12"
+        if "arduino" in selected_frameworks:
+            # we downgrade the GCC version to just 8 because with 12, there are build errors.
+            gcc_branch = ""
         if IS_LINUX:
-            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-linux.git#gcc12"
+            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-linux.git%s" % gcc_branch
         elif IS_MAC:
-            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-mac.git#gcc12"
+            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-mac.git" % gcc_branch
+        else:
+            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-windows.git" % gcc_branch
         if not variables.get("board"):
             return super().configure_default_packages(variables, targets)
-        selected_frameworks = variables.get("pioframework", [])
         # The FreeRTOS, Harmony LiteOS and RT-Thread package needs the 
         # NoneSDK as a base package
         if any([framework in selected_frameworks for framework in ("freertos", "harmony-liteos", "rt-thread", "tencent-os")]):
