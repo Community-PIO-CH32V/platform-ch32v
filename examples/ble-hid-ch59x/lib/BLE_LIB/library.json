@@ -5,6 +5,7 @@
       "flags": [
         "-L.",
         "-lCH59xBLE"
-      ]
+      ],
+      "libArchive": false
     }
   }
