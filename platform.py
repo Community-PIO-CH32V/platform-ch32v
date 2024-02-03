@@ -36,9 +36,9 @@ class Ch32vPlatform(PlatformBase):
         # until toolchain is not yet approved in PIO registry: redirect packages at will here
         # (temporary)
         if IS_LINUX:
-            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-linux.git"
+            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-linux.git#gcc12"
         elif IS_MAC:
-            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-mac.git"
+            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-mac.git#gcc12"
         if not variables.get("board"):
             return super().configure_default_packages(variables, targets)
         selected_frameworks = variables.get("pioframework", [])
@@ -136,13 +136,23 @@ class Ch32vPlatform(PlatformBase):
                             "target/%s.cfg" % debug.get("openocd_target"),
                         ]
                     )
+                # Ugly countermeasure. Usually this is "gdb_port pipe" but GCC12 has a bug
+                # that prevents it from starting OpenOCD in pipe mode. Hence, we have to revert
+                # to reserving a port number for the GDB communication. But we can still disable
+                # all other ports.
+                # GCC8 would not need this.
+                server_args.extend([
+                    "-c", "gdb_port 3333; tcl_port disabled; telnet_port disabled"
+                ])
                 debug["tools"][tool] = {
                     "init_cmds": openocd_reset_cmds + init_cmds,
                     "server": {
                         "package": "tool-openocd-riscv-wch",
                         "executable": "bin/openocd",
                         "arguments": server_args,
-                    }
+                    },
+                    # reference opened port
+                    "port": "localhost:3333"
                 }
             elif tool == "minichlink":
                 debug["tools"][tool] = {

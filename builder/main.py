@@ -29,15 +29,19 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board_config = env.BoardConfig()
 
+# Depending on whether we're using GCC8 or GCC12, the compiler executable's names need to be adapted.
+# Attempt proper detection by looking at the package version.
+is_gcc_12 = platform.get_package_version("toolchain-riscv").split(".")[1].startswith("12")
+compiler_triple = "riscv-none-elf" if is_gcc_12 else "riscv-none-embed"
 env.Replace(
-    AR="riscv-none-embed-gcc-ar",
-    AS="riscv-none-embed-as",
-    CC="riscv-none-embed-gcc",
-    GDB="riscv-none-embed-gdb",
-    CXX="riscv-none-embed-g++",
-    OBJCOPY="riscv-none-embed-objcopy",
-    RANLIB="riscv-none-embed-ranlib",
-    SIZETOOL="riscv-none-embed-size",
+    AR="%s-gcc-ar" % compiler_triple,
+    AS="%s-as" % compiler_triple,
+    CC="%s-gcc" % compiler_triple,
+    GDB="%s-gdb" % compiler_triple,
+    CXX="%s-g++" % compiler_triple,
+    OBJCOPY="%s-objcopy" % compiler_triple,
+    RANLIB="%s-ranlib" % compiler_triple,
+    SIZETOOL="%s-size" % compiler_triple,
     ARFLAGS=["rc"],
     SIZEPROGREGEXP=r"^(?:\.text|\.data|\.rodata|\.text.align|\.init|\.vector)\s+(\d+).*",
     SIZEDATAREGEXP=r"^(?:\.data|\.bss|\.noinit|\.stack)\s+(\d+).*",
