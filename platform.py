@@ -43,9 +43,9 @@ class Ch32vPlatform(PlatformBase):
         if IS_LINUX:
             self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-linux.git%s" % gcc_branch
         elif IS_MAC:
-            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-mac.git" % gcc_branch
+            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-mac.git%s" % gcc_branch
         else:
-            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-windows.git" % gcc_branch
+            self.packages["toolchain-riscv"]["version"] = "https://github.com/Community-PIO-CH32V/toolchain-riscv-windows.git%s" % gcc_branch
         if not variables.get("board"):
             return super().configure_default_packages(variables, targets)
         # The FreeRTOS, Harmony LiteOS and RT-Thread package needs the 
