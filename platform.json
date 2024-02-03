@@ -113,7 +113,7 @@
     "toolchain-riscv": {
       "type": "toolchain",
       "owner": "platformio",
-      "version": "https://github.com/Community-PIO-CH32V/toolchain-riscv-windows.git#gcc12"
+      "version": "https://github.com/Community-PIO-CH32V/toolchain-riscv-windows.git"
     },
     "tool-openocd-riscv-wch": {
       "type": "uploader",
