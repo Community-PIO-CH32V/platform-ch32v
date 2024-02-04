@@ -16,6 +16,25 @@ Please visit https://pio-ch32v.readthedocs.io/ for the most recent documention.
 
 **This page is a work in progress at the moment.**
 
+# Important notices
+
+The newest used version of OpenOCD **requires** the firmware of the WCH-Link(E) probe to be the latest (2.10 and 2.11 respectively). Otherwise you **will** be seeing flash programming errors like
+
+```
+Info : WCH-LinkE  mode:RV version 2.9 
+..
+** Programming Started **
+Info : device id = 0xabc8abcd
+Error: error writing to flash at address 0x00000000 at offset 0x00000000
+embedded:startup.tcl:1162: Error: ** Programming Failed **
+```
+
+Please update the WCH-Link(E) firmware using
+* https://www.wch.cn/downloads/WCH-LinkUtility_ZIP.html (Windows only, Target --> Query Chip Info)
+* http://www.mounriver.com/download (MounRiver Studio, Windows and Linux Eclipse GUI)
+
+If you use Mac, the usage of a Linux virtual machine may be required to run these tools.
+
 # Media
 ![vscode debugging](docs/debugging_ch32v003.png)
 
