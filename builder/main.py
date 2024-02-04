@@ -193,7 +193,12 @@ def generate_openocd_action(args: List[str], action_name:str):
     cmd = [
         "\"%s\"" % openocd_path
     ]
-    cmd.extend(debug_tools.get(upload_protocol).get("server").get("arguments", []))
+    default_args: List[str] = debug_tools.get(upload_protocol).get("server").get("arguments", [])
+    # small fixup with shell escaping. Quote args that have spaces in them.
+    for (i, arg) in enumerate(default_args.copy()):
+        if " " in arg:
+            default_args[i] = '"%s"' % arg
+    cmd.extend(default_args)
     cmd.extend([
         "-c",
         "\"debug_level %d\"" % (3 if int(ARGUMENTS.get("PIOVERBOSE", 0)) else 2),
