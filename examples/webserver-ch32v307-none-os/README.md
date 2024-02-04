@@ -39,7 +39,9 @@ Further, you need connect an Ethernet cable to your board.
 
 ## Configuration
 
-**The IPs and MAC addresses are hardcoded in this example and might not fit your network.** Edit the `lib/HTTP/HTTPS.c` file in regards to variable
+**DHCP is used for automatic IP acquisition.**
+
+If you don't want this, edit the `lib/HTTP/HTTPS.c` file in regards to variable
 ```cpp
 u8 Basic_Default[BASIC_CFG_LEN] = {
 0x57, 0xAB,
@@ -59,7 +61,7 @@ typedef struct Basic_Cfg   //Basic configuration parameters
 ```
 So this configures 192.168.0.10 as the board's IP and 192.168.0.1 as the gateway.
 
-DHCP code examples are also available in the SDK.
+Then, comment out the call to `WCHNET_DHCPStart(WCHNET_DHCPCallBack);` in `src/main.c`.
 
 ## Expected output
 
@@ -78,10 +80,16 @@ desport: 1000, srcport: 1000
 desip:192.168.0.100
 mode 1
 __AMAC=1.2.3.4.5.6
-__ASIP=192.168.0.10
+__ASIP=0.0.0.0
 __AMSK=255.255.255.0
-__AGAT=192.168.0.1
+__AGAT=0.0.0.0
 PHY Link Success
+DHCP Success
+IPAddr: 192.168.0.10
+GWIPAddr: 192.168.0.1
+IPMask: 255.255.255.0
+DNS1: 192.168.0.1
+DNS2: 0.0.0.0
 ```
 After that, http://192.168.0.10/ can be visited.
 
@@ -93,4 +101,3 @@ After that, the main page should load.
 
 ![info](info.png)
 
-*Note: The info may only load partially the first few tries. Modern browser like to access the website concurrently, which is not optimal for an embedded device that is overwhelmed.*
