@@ -67,12 +67,11 @@ Then, comment out the call to `WCHNET_DHCPStart(WCHNET_DHCPCallBack);` in `src/m
 
 On the UART (at 115200 baud), the chip should hopefully detect a connected link:
 ```
-WEB SERVER
+Web Server
 SystemClk:96000000
 ChipID:30700518
-net version:16
-ip:
-192.168.0.10.
+net version:19
+ip: 0.0.0.0.
 mac addr:38 3b 26 3e d7 90
 WCHNET_LibInit Success
 SocketIdForListen 0
