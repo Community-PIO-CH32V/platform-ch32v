@@ -108,7 +108,7 @@
       "type": "framework",
       "optional": true,
       "owner": "platformio",
-      "version": "https://github.com/Community-PIO-CH32V/arduino_core_ch32.git"
+      "version": "https://github.com/theaudiobible/arduino_core_ch32.git"
     },
     "toolchain-riscv": {
       "type": "toolchain",
