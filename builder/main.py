@@ -80,6 +80,14 @@ if not env.get("PIOFRAMEWORK"):
 # Target: Build executable and linkable firmware
 #
 
+frameworks = env.get("PIOFRAMEWORK", [])
+if "zephyr" in frameworks:
+    env.SConscript(
+        os.path.join(platform.get_package_dir(
+            "framework-zephyr"), "scripts", "platformio", "platformio-build-pre.py"),
+        exports={"env": env}
+    )
+
 target_elf = None
 if "nobuild" in COMMAND_LINE_TARGETS:
     target_elf = os.path.join("$BUILD_DIR", "${PROGNAME}.elf")
@@ -87,6 +95,9 @@ if "nobuild" in COMMAND_LINE_TARGETS:
 else:
     target_elf = env.BuildProgram()
     target_bin = env.ElfToBin(os.path.join("$BUILD_DIR", "${PROGNAME}"), target_elf)
+    if "zephyr" in frameworks and "mcuboot-image" in COMMAND_LINE_TARGETS:
+        target_bin = env.MCUbootImage(
+            os.path.join("$BUILD_DIR", "${PROGNAME}.mcuboot.bin"), target_bin)
     env.Depends(target_bin, "checkprogsize")
 
 AlwaysBuild(env.Alias("nobuild", target_bin))

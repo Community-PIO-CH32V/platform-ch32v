@@ -92,6 +92,12 @@ class Ch32vPlatform(PlatformBase):
                 self.frameworks["arduino"]["package"] = "framework-arduinoch32v"
             elif build_core == "openwch":
                self.frameworks["arduino"]["package"] = "framework-arduino-openwch-ch32"
+        if "zephyr" in frameworks:
+            for p in self.packages:
+                if p in ("tool-cmake", "tool-dtc", "tool-ninja"):
+                    self.packages[p]["optional"] = False
+            if not IS_WINDOWS:
+                self.packages["tool-gperf"]["optional"] = False
         return super().configure_default_packages(variables, targets)
 
     def _add_default_debug_tools(self, board):
