@@ -121,7 +121,7 @@
       "type": "framework",
       "optional": true,
       "owner": "platformio",
-      "version": "symlink://C:/Users/Max/Downloads/framework-zephyr-2.30500.231204.tar/framework-zephyr-2.30500.231204"
+      "version": "https://github.com/Community-PIO-CH32V/framework-zephyr.git"
     },
     "toolchain-riscv": {
       "type": "toolchain",
