@@ -1,0 +1,20 @@
+/ {
+     chosen {
+             zephyr,console = &usart2;
+     };
+
+     aliases {
+             ledcustom = &myled0;
+     };
+
+     leds {
+             compatible = "gpio-leds";
+             myled0: ledcustom {
+                     gpios = <&gpiob 1 GPIO_ACTIVE_LOW>;
+             };
+     };
+};
+
+&usart2 {
+             current-speed = <115200>;
+};
