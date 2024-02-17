@@ -87,6 +87,11 @@ if "zephyr" in frameworks:
             "framework-zephyr"), "scripts", "platformio", "platformio-build-pre.py"),
         exports={"env": env}
     )
+    # correct display of RAM and Flash statistics
+    env.Replace(
+        SIZEPROGREGEXP=r"^(?:text|rom_start|reset|exceptions|initlevel|device_area|sw_isr_table|_static_thread_data_area|datas|rodata|device_states|\.last_section|k_\S+)\s+(\d+).*",
+        SIZEDATAREGEXP=r"^(?:datas|bss|noinit|stack|device_states|k_\S+)\s+(\d+).*",
+    )
 
 target_elf = None
 if "nobuild" in COMMAND_LINE_TARGETS:
