@@ -1,0 +1,55 @@
+{
+  "build": {
+    "arduino": {
+      "openwch": {
+        "variant": "CH32X035/CH32X035G8U",
+        "variant_h": "variant_CH32X035G8U.h"
+      }
+    },
+    "core": "openwch",
+    "extra_flags": "-DCH32X035G8 -DCH32X03X -DCH32X035",
+    "f_cpu": "48000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imacxw",
+    "mcu": "ch32x035g8u6",
+    "series": "ch32x035",
+    "zephyr": {
+      "variant": "usb_pdmon"
+    }
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32X035xx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "freertos",
+    "harmony-liteos",
+    "rt-thread",
+    "tencent-os",
+    "zephyr",
+    "arduino"
+  ],
+  "name": "USB PDMon",
+  "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 63488,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp"
+    ]
+  },
+  "url": "https://github.com/dragonlock2/kicadboards/tree/main/breakouts/usb_pdmon",
+  "vendor": "Matthew Tran"
+}

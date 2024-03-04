@@ -80,6 +80,19 @@ if not env.get("PIOFRAMEWORK"):
 # Target: Build executable and linkable firmware
 #
 
+frameworks = env.get("PIOFRAMEWORK", [])
+if "zephyr" in frameworks:
+    env.SConscript(
+        os.path.join(platform.get_package_dir(
+            "framework-zephyr"), "scripts", "platformio", "platformio-build-pre.py"),
+        exports={"env": env}
+    )
+    # correct display of RAM and Flash statistics
+    env.Replace(
+        SIZEPROGREGEXP=r"^(?:text|rom_start|reset|exceptions|initlevel|device_area|sw_isr_table|_static_thread_data_area|datas|rodata|device_states|\.last_section|k_\S+)\s+(\d+).*",
+        SIZEDATAREGEXP=r"^(?:datas|bss|noinit|stack|device_states|k_\S+)\s+(\d+).*",
+    )
+
 target_elf = None
 if "nobuild" in COMMAND_LINE_TARGETS:
     target_elf = os.path.join("$BUILD_DIR", "${PROGNAME}.elf")
@@ -87,6 +100,9 @@ if "nobuild" in COMMAND_LINE_TARGETS:
 else:
     target_elf = env.BuildProgram()
     target_bin = env.ElfToBin(os.path.join("$BUILD_DIR", "${PROGNAME}"), target_elf)
+    if "zephyr" in frameworks and "mcuboot-image" in COMMAND_LINE_TARGETS:
+        target_bin = env.MCUbootImage(
+            os.path.join("$BUILD_DIR", "${PROGNAME}.mcuboot.bin"), target_bin)
     env.Depends(target_bin, "checkprogsize")
 
 AlwaysBuild(env.Alias("nobuild", target_bin))

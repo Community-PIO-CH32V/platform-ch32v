@@ -30,6 +30,7 @@ jobs:
           - "examples/ble-usb-cdc-ch58x"
           - "examples/ble-hid-ch59x"
           - "examples/usb-pd-ch32x035"
+          - "examples/zephyr-blink"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4

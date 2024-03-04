@@ -15,6 +15,7 @@
 import os
 import sys
 from platformio.public import PlatformBase
+from platformio import util
 
 IS_WINDOWS = sys.platform.startswith("win")
 IS_LINUX = sys.platform.startswith("linux")
@@ -71,6 +72,17 @@ class Ch32vPlatform(PlatformBase):
                 self.packages["tool-minichlink"]["version"] = "https://github.com/Community-PIO-CH32V/tool-minichlink.git#linux"
             elif IS_MAC:
                 self.packages["tool-minichlink"]["version"] = "https://github.com/Community-PIO-CH32V/tool-minichlink.git#mac"
+        elif variables.get("upload_protocol", default_protocol) == "wch-link":
+            sys_type = util.get_systype()
+            if IS_WINDOWS:
+                self.packages["tool-openocd-riscv-wch"]["version"] = "https://github.com/Community-PIO-CH32V/tool-openocd-riscv-wch.git#main"
+            elif IS_LINUX:
+                self.packages["tool-openocd-riscv-wch"]["version"] = "https://github.com/Community-PIO-CH32V/tool-openocd-riscv-wch.git#linux"
+            else:
+                if sys_type == "darwin_arm64":
+                    self.packages["tool-openocd-riscv-wch"]["version"] = "https://github.com/Community-PIO-CH32V/tool-openocd-riscv-wch.git#darwin_arm"
+                else:
+                    self.packages["tool-openocd-riscv-wch"]["version"] = "https://github.com/Community-PIO-CH32V/tool-openocd-riscv-wch.git#darwin_x64"
         frameworks = variables.get("pioframework", [])
         build_core = variables.get("board_build.core", board_config.get("build.core", "arduino"))
         if "arduino" in frameworks:
@@ -80,6 +92,12 @@ class Ch32vPlatform(PlatformBase):
                 self.frameworks["arduino"]["package"] = "framework-arduinoch32v"
             elif build_core == "openwch":
                self.frameworks["arduino"]["package"] = "framework-arduino-openwch-ch32"
+        if "zephyr" in frameworks:
+            for p in self.packages:
+                if p in ("tool-cmake", "tool-dtc", "tool-ninja"):
+                    self.packages[p]["optional"] = False
+            if not IS_WINDOWS:
+                self.packages["tool-gperf"]["optional"] = False
         return super().configure_default_packages(variables, targets)
 
     def _add_default_debug_tools(self, board):
