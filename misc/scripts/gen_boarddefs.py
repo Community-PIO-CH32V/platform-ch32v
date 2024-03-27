@@ -206,6 +206,7 @@ known_openwchcore_variants: List[OpenWCHVariant] = [
     OpenWCHVariant("ch32v203c6", "CH32V20x/CH32V203C6", "variant_CH32V203C6.h"),
     OpenWCHVariant("ch32v203c8", "CH32V20x/CH32V203C8", "variant_CH32V203C8.h"),
     OpenWCHVariant("ch32v203g8", "CH32V20x/CH32V203G8", "variant_CH32V203G8.h"),
+    OpenWCHVariant("ch32v203rb", "CH32V20x/CH32V203RB", "variant_CH32V203RB.h"),
     OpenWCHVariant("ch32v307vct6", "CH32V30x/CH32V307VCT6", "variant_CH32V307VCT6.h", "-DCH32V30x_C"),
     OpenWCHVariant("ch32x035g8u", "CH32X035/CH32X035G8U", "variant_CH32X035G8U.h")
 ]
