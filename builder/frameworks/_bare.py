@@ -15,7 +15,7 @@ machine_arch = str(board.get("build.march"))
 IS_MAC =  sys.platform.startswith("darwin")
 is_gcc_12 = platform.get_package_version("toolchain-riscv").split(".")[1].startswith("12")
 if IS_MAC and is_gcc_12:
-    machine_arch += "+zicsr"
+    machine_arch += "_zicsr"
 
 env.Append(
     ASFLAGS=[
