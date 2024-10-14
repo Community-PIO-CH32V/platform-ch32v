@@ -140,9 +140,12 @@ def get_ld_defines(chip_name: str):
 # retrieve needed macro values
 target_mcu, mcu_package, target_mcu_ld = get_ld_defines(chip_name)
 
+# Add "" to the build path to fix spaces
+BUILD_DIR_FIX:str = '\"$BUILD_DIR\"'
+
 # Let the LD script be generated right before the .elf is built
 env.AddPreAction(
-    "$BUILD_DIR/${PROGNAME}.elf",
+    "${BUILD_DIR_FIX}/${PROGNAME}.elf",
     env.VerboseAction(" ".join([
         "$CC",
         "-E",
@@ -154,14 +157,15 @@ env.AddPreAction(
         "-DTARGET_MCU_LD=%d" % target_mcu_ld,
         join(FRAMEWORK_DIR, "ch32v003fun", "ch32v003fun.ld"),
         ">",
-        join("$BUILD_DIR", "ldscript.ld")
-    ]), "Building %s" % join("$BUILD_DIR", "ldscript.ld"))
+        join("${BUILD_DIR_FIX}", "ldscript.ld")
+    ]), "Building %s" % join("${BUILD_DIR_FIX}", "ldscript.ld"))
 )
+
 # Already put in the right path for the to-be-generated file
-env.Replace(LDSCRIPT_PATH=join("$BUILD_DIR", "ldscript.ld"))
+env.Replace(LDSCRIPT_PATH=join("${BUILD_DIR_FIX}", "ldscript.ld"))
 
 # build actual ch32v003fun source file
 env.BuildSources(
-    join("$BUILD_DIR", "FrameworkCh32v003fun"),
+    join("${BUILD_DIR_FIX}", "FrameworkCh32v003fun"),
     join(FRAMEWORK_DIR, "ch32v003fun")
 )
