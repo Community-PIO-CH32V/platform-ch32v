@@ -39,6 +39,7 @@ env.Replace(
     CC="%s-gcc" % compiler_triple,
     GDB="%s-gdb" % compiler_triple,
     CXX="%s-g++" % compiler_triple,
+    OBJDUMP="%s-objdump" % compiler_triple,
     OBJCOPY="%s-objcopy" % compiler_triple,
     RANLIB="%s-ranlib" % compiler_triple,
     SIZETOOL="%s-size" % compiler_triple,
@@ -99,6 +100,21 @@ if "nobuild" in COMMAND_LINE_TARGETS:
     target_bin = os.path.join("$BUILD_DIR", "${PROGNAME}.bin")
 else:
     target_elf = env.BuildProgram()
+    # Build disassembly listing (additionally intermixed with code)
+    for opt, name in [("", ""), ("-S", ".debug")]:
+        env.AddPostAction(
+            "$BUILD_DIR/${PROGNAME}.elf",
+            env.VerboseAction(" ".join([
+                    "$OBJDUMP",
+                    opt,
+                    "-M", # disassemble compressed instructions correctly
+                    "xw",
+                    "-d",
+                    "$BUILD_DIR/${PROGNAME}.elf",
+                    ">",
+                    "$BUILD_DIR/${PROGNAME}" + name + ".lst"
+            ]), "Building $BUILD_DIR/${PROGNAME}" + name + ".lst")
+        )
     target_bin = env.ElfToBin(os.path.join("$BUILD_DIR", "${PROGNAME}"), target_elf)
     if "zephyr" in frameworks and "mcuboot-image" in COMMAND_LINE_TARGETS:
         target_bin = env.MCUbootImage(

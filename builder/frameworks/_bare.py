@@ -68,6 +68,7 @@ env.Append(
 
     LINKFLAGS=[
         "-Os",
+        "-g",
         "-march=%s" % machine_arch,
         "-mabi=%s" % board.get("build.mabi"),
         "-ffunction-sections",
