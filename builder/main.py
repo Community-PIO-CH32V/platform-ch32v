@@ -110,9 +110,9 @@ else:
                     "-M", # disassemble compressed instructions correctly
                     "xw",
                     "-d",
-                    "$BUILD_DIR/${PROGNAME}.elf",
+                    '"%s"' % "$BUILD_DIR/${PROGNAME}.elf",
                     ">",
-                    "$BUILD_DIR/${PROGNAME}" + name + ".lst"
+                    '"%s"' % ("$BUILD_DIR/${PROGNAME}" + name + ".lst")
             ]), "Building $BUILD_DIR/${PROGNAME}" + name + ".lst")
         )
     target_bin = env.ElfToBin(os.path.join("$BUILD_DIR", "${PROGNAME}"), target_elf)
