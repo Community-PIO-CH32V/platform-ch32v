@@ -6,7 +6,7 @@
 #include <ch32v20x.h>
 #elif defined(CH32V30X) || defined(CH32V31X)
 #include <ch32v30x.h>
-#elif defined (CH32X035)
+#elif defined (CH32X03X) /* both X033 and X035 */
 #include <ch32x035.h>
 #elif defined(CH32L10X)
 #include <ch32l103.h>
