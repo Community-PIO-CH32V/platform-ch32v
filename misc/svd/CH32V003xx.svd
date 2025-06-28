@@ -3,9 +3,9 @@
 xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd">
   <vendor>WCH Ltd.</vendor>                                       <!-- device vendor name -->
   <vendorID>WCH</vendorID>                                        <!-- device vendor short name -->
-  <name>CH32V00xxx</name>
-  <version>1.2</version>
-  <description>CH32V00xxx View File</description>
+  <name>CH32V003xx</name>
+  <version>1.3</version>
+  <description>CH32V003xx View File</description>
   <!--Bus Interface Properties-->
   <!--RISC-V is byte addressable-->
 
@@ -746,7 +746,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <description>LOCKUP RESET</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>     
             <field>
               <name>LDO_TRIM</name>
@@ -1327,7 +1327,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <access>read-write</access>
             </field>
             <field>
-              <name>PA12_RM</name>
+              <name>PA1PA2_RM</name>
               <description>Port A1/Port A2 mapping on
               OSCIN/OSCOUT</description>
               <bitOffset>15</bitOffset>

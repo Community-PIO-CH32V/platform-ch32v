@@ -3,9 +3,9 @@
 <device schemaVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd" >
   <vendor>WCH Ltd.</vendor>                                       <!-- device vendor name -->
   <vendorID>WCH</vendorID>                                        <!-- device vendor short name -->
-  <name>CH573SFR</name>                                        <!-- name of part-->
+  <name>CH57Xxx</name>                                        <!-- name of part-->
   <series>CH57x</series>                                         <!-- device series the device belongs to -->
-  <version>1.0</version>                                          <!-- version of this description, adding CMSIS-SVD 1.1 tags -->
+  <version>1.1</version>                                          <!-- version of this description, adding CMSIS-SVD 1.1 tags -->
   <description>WCH wireless MCU CH57x Family Support, Drivers</description>
   <cpu>                                                           <!-- details about the cpu embedded in the device -->
     <name>RISC-V</name>
@@ -173,7 +173,7 @@
 			<description>RWA, sleep clock off control byte 0, SAM</description>
 			<addressOffset>0x0C</addressOffset>
 			<size>8</size>
-			<access>Read or  Write under safe Accessing mode</access> 
+			<access>read-write</access> 
 		    <resetValue>0x00</resetValue>
 			<fields>
 				<field>
@@ -223,7 +223,7 @@
 			<description>RWA, sleep clock off control byte 1, SAM</description>
 			<addressOffset>0x0D</addressOffset>
 			<size>8</size>
-			<access>Read or  Write under safe Accessing mode</access> 
+			<access>read-write</access> 
 		    <resetValue>0x00</resetValue>
 			<fields>
 				<field>
@@ -253,7 +253,7 @@
 			<description>RWA, wake control, SAM</description>
 			<addressOffset>0x0E</addressOffset>
 			<size>8</size>
-			<access>Read or Write under safe Accessing mode</access> 
+			<access>read-write</access> 
 			<resetValue>0x20</resetValue>
 			<fields>
 				<field>
@@ -293,7 +293,7 @@
 			<description>RWA, peripherals power down control, SAM</description>
 			<addressOffset>0x0F</addressOffset>
 			<size>8</size>
-			<access>Read or Write under safe Accessing mode</access>
+			<access>read-write</access>
 			<resetValue>0x00</resetValue>
 			<fields>
 				<field>
@@ -419,7 +419,7 @@
 			<description>RWA, power plan before sleep instruction, SAM</description>
 			<addressOffset>0x20</addressOffset>
 			<size>16</size>
-			<access>Read or Write under safe Accessing mode</access> 
+			<access>read-write</access> 
 			<resetValue>0x11DF</resetValue>
 			<fields>
 			    <field>
@@ -456,7 +456,7 @@
 					<name>RB_PWR_LDO_EN</name>
 					<description>RWA, LDO enable </description>
 					<bitRange>[8:8]</bitRange>
-				</field>>
+				</field>
 				<field>
 					<name>RB_PWR_DCDC_EN</name>
 					<description>RWA, DC/DC converter enable: 0=DC/DC disable and bypass, 1=DC/DC enable</description>
@@ -486,7 +486,7 @@
 			<description>RWA, aux power adjust control, SAM</description>
 			<addressOffset>0x22</addressOffset>
 			<size>8</size>
-			<access>Read or Write under safe Accessing mode</access>
+			<access>read-write</access>
 			<resetValue>0x00</resetValue>
 			<fields>
 				<field>
@@ -502,11 +502,11 @@
 			<description>RWA, battery voltage detector control, SAM</description>
 			<addressOffset>0x24</addressOffset>
 			<size>8</size>
-			<access>Read / Write under safe Accessing mode</access>
+			<access>read-write</access>
 		    <resetValue>0x00</resetValue>
 			<fields>
 				<field>
-					<name>RB_BAT_DET_EN/RB_BAT_LOW_VTHX</name>
+					<name>RB_BAT_DET_EN_RB_BAT_LOW_VTHX</name>
 					<description>RWA, battery voltage detector enable/select monitor threshold voltage</description>
 					<bitRange>[0:0]</bitRange>
 				</field>
@@ -532,7 +532,7 @@
 			<description>RWA, battery voltage detector configuration, SAM</description>
 			<addressOffset>0x25</addressOffset>
 			<size>8</size>
-			<access>Read or Write under safe Accessing mode</access> 
+			<access>read-write</access> 
 		    <resetValue>0x01</resetValue>
 			<fields>
 				<field>
@@ -567,7 +567,7 @@
 			<description>RWA, internal 32KHz oscillator tune control, SAM</description>
 			<addressOffset>0x2C</addressOffset>
 			<size>16</size>
-			<access>Read or Write under safe Accessing mode</access>
+			<access>read-write</access>
 			<resetValue>0x0800</resetValue>
 			<fields>
 				<field>
@@ -582,7 +582,7 @@
 			<description>RWA, external 32KHz oscillator tune control, SAM</description>
 			<addressOffset>0x2E</addressOffset>
 			<size>8</size>
-			<access>Read or Write under safe Accessing mode</access>
+			<access>read-write</access>
 			<resetValue>0xC3</resetValue>
 			<fields>
 				<field>
@@ -602,7 +602,7 @@
 			<description>RWA, 32KHz oscillator configure</description>
 			<addressOffset>0x2F</addressOffset>
 			<size>8</size>
-			<access>Read or  Write under safe Accessing mode</access>
+			<access>read-write</access>
 			<resetValue>0x02</resetValue>
 			<fields>
 				<field>
@@ -670,7 +670,7 @@
 			<description>RWA, RTC mode control, SAM</description>
 			<addressOffset>0x31</addressOffset>
 			<size>8</size>
-			<access>Read or Write under safe Accessing mode</access>
+			<access>read-write</access>
 			<resetValue>0x02</resetValue>
 			<fields>
 				<field>
@@ -710,7 +710,7 @@
 			<description>RWA, RTC trigger value, SAM</description>
 			<addressOffset>0x34</addressOffset>
 			<size>32</size>
-			<access>Read or Write under safe Accessing mode</access>
+			<access>read-write</access>
 			<resetValue>0x00000000</resetValue>
 			<fields>
 			    <field>
@@ -770,7 +770,7 @@
           <description>WO, safe accessing sign register, must write SAFE_ACCESS_SIG1 then SAFE_ACCESS_SIG2 to enter safe accessing mode</description>
           <addressOffset>0x40</addressOffset>
           <size>8</size>
-          <access>read/write</access>
+          <access>read-write</access>
 		  <resetValue>0x00</resetValue>
 		  <fields>
 			<field>
@@ -800,7 +800,7 @@
 			<description>RF, chip ID register, always is ID_CH57*</description>
 			<addressOffset>0x41</addressOffset>
 			<size>8</size>
-			<access>-Read only for Fixed value</access> 
+			<access>read-only</access> 
 			<resetValue>0x73</resetValue>
             <fields>
 			<field>
@@ -815,7 +815,7 @@
 			<description>RF, safe accessing ID register, always 0x04</description>
 			<addressOffset>0x42</addressOffset>
 			<size>8</size>
-			<access>-Read only for Fixed value</access> 
+			<access>read-only</access> 
 			<resetValue>0x04</resetValue>
             <fields>
 			<field>
@@ -841,10 +841,10 @@
             </fields>
 		</register>
 		<register>
-			<name>R8_RESET_STATUS/R8_GLOB_ROM_CFG</name>
+			<name>R8_RESET_STATUS_R8_GLOB_ROM_CFG</name>
 			<description>RWA, reset status, SAM or flash ROM configuration</description>
 			<addressOffset>0x04</addressOffset>
-			<access>-Read only for Fixed value</access>
+			<access>read-only</access>
 			<size>8</size>
 			<resetValue>0x01</resetValue>
 			<fields>
@@ -886,7 +886,7 @@
 			<addressOffset>0x45</addressOffset>
 			<access>read-only</access>
 			<size>8</size>
-			<resetValue>0xEX</resetValue>
+			<resetValue>0xE0</resetValue>
 			<fields>
 				<field>
 					<name>RB_CFG_ROM_READ</name>
@@ -919,7 +919,7 @@
 			<name>R8_RST_WDOG_CTRL</name>
 			<description>RWA, reset and watch-dog control, SAM</description>
 			<addressOffset>0x46</addressOffset>
-			<access> Read or Write under safe Accessing mode </access>
+			<access>read-write</access>
 			<size>8</size>
 			<resetValue>0x00</resetValue>
 			<fields>
@@ -966,7 +966,7 @@
 			<addressOffset>0x4B</addressOffset>
 			<size>8</size>
 			<resetValue>0x4A</resetValue> 
-			<access>Read or Write under safe Accessing mode</access>
+			<access>read-write</access>
 			<fields>
 				<field>
 					<name>RB_PLL_CFG_DAT</name>
@@ -981,7 +981,7 @@
 			<description>RWA, external 32MHz oscillator tune control, SAM</description>
 			<addressOffset>0x4E</addressOffset>
 			<size>8</size>
-			<access>Read or Write under safe Accessing mode</access> 
+			<access>read-write</access> 
 			<resetValue>0x31</resetValue>
 			<fields>
 				<field>
@@ -1018,7 +1018,7 @@
 			<description>RWA, oscillator frequency calibration control, SAM</description>
 			<addressOffset>0x52</addressOffset>
 			<size>8</size>
-			<access>Read or Write under safe Accessing mode</access> 
+			<access>read-write</access> 
 			<resetValue>0x02</resetValue>
 			<fields>
 				<field>
@@ -1218,7 +1218,7 @@
 			</fields>
 		</register>	
 	    <register>
-			<name>R8_ADC_DMA_IF</name>
+			<name>ADC_DMA_IF</name>
 			<description>RO, ADC interrupt flag register</description>
 			<addressOffset>0x5E</addressOffset>
 			<size>8</size>
@@ -1237,7 +1237,7 @@
 			<description>RO, ADC DMA control and status register</description>
 			<addressOffset>0x60</addressOffset>
 			<size>8</size>
-			<access>write-read</access>
+			<access>read-write</access>
 			<resetValue>0x00</resetValue>
 			<fields>
 				<field>
@@ -1252,7 +1252,7 @@
 			<description>RW, ADC DMA control</description>
 			<addressOffset>0x61</addressOffset>
 			<size>8</size>
-			<access>write-read</access>
+			<access>read-write</access>
 			<resetValue>0x00</resetValue>
 			<fields>
 				<field>
@@ -1287,7 +1287,7 @@
 			<description>RO, ADC interrupt flag</description>
 			<addressOffset>0x62</addressOffset>
 			<size>8</size>
-			<access>write-read</access>
+			<access>read-write</access>
 			<resetValue>0x00</resetValue>
 			<fields>
 				<field>
@@ -1307,7 +1307,7 @@
 			<description>RO, ADC interrupt flag</description>
 			<addressOffset>0x63</addressOffset>
 			<size>8</size>
-			<access>write-read</access>
+			<access>read-write</access>
 			<resetValue>0x00</resetValue>
 			<fields>
 				<field>
@@ -1337,7 +1337,7 @@
 			<description>RW, ADC DMA begin address</description>
 			<addressOffset>0x68</addressOffset>
 			<size>8</size>
-			<access>write-read</access>
+			<access>read-write</access>
 			<resetValue>0x00000000</resetValue>
 			<fields>
 				<field>
@@ -1352,7 +1352,7 @@
 			<description>RW, ADC DMA end address</description>
 			<addressOffset>0x6C</addressOffset>
 			<size>8</size>
-			<access>write-read</access>
+			<access>read-write</access>
 			<resetValue>0x00000000</resetValue>
 			<fields>
 				<field>
@@ -1734,11 +1734,6 @@
 			<size>0x400</size>
 			<usage>registers</usage>
 		</addressBlock>
-		<interrupt>
-			<name>TMR0</name>
-			<description>TMR0_IRQHandler</description>
-			<value>0</value>
-		</interrupt>
 		<registers>
 			<register>
 				<name>R8_TMR0_CTRL_MOD</name>
@@ -1769,12 +1764,12 @@
 						<bitRange>[3:3]</bitRange>				
 					</field>
 					<field>
-						<name>RB_TMR_OUT_POLAR/RB_TMR_CAP_COUNT</name>
+						<name>RB_TMR_OUT_POLAR_RB_TMR_CAP_COUNT</name>
 						<description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action;RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
 						<bitRange>[4:4]</bitRange>
 					</field>
 					<field>
-						<name>RB_TMR_PWM_REPEAT/RB_TMR_CAP_EDGE</name>
+						<name>RB_TMR_PWM_REPEAT_RB_TMR_CAP_EDGE</name>
 						<description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16;RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
 						<bitRange>[7:6]</bitRange>
 					</field>
@@ -1820,7 +1815,7 @@
 				<description>RW1, TMR0 interrupt flag</description>
 				<addressOffset>0x06</addressOffset>
 				<size>8</size>
-				<access>Read / Write 1 to Clear</access> 
+				<access>read-write</access> 
 				<resetValue>0x00</resetValue>
 				<fields>
 					<field>
@@ -1856,7 +1851,7 @@
 				<addressOffset>0x07</addressOffset>
 				<size>8</size>
 				<access>read-only</access>
-				<resetValue>0x0X</resetValue>
+				<resetValue>0x00</resetValue>
 				<fields>
 					<field>
 						<name>R8_TMR0_FIFO_COUNT</name>
@@ -1922,11 +1917,6 @@
 			<size>0x400</size>
 			<usage>registers</usage>
 		</addressBlock>
-		<interrupt>
-			<name>TMR1</name>
-			<description>TMR1_IRQHandler</description>
-			<value>8</value>
-		</interrupt>
 		<registers>
 			<register>
 				<name>R8_TMR1_CTRL_MOD</name>
@@ -1957,12 +1947,12 @@
 						<bitRange>[3:3]</bitRange>				
 					</field>
 					<field>
-						<name>RB_TMR_OUT_POLAR/RB_TMR_CAP_COUNT</name>
+						<name>RB_TMR_OUT_POLAR_RB_TMR_CAP_COUNT</name>
 						<description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action;RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
 						<bitRange>[4:4]</bitRange>
 					</field>
 					<field>
-						<name>RB_TMR_PWM_REPEAT/RB_TMR_CAP_EDGE</name>
+						<name>RB_TMR_PWM_REPEAT_RB_TMR_CAP_EDGE</name>
 						<description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16;RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
 						<bitRange>[7:6]</bitRange>
 					</field>
@@ -2029,7 +2019,7 @@
 				<addressOffset>0x06</addressOffset>
 				<size>8</size>
 				<resetValue>0x00</resetValue>
-				<access>Read or Write 1 to Clear</access> 
+				<access>Read-Write</access> 
 				<fields>
 					<field>
 						<name>RB_TMR_IF_CYC_END</name>
@@ -2064,7 +2054,7 @@
 				<addressOffset>0x07</addressOffset>
 				<size>8</size>
 				<access>read-only</access>
-                <resetValue>0x0X</resetValue>
+                <resetValue>0x00</resetValue>
 				<fields>
 					<field>
 						<name>R8_TMR1_FIFO_COUNT</name>
@@ -2210,12 +2200,12 @@
 						<bitRange>[3:3]</bitRange>				
 					</field>
 					<field>
-						<name>RB_TMR_OUT_POLAR/RB_TMR_CAP_COUNT</name>
+						<name>RB_TMR_OUT_POLAR_RB_TMR_CAP_COUNT</name>
 						<description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action;RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
 						<bitRange>[4:4]</bitRange>
 					</field>
 					<field>
-						<name>RB_TMR_PWM_REPEAT/RB_TMR_CAP_EDGE</name>
+						<name>RB_TMR_PWM_REPEAT_RB_TMR_CAP_EDGE</name>
 						<description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16;RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
 						<bitRange>[7:6]</bitRange>
 					</field>
@@ -2317,7 +2307,7 @@
 				<addressOffset>0x07</addressOffset>
 				<size>8</size>
 				<access>read-only</access>
-                <resetValue>0x0X</resetValue>
+                <resetValue>0x00</resetValue>
 				<fields>
 					<field>
 						<name>R8_TMR2_FIFO_COUNT</name>
@@ -2332,7 +2322,7 @@
 				<addressOffset>0x08</addressOffset>
 				<size>32</size>
 				<access>read-only</access>
-				<resetValue>0x0X</resetValue>
+				<resetValue>0x00</resetValue>
 				<fields>
 					<field>
 						<name>R32_TMR2_COUNT</name>
@@ -2347,7 +2337,7 @@
 				<addressOffset>0x0C</addressOffset>
 				<size>32</size>
 				<access>read-write</access>
-				<resetValue>0x0X</resetValue>
+				<resetValue>0x00</resetValue>
 				<fields>
 					<field>
 						<name>R32_TMR2_COUNT</name>
@@ -2361,7 +2351,7 @@
 				<description>RO, TMR2 FIFO register, only low 26 bit</description>
 				<addressOffset>0x10</addressOffset>
 				<size>32</size>
-				<access>write-only or read-only</access>
+				<access>read-write</access>
 				<resetValue>0x00000000</resetValue>
 				<fields>
 					<field>
@@ -2428,11 +2418,6 @@
 			<size>0x400</size>
 			<usage>registers</usage>
 		</addressBlock>
-		<interrupt>
-			<name>TMR3</name>
-			<description>TMR3_IRQHandler</description>
-			<value>16</value>
-		</interrupt>
 		<registers>
 			<register>
 				<name>R8_TMR3_CTRL_MOD</name>
@@ -2463,12 +2448,12 @@
 						<bitRange>[3:3]</bitRange>				
 					</field>
 					<field>
-						<name>RB_TMR_OUT_POLAR/RB_TMR_CAP_COUNT</name>
+						<name>RB_TMR_OUT_POLAR_RB_TMR_CAP_COUNT</name>
 						<description>RW, timer PWM output polarity: 0=default low and high action, 1=default high and low action;RW, count sub-mode if RB_TMR_MODE_IN=1: 0=capture, 1=count</description>
 						<bitRange>[4:4]</bitRange>
 					</field>
 					<field>
-						<name>RB_TMR_PWM_REPEAT/RB_TMR_CAP_EDGE</name>
+						<name>RB_TMR_PWM_REPEAT_RB_TMR_CAP_EDGE</name>
 						<description>RW, timer PWM repeat mode: 00=1, 01=4, 10=8, 11-16;RW, timer capture edge mode: 00=disable, 01=edge change, 10=fall to fall, 11-rise to rise</description>
 						<bitRange>[7:6]</bitRange>
 					</field>
@@ -2514,7 +2499,7 @@
 				<description>RW1, TMR3 interrupt flag</description>
 				<addressOffset>0x06</addressOffset>
 				<size>8</size>
-				<access>Read or Write 1 to Clear</access>
+				<access>Read-Write</access>
 				<resetValue>0x00</resetValue>
 				<fields>
 					<field>
@@ -2550,7 +2535,7 @@
 				<addressOffset>0x07</addressOffset>
 				<size>8</size>
 				<access>read-only</access>
-                <resetValue>0x0X</resetValue>
+                <resetValue>0x00</resetValue>
 				<fields>
 					<field>
 						<name>R8_TMR3_FIFO_COUNT</name>
@@ -2594,7 +2579,7 @@
 				<description>RO/WO, TMR3 FIFO register, only low 26 bit</description>
 				<addressOffset>0x10</addressOffset>
 				<size>32</size>
-				<access>read-only or write-only</access>
+				<access>read-write</access>
 				<resetValue>0x00000000</resetValue>
 				<fields>
 					<field>
@@ -2616,11 +2601,6 @@
 			<size>0x400</size>
 			<usage>registers</usage>
 		</addressBlock>
-		<interrupt>
-			<name>UART0</name>
-			<description>UART0_IRQHandler</description>
-			<value>10</value>
-		</interrupt>
 		<registers>
 			<register>
 				<name>R8_UART0_MCR</name>
@@ -2646,7 +2626,7 @@
 						<bitRange>[2:2]</bitRange>
 					</field>
 					<field>
-						<name>RB_MCR_OUT2/RB_MCR_INT_OE</name>
+						<name>RB_MCR_OUT2_RB_MCR_INT_OE</name>
 						<description>RW, UART control OUT2/ UART interrupt output enable</description>
 						<bitRange>[3:3]</bitRange>
 					</field>
@@ -2786,7 +2766,7 @@
 						<bitRange>[6:6]</bitRange>
 					</field>
 					<field>
-						<name>RB_LCR_GP_BIT/RB_LCR_DLAB</name>
+						<name>RB_LCR_GP_BIT_RB_LCR_DLAB</name>
 						<description>RW, UART general purpose bit;RW, UART reserved bit</description>
 						<bitRange>[7:7]</bitRange>
 					</field>
@@ -3036,11 +3016,6 @@
 			<size>0x400</size>
 			<usage>registers</usage>
 		</addressBlock>
-		<interrupt>
-			<name>UART1</name>
-			<description>UART1_IRQHandler</description>
-			<value>11</value>
-		</interrupt>
 		<registers>
 			<register>
 				<name>R8_UART1_MCR</name>
@@ -3051,7 +3026,7 @@
 				<resetValue>0x00</resetValue>
 				<fields>
 					<field>
-						<name>RB_MCR_OUT2/RB_MCR_INT_OE</name>
+						<name>RB_MCR_OUT2_RB_MCR_INT_OE</name>
 						<description>RW, UART control OUT2/UART interrupt output enable</description>
 						<bitRange>[3:3]</bitRange>
 					</field>
@@ -3156,7 +3131,7 @@
 						<bitRange>[6:6]</bitRange>
 					</field>
 					<field>
-						<name>RB_LCR_GP_BIT/RB_LCR_DLAB</name>
+						<name>RB_LCR_GP_BIT_RB_LCR_DLAB</name>
 						<description>RW, UART general purpose bit;RW, UART reserved bit</description>
 						<bitRange>[7:7]</bitRange>
 					</field>
@@ -3339,11 +3314,6 @@
 			<size>0x400</size>
 			<usage>registers</usage>
 		</addressBlock>
-		<interrupt>
-			<name>UART2</name>
-			<description>UART1_IRQHandler</description>
-			<value>17</value>
-		</interrupt>
 		<registers>
 			<register>
 				<name>R8_UART2_MCR</name>
@@ -3354,7 +3324,7 @@
 				<resetValue>0x00</resetValue>
 				<fields>
 					<field>
-						<name>RB_MCR_OUT2/RB_MCR_INT_OE</name>
+						<name>RB_MCR_OUT2_RB_MCR_INT_OE</name>
 						<description>RW, UART control OUT2;UART interrupt output enable</description>
 						<bitRange>[3:3]</bitRange>
 					</field>
@@ -3459,7 +3429,7 @@
 						<bitRange>[6:6]</bitRange>
 					</field>
 					<field>
-						<name>RB_LCR_GP_BIT/RB_LCR_DLAB</name>
+						<name>RB_LCR_GP_BIT_RB_LCR_DLAB</name>
 						<description>RW, UART general purpose bit;RW, UART reserved bit</description>
 						<bitRange>[7:7]</bitRange>
 					</field>
@@ -3642,11 +3612,6 @@
 			<size>0x400</size>
 			<usage>registers</usage>
 		</addressBlock>
-		<interrupt>
-			<name>UART3</name>
-			<description>UART3_IRQHandler</description>
-			<value>18</value>
-		</interrupt>
 		<registers>
 			<register>
 				<name>R8_UART3_MCR</name>
@@ -3657,7 +3622,7 @@
 				<resetValue>0x00</resetValue>
 				<fields>
 					<field>
-						<name>RB_MCR_OUT2/RB_MCR_INT_OE</name>
+						<name>RB_MCR_OUT2_RB_MCR_INT_OE</name>
 						<description>RW, UART control OUT2;UART interrupt output enable</description>
 						<bitRange>[3:3]</bitRange>
 					</field>
@@ -3762,7 +3727,7 @@
 						<bitRange>[6:6]</bitRange>
 					</field>
 					<field>
-						<name>RB_LCR_GP_BIT/RB_LCR_DLAB</name>
+						<name>RB_LCR_GP_BIT_RB_LCR_DLAB</name>
 						<description>RW, UART general purpose bit;RW, UART reserved bit</description>
 						<bitRange>[7:7]</bitRange>
 					</field>
@@ -4405,7 +4370,7 @@
 				<addressOffset>0x02</addressOffset>
 				<size>8</size>
 				<access>read-write</access>
-				<resetValue>0x0X</resetValue>
+				<resetValue>0x00</resetValue>
 				<fields>
 					<field>
 						<name>RB_PWM_CYCLE_SEL</name>
@@ -4755,11 +4720,6 @@
 						<name>RB_UIE_DEV_NAK</name>
 						<description>enable interrupt for NAK responded for USB device mode</description>
 						<bitRange>[6:6]</bitRange>
-					</field>
-					<field>
-						<name>RB_UIE_DEV_SOF</name>
-						<description>enable interrupt for SOF received for USB device mode</description>
-						<bitRange>[7:7]</bitRange>
 					</field>
 				</fields>
 			</register>
@@ -5343,11 +5303,6 @@
 		 <interrupt>
 		  <name>BLEL</name>
 		  <description>LLE_IRQHandler</description>
-		  <value>6</value>
-	     </interrupt>
-		 <interrupt>
-		  <name>BLEB</name>
-		  <description>BB_IRQHandler</description>
 		  <value>6</value>
 	     </interrupt>
 	</peripheral>

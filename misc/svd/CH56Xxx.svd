@@ -4,7 +4,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
   <vendor>WCH Ltd.</vendor>                                       <!-- device vendor name -->
   <vendorID>WCH</vendorID>                                        <!-- device vendor short name -->
   <name>CH569</name>
-  <version>1.0</version>
+  <version>1.1</version>
   <description>CH569 View File</description>
   <!--Bus Interface Properties-->
   <!--RISC-V is byte addressable-->
@@ -1221,7 +1221,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
 				<description>TMR0 FIFO register, only low 26 bit</description>
 				<addressOffset>0x10</addressOffset>
 				<size>32</size>
-				<access>read-only/write-only</access>
+				<access>read-write</access>
                 <resetValue>0x00000000</resetValue>
 				<fields>
 					<field>
@@ -1406,7 +1406,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
 				<description>TMR1 FIFO  only low 26 bit</description>
 				<addressOffset>0x10</addressOffset>
 				<size>32</size>
-				<access>read-only/write-only</access>
+				<access>read-write</access>
                 <resetValue>0x00000000</resetValue>
 				<fields>
 					<field>
@@ -1656,7 +1656,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
 				<description>TMR2 end count value, only low 26 bit</description>
 				<addressOffset>0x10</addressOffset>
 				<size>32</size>
-				<access>read-only/write-only</access>
+				<access>read-write</access>
                 <resetValue>0x00000000</resetValue>
 				<fields>
 					<field>
@@ -3522,7 +3522,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
 				<description>SPI1 work flag</description>
 				<addressOffset>0x05</addressOffset>
 				<size>8</size>
-				<access>read</access>
+				<access>read-write</access>
                 <resetValue>0x00</resetValue>
 				<fields>
 					<field>

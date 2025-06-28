@@ -3,7 +3,7 @@
   <vendor>WCH Ltd.</vendor><!-- device vendor name -->
   <vendorID>WCH</vendorID><!-- device vendor short name -->
   <name>CH643</name>
-  <version>1.2</version>
+  <version>1.3</version>
   <description>CH643 View File</description><!--Bus Interface Properties--><!--RISC-V is byte addressable-->
   <addressUnitBits>8</addressUnitBits><!--the maximum data bit width accessible within a single transfer-->
   <width>32</width><!--Register Default Properties-->
@@ -3747,210 +3747,210 @@
               <description>Interrupt flag  bit 0</description>
               <bitOffset>0</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
             <field>
               <name>IF1</name>
               <description>Interrupt flag  bit 1</description>
               <bitOffset>1</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF2</name>
               <description>Interrupt flag  bit 2</description>
               <bitOffset>2</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF3</name>
               <description>Interrupt flag  bit 3</description>
               <bitOffset>3</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF4</name>
               <description>Interrupt flag  bit 4</description>
               <bitOffset>4</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF5</name>
               <description>Interrupt flag  bit 5</description>
               <bitOffset>5</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF6</name>
               <description>Interrupt flag  bit 6</description>
               <bitOffset>6</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF7</name>
               <description>Interrupt flag  bit 7</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF8</name>
               <description>Interrupt flag  bit 8</description>
               <bitOffset>8</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF9</name>
               <description>Interrupt flag  bit 9</description>
               <bitOffset>9</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF10</name>
               <description>Interrupt flag  bit 10</description>
               <bitOffset>10</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF11</name>
               <description>Interrupt flag  bit 11</description>
               <bitOffset>11</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF12</name>
               <description>Interrupt flag  bit 12</description>
               <bitOffset>12</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF13</name>
               <description>Interrupt flag  bit 13</description>
               <bitOffset>13</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF14</name>
               <description>Interrupt flag  bit 14</description>
               <bitOffset>14</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF15</name>
               <description>Interrupt flag  bit 15</description>
               <bitOffset>15</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF16</name>
               <description>Interrupt flag  bit 16</description>
               <bitOffset>16</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF17</name>
               <description>Interrupt flag  bit 17</description>
               <bitOffset>17</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF18</name>
               <description>Interrupt flag  bit 18</description>
               <bitOffset>18</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF19</name>
               <description>Interrupt flag  bit 19</description>
               <bitOffset>19</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF20</name>
               <description>Interrupt flag  bit 20</description>
               <bitOffset>20</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF21</name>
               <description>Interrupt flag  bit 21</description>
               <bitOffset>21</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF22</name>
               <description>Interrupt flag  bit 22</description>
               <bitOffset>22</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF23</name>
               <description>Interrupt flag  bit 23</description>
               <bitOffset>23</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF24</name>
               <description>Interrupt flag  bit 24</description>
               <bitOffset>24</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF25</name>
               <description>Interrupt flag  bit 25</description>
               <bitOffset>25</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF26</name>
               <description>Interrupt flag  bit 26</description>
               <bitOffset>26</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF27</name>
               <description>Interrupt flag  bit 27</description>
               <bitOffset>27</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF28</name>
               <description>Interrupt flag  bit 28</description>
               <bitOffset>28</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>IF29</name>
               <description>Interrupt flag  bit 29</description>
               <bitOffset>29</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
           </fields>
         </register>
@@ -5918,7 +5918,7 @@
               <description>Early Wakeup Interrupt</description>
               <bitOffset>9</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/set</access>
+              <access>read-write</access>
             </field>
           </fields>
         </register>
@@ -5935,7 +5935,7 @@
               <description>Early Wakeup Interrupt Flag</description>
               <bitOffset>0</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
           </fields>
         </register>
@@ -6354,7 +6354,7 @@
               <description>Update interrupt flag</description>
               <bitOffset>0</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>CC1IF</name>
@@ -6362,7 +6362,7 @@
               flag</description>
               <bitOffset>1</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>CC2IF</name>
@@ -6370,7 +6370,7 @@
               flag</description>
               <bitOffset>2</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>CC3IF</name>
@@ -6378,7 +6378,7 @@
               flag</description>
               <bitOffset>3</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>CC4IF</name>
@@ -6386,28 +6386,28 @@
               flag</description>
               <bitOffset>4</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>COMIF</name>
               <description>COM interrupt flag</description>
               <bitOffset>5</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>TIF</name>
               <description>Trigger interrupt flag</description>
               <bitOffset>6</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>BIF</name>
               <description>Break interrupt flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>CC1OF</name>
@@ -6415,7 +6415,7 @@
               flag</description>
               <bitOffset>9</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>CC2OF</name>
@@ -6423,7 +6423,7 @@
               flag</description>
               <bitOffset>10</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
 			<field>
               <name>CC3OF</name>
@@ -6431,7 +6431,7 @@
               flag</description>
               <bitOffset>11</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>
             <field>
               <name>CC4OF</name>
@@ -6439,7 +6439,7 @@
               flag</description>
               <bitOffset>12</bitOffset>
               <bitWidth>1</bitWidth>
-			  <access>read/clear</access>
+			  <access>read-write</access>
             </field>     
           </fields>
         </register>
@@ -8114,7 +8114,7 @@
               (slave mode)</description>
               <bitOffset>1</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
 			<field>
               <name>BTF</name>
@@ -8160,7 +8160,7 @@
               <description>Bus error</description>
               <bitOffset>8</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
 			<field>
               <name>ARLO</name>
@@ -8168,28 +8168,28 @@
               mode)</description>
               <bitOffset>9</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
 			<field>
               <name>AF</name>
               <description>Acknowledge failure</description>
               <bitOffset>10</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
 			<field>
               <name>OVR</name>
               <description>Overrun/Underrun</description>
               <bitOffset>11</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>PECERR</name>
               <description>PEC Error in reception</description>
               <bitOffset>12</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>   
           </fields>
         </register>
@@ -9808,26 +9808,50 @@
           </fields>
         </register>
         <register>
-          <name>RDATAR_DR_ACT_DCG</name>
-          <displayName>RDATAR_DR_ACT_DCG</displayName>
-          <description>regular data register_start and discharge time register/TKEYx_DR/TKEYx_ACT_DCG</description>
+          <name>RDATAR_DR</name>
+          <displayName>RDATAR_DR</displayName>
+          <description>regular data register</description>
           <addressOffset>0x4C</addressOffset>
           <size>0x20</size>
-          <access>read-only_write-only</access>
+          <access>read-only</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>DATA0_7_TKACT_DCG</name>
-              <description>Regular data_Touch key start and discharge time register</description>
+              <name>DATA0_7</name>
+              <description>Regular data</description>
               <bitOffset>0</bitOffset>
               <bitWidth>8</bitWidth>
             </field>
-            <field>
+			<field>
               <name>DATA8_15</name>
               <description>Regular data</description>
               <bitOffset>8</bitOffset>
               <bitWidth>8</bitWidth>
             </field>
+			<field>
+              <name>ADC2DATA</name>
+              <description>converter data</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>16</bitWidth>
+            </field>			
+          </fields>
+        </register>
+        <register>
+          <name>ACT_DCG</name>
+          <displayName>ACT_DCG</displayName>
+          <description>start and discharge time register</description>
+          <addressOffset>0x4C</addressOffset>
+		  <alternateRegister>RDATAR_DR</alternateRegister>
+          <size>0x20</size>
+          <access>write-only</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>TKACT_DCG</name>
+              <description>Touch key start and discharge time register</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+            </field>			
           </fields>
         </register>
         <register>
@@ -9839,6 +9863,30 @@
           <access>read-write</access>
           <resetValue>0x00000003</resetValue>
           <fields>
+		      <field>
+                <name>AWD3_RES</name>
+                <description>Analog Watchdog 3 compares the results</description>
+                <bitOffset>19</bitOffset>
+                <bitWidth>1</bitWidth>
+              </field>
+		      <field>
+                <name>AWD2_RES</name>
+                <description>Analog Watchdog 2 compares the results</description>
+                <bitOffset>18</bitOffset>
+                <bitWidth>1</bitWidth>
+              </field>
+              <field>
+                <name>AWD1_RES</name>
+                <description>Analog Watchdog 1 compares the results</description>
+                <bitOffset>17</bitOffset>
+                <bitWidth>1</bitWidth>
+              </field>			  
+              <field>
+                <name>AWD0_RES</name>
+                <description>Analog Watchdog 0 compares the results</description>
+                <bitOffset>16</bitOffset>
+                <bitWidth>1</bitWidth>
+              </field>
             <field>
               <name>AWD3_RST_EN</name>
               <description>watchdog 3 output reset enable</description>
@@ -10183,16 +10231,16 @@
               <bitOffset>4</bitOffset>
               <bitWidth>1</bitWidth>
             </field>
+			<field>
+				<name>RB_UID_1_WIRE</name>
+				<description>USB single-line mode enable</description>
+				<bitOffset>5</bitOffset>
+			    <bitWidth>1</bitWidth>
+			</field>
             <field>
               <name>RB_UIE_DEV_NAK</name>
               <description>RB_UIE_DEV_NAK</description>
               <bitOffset>6</bitOffset>
-              <bitWidth>1</bitWidth>
-            </field>
-            <field>
-              <name>RB_UIE_DEV_SOF</name>
-              <description>RB_UIE_DEV_SOF</description>
-              <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
             </field>
           </fields>
@@ -11305,12 +11353,6 @@
               <name>MER</name>
               <description>Mass Erase</description>
               <bitOffset>2</bitOffset>
-              <bitWidth>1</bitWidth>
-            </field>
-            <field>
-              <name>OBPG</name>
-              <description>Option byte programming</description>
-              <bitOffset>4</bitOffset>
               <bitWidth>1</bitWidth>
             </field>
             <field>
@@ -13394,6 +13436,13 @@
               <access>read-write</access>
             </field>
 			<field>
+            <name>HYEN1</name>
+            <description>CMP1 hysteresis comparator switch</description>
+            <bitOffset>4</bitOffset>
+            <bitWidth>1</bitWidth>
+            <access>read-write</access>
+			</field>
+			<field>
               <name>EN2</name>
               <description>CMP2 Enable</description>
               <bitOffset>5</bitOffset>
@@ -13421,6 +13470,13 @@
               <bitWidth>1</bitWidth>
               <access>read-write</access>
             </field>
+			<field>
+            <name>HYEN2</name>
+            <description>CMP2 hysteresis comparator switch</description>
+            <bitOffset>9</bitOffset>
+            <bitWidth>1</bitWidth>
+            <access>read-write</access>
+			</field>
             <field>
               <name>EN3</name>
               <description>CMP3 Enable</description>
@@ -13449,7 +13505,13 @@
               <bitWidth>1</bitWidth>
               <access>read-write</access>
             </field>
-
+			<field>
+            <name>HYEN3</name>
+            <description>CMP3 hysteresis comparator switch</description>
+            <bitOffset>14</bitOffset>
+            <bitWidth>1</bitWidth>
+            <access>read-write</access>
+			</field>
             <field>
               <name>CMP_LOCK</name>
               <description>CMP_LOCK</description>

@@ -5,7 +5,7 @@
 	<vendor>WCH Ltd.</vendor>                                       <!-- device vendor name -->
 	<vendorID>WCH</vendorID>                                        <!-- device vendor short name -->
 	<name>CH564</name>
-	<version>1.0</version>
+	<version>1.1</version>
 	<description>CH564 View File</description>
 	<!--Bus
 	Interface Properties-->
@@ -153,12 +153,6 @@
 					<size>0x8</size>
 					<resetValue>0x00</resetValue>
 					<fields>
-						<field>
-							<name>RB_GLOB_FORCE_RST</name>
-							<description>global software reset</description>
-							<bitRange>[0:0]</bitRange>
-							<access>write-only</access>
-						</field>
 						<field>
 							<name>RB_GLOB_WDOG_EN</name>
 							<description>enable watch-dog reset</description>
@@ -2014,7 +2008,7 @@
 					<description>TMR0 FIFO register, only low 28 bit</description>
 					<addressOffset>0x10</addressOffset>
 					<size>0x20</size>
-					<access>read-only/write-only</access>
+					<access>read-write</access>
 					<resetValue>0x00000000</resetValue>
 					<fields>
 						<field>
@@ -2293,7 +2287,7 @@
 					<description>TMR1 FIFO register, only low 28 bit</description>
 					<addressOffset>0x10</addressOffset>
 					<size>0x20</size>
-					<access>read-only/write-only</access>
+					<access>read-write</access>
 					<resetValue>0x00000000</resetValue>
 					<fields>
 						<field>
@@ -2567,7 +2561,7 @@
 					<description>TMR2 FIFO register, only low 28 bit</description>
 					<addressOffset>0x10</addressOffset>
 					<size>0x20</size>
-					<access>read-only/write-only</access>
+					<access>read-write</access>
 					<resetValue>0x00000000</resetValue>
 					<fields>
 						<field>
@@ -2826,7 +2820,7 @@
 					<description>TMR3 FIFO register, only low 28 bit</description>
 					<addressOffset>0x10</addressOffset>
 					<size>0x20</size>
-					<access>read-only/write-only</access>
+					<access>read-write</access>
 					<resetValue>0x00000000</resetValue>
 					<fields>
 						<field>
@@ -4120,7 +4114,7 @@
 					<description>SPI0 FIFO register</description>
 					<addressOffset>0x10</addressOffset>
 					<size>8</size>
-					<access>read-only/write-only</access>
+					<access>read-write</access>
 					<resetValue>0x00</resetValue>
 					<fields>
 						<field>
@@ -4408,7 +4402,7 @@
 					<description>SPI1 FIFO register</description>
 					<addressOffset>0x10</addressOffset>
 					<size>8</size>
-					<access>read-only/write-only</access>
+					<access>read-write</access>
 					<resetValue>0x00</resetValue>
 					<fields>
 						<field>
@@ -6892,7 +6886,7 @@
 							<description>SLEEPONEXIT</description>
 							<bitOffset>1</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>write-write</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>SLEEPDEEP</name>
@@ -6906,14 +6900,14 @@
 							<description>WFITOWFE</description>
 							<bitOffset>3</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>write-write</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>SEVONPEND</name>
 							<description>SEVONPEND</description>
 							<bitOffset>4</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>write-write</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>SETEVENT</name>
@@ -6927,7 +6921,7 @@
 							<description>Lock_up</description>
 							<bitOffset>6</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>write-write</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>SYSRESET</name>
@@ -8570,7 +8564,7 @@
 							<description>Transmit status</description>
 							<bitOffset>0</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>TPSS</name>
@@ -8578,7 +8572,7 @@
 								status</description>
 							<bitOffset>1</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>TBUS</name>
@@ -8586,7 +8580,7 @@
 								status</description>
 							<bitOffset>2</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>TJTS</name>
@@ -8594,28 +8588,28 @@
 								status</description>
 							<bitOffset>3</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>ROS</name>
 							<description>Receive overflow status</description>
 							<bitOffset>4</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>TUS</name>
 							<description>Transmit underflow status</description>
 							<bitOffset>5</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>RS</name>
 							<description>Receive status</description>
 							<bitOffset>6</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>RBUS</name>
@@ -8623,7 +8617,7 @@
 								status</description>
 							<bitOffset>7</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>RPSS</name>
@@ -8631,7 +8625,7 @@
 								status</description>
 							<bitOffset>8</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>PWTS</name>
@@ -8639,42 +8633,42 @@
 								status</description>
 							<bitOffset>9</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>ETS</name>
 							<description>Early transmit status</description>
 							<bitOffset>10</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>PHYLINK_SR</name>
 							<description>read interrupt source</description>
 							<bitOffset>11</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>ERS</name>
 							<description>Early receive status</description>
 							<bitOffset>14</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>AIS</name>
 							<description>Abnormal interrupt summary</description>
 							<bitOffset>15</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>NIS</name>
 							<description>Normal interrupt summary</description>
 							<bitOffset>16</bitOffset>
 							<bitWidth>1</bitWidth>
-							<access>read/clear</access>
+							<access>read-write</access>
 						</field>
 						<field>
 							<name>RPS</name>

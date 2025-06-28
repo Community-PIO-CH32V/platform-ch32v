@@ -4,7 +4,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
   <vendor>WCH Ltd.</vendor>                                       <!-- device vendor name -->
   <vendorID>WCH</vendorID>                                        <!-- device vendor short name -->
   <name>CH32V203xx</name>
-  <version>1.1</version>
+  <version>1.2</version>
   <description>CH32V203xx View File</description>
   <!--Bus Interface Properties-->
   <!--RISC-V is byte addressable-->
@@ -15550,7 +15550,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <description>Transmit status</description>
               <bitOffset>0</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>TPSS</name>
@@ -15558,7 +15558,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               status</description>
               <bitOffset>1</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>TBUS</name>
@@ -15566,7 +15566,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               status</description>
               <bitOffset>2</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>TJTS</name>
@@ -15574,28 +15574,28 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               status</description>
               <bitOffset>3</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>ROS</name>
               <description>Receive overflow status</description>
               <bitOffset>4</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>TUS</name>
               <description>Transmit underflow status</description>
               <bitOffset>5</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>RS</name>
               <description>Receive status</description>
               <bitOffset>6</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>RBUS</name>
@@ -15603,7 +15603,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               status</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>RPSS</name>
@@ -15611,7 +15611,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               status</description>
               <bitOffset>8</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>PWTS</name>
@@ -15619,42 +15619,42 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               status</description>
               <bitOffset>9</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>ETS</name>
               <description>Early transmit status</description>
               <bitOffset>10</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>FBES</name>
               <description>Fatal bus error status</description>
               <bitOffset>13</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>ERS</name>
               <description>Early receive status</description>
               <bitOffset>14</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>AIS</name>
               <description>Abnormal interrupt summary</description>
               <bitOffset>15</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>NIS</name>
               <description>Normal interrupt summary</description>
               <bitOffset>16</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>RPS</name>
@@ -16749,9 +16749,9 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <bitWidth>1</bitWidth>
               <access>read-write</access>
             </field>
-			      <field>
-              <name>ADC_CLK_ADJ</name>
-              <description>ADC clock ADJ</description>
+			<field>
+              <name>ADCDUTY</name>
+              <description>ADC clock duty cycle adjustment</description>
               <bitOffset>31</bitOffset>
               <bitWidth>1</bitWidth>
               <access>read-write</access>
@@ -17656,7 +17656,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <description>DVP reset</description>
               <bitOffset>13</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>ETHMACRST</name>
@@ -17837,7 +17837,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <description>LOCKUP RESET</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>    
             <field>
               <name>ULLDOTRIM</name>
@@ -19010,7 +19010,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <access>read-write</access>
             </field>
             <field>
-              <name>PD01_RM</name>
+              <name>PD0PD1_RM</name>
               <description>Port D0/Port D1 mapping on
               OSCIN/OSCOUT</description>
               <bitOffset>15</bitOffset>
@@ -27821,17 +27821,17 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
           </fields>
         </register>
         <register>
-          <name>RDATAR_DR_ACT_DCG</name>
-          <displayName>RDATAR_DR_ACT_DCG</displayName>
-          <description>regular data register_start and discharge time register</description>
+          <name>RDATAR_DR</name>
+          <displayName>RDATAR_DR</displayName>
+          <description>regular data register</description>
           <addressOffset>0x4C</addressOffset>
           <size>0x20</size>
-          <access>read-only_write-only</access>
+          <access>read-only</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>DATA0_7_TKACT_DCG</name>
-              <description>Regular data_Touch key start and discharge time register</description>
+              <name>DATA0_7</name>
+              <description>Regular data</description>
               <bitOffset>0</bitOffset>
               <bitWidth>8</bitWidth>
             </field>
@@ -27840,7 +27840,31 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <description>Regular data</description>
               <bitOffset>8</bitOffset>
               <bitWidth>8</bitWidth>
-            </field>
+            </field>	
+			<field>
+              <name>ADC2DATA</name>
+              <description>converter data</description>
+              <bitOffset>16</bitOffset>
+              <bitWidth>16</bitWidth>
+            </field>			
+          </fields>
+        </register>
+        <register>
+          <name>ACT_DCG</name>
+          <displayName>ACT_DCG</displayName>
+          <description>start and discharge time register</description>
+          <addressOffset>0x4C</addressOffset>
+		  <alternateRegister>RDATAR_DR</alternateRegister>
+          <size>0x20</size>
+          <access>write-only</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>TKACT_DCG</name>
+              <description>Touch key start and discharge time register</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+            </field>			
           </fields>
         </register>
       </registers>
@@ -28654,17 +28678,17 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
           </fields>
         </register>
         <register>
-          <name>RDATAR_DR_ACT_DCG</name>
-          <displayName>RDATAR_DR_ACT_DCG</displayName>
-          <description>regular data register_start and discharge time register</description>
+          <name>RDATAR_DR</name>
+          <displayName>RDATAR_DR</displayName>
+          <description>regular data register</description>
           <addressOffset>0x4C</addressOffset>
           <size>0x20</size>
-          <access>read-only_write-only</access>
+          <access>read-only</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>DATA0_7_TKACT_DCG</name>
-              <description>Regular data_Touch key start and discharge time register</description>
+              <name>DATA0_7</name>
+              <description>Regular data</description>
               <bitOffset>0</bitOffset>
               <bitWidth>8</bitWidth>
             </field>
@@ -28673,7 +28697,25 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <description>Regular data</description>
               <bitOffset>8</bitOffset>
               <bitWidth>8</bitWidth>
-            </field>
+            </field>			
+          </fields>
+        </register>
+        <register>
+          <name>ACT_DCG</name>
+          <displayName>ACT_DCG</displayName>
+          <description>start and discharge time register</description>
+          <addressOffset>0x4C</addressOffset>
+		  <alternateRegister>RDATAR_DR</alternateRegister>
+          <size>0x20</size>
+          <access>write-only</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>TKACT_DCG</name>
+              <description>Touch key start and discharge time register</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>8</bitWidth>
+            </field>			
           </fields>
         </register>
       </registers>
@@ -31344,12 +31386,6 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <bitOffset>18</bitOffset>
               <bitWidth>1</bitWidth>
             </field>
-            <field>
-              <name>BER64</name>
-              <description>Block Erase 64K</description>
-              <bitOffset>19</bitOffset>
-              <bitWidth>1</bitWidth>
-            </field>
 			<field>
               <name>PGSTRT</name>
               <description>Page Programming Start</description>
@@ -31573,13 +31609,13 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
 						<name>RB_UH_DM_PIN__RB_UD_DM_PIN</name>
 						<description>ReadOnly: indicate current UDM pin level</description>
 						<bitRange>[4:4]</bitRange>
-						<access>read-opnly</access>
+						<access>read-only</access>
 					</field>
 					<field>
 						<name>RB_UH_DP_PIN__RB_UD_DP_PIN</name>
 						<description>USB device enable and internal pullup resistance enable</description>
 						<bitRange>[5:5]</bitRange>
-						<access>read-opnly</access>
+						<access>read-only</access>
 					</field>
 					<field>
 						<name>RB_UH_PD_DIS__RB_UD_PD_DIS</name>

@@ -4,7 +4,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
   <vendor>WCH Ltd.</vendor>                                       <!-- device vendor name -->
   <vendorID>WCH</vendorID>                                        <!-- device vendor short name -->
   <name>CH32V00Xxx</name>
-  <version>1.0</version>
+  <version>1.2</version>
   <description>CH32V00Xxx View File</description>
   <!--Bus Interface Properties-->
   <!--RISC-V is byte addressable-->
@@ -771,7 +771,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <description>System clock invalidation interrupt flag</description>
               <bitOffset>8</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-write0</access>
+              <access>read-write</access>
             </field>
             <field>
               <name>ADCRSTF</name>
@@ -865,7 +865,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <description>LOCKUP RESET</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read/clear</access>
+              <access>read-write</access>
             </field>     
             <field>
                <name>TIM2_DMA_REMAP</name>
@@ -6736,7 +6736,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
     <peripheral>
         <name>OPA</name>
         <description>OPA and CMP</description>
-        <groupName>SPI</groupName>
+        <groupName>OPA_CMP</groupName>
         <baseAddress>0x40024000</baseAddress>
         <addressBlock>
         <offset>0x0</offset>
@@ -7824,18 +7824,6 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <bitWidth>1</bitWidth>
             </field>			
             <field>
-              <name>RSTCAL</name>
-              <description>Reset calibration</description>
-              <bitOffset>3</bitOffset>
-              <bitWidth>1</bitWidth>
-            </field>
-            <field>
-              <name>CAL</name>
-              <description>A/D calibration</description>
-              <bitOffset>2</bitOffset>
-              <bitWidth>1</bitWidth>
-            </field>
-            <field>
               <name>CONT</name>
               <description>Continuous conversion</description>
               <bitOffset>1</bitOffset>
@@ -7846,24 +7834,6 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <description>A/D converter ON / OFF</description>
               <bitOffset>0</bitOffset>
               <bitWidth>1</bitWidth>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>SAMPTR1</name>
-          <displayName>SAMPTR1</displayName>
-          <description>sample time register 1</description>
-          <addressOffset>0xC</addressOffset>
-          <size>0x20</size>
-          <access>read-write</access>
-          <resetValue>0x00000000</resetValue>
-          <fields>
-            <field>
-              <name>SMP10</name>
-              <description>Channel 10 sample time
-              selection</description>
-              <bitOffset>0</bitOffset>
-              <bitWidth>3</bitWidth>
             </field>
           </fields>
         </register>
@@ -8260,29 +8230,40 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
           </fields>
         </register>
         <register>
-          <name>IDATAR1_TKEY_CHG</name>
-          <displayName>IDATAR1_TKEY_CHG</displayName>
-          <description>injected data register 1_Charge time configuration register</description>
+          <name>IDATAR1</name>
+          <displayName>IDATAR1</displayName>
+          <description>injected data register 1</description>
           <addressOffset>0x3C</addressOffset>
           <size>0x20</size>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>JDATA0_10_TKCHARGE</name>
-              <description>Injected data_Touch key charge data offset for injected channel x</description>
-              <bitOffset>0</bitOffset>
-              <bitWidth>11</bitWidth>
-              <access>read-only_write-only</access>
-            </field>
-            <field>
-              <name>JDATA11_15</name>
+              <name>JDATA0_15</name>
               <description>Injected data</description>
-              <bitOffset>11</bitOffset>
-              <bitWidth>5</bitWidth>
-              <access>read-only</access>			  
+              <bitOffset>0</bitOffset>
+              <bitWidth>16</bitWidth>
+              <access>read-only</access>
             </field>
           </fields>
         </register>
+        <register>
+          <name>TKEY_CHG</name>
+          <displayName>TKEY_CHG</displayName>
+		  <alternateRegister>IDATAR1</alternateRegister>		  
+          <description>Charge time configuration register</description>
+          <addressOffset>0x3C</addressOffset>
+          <size>0x20</size>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>TKCHARGE</name>
+              <description>Touch key charge data offset for injected channel x</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>11</bitWidth>
+              <access>write-only</access>
+            </field>
+          </fields>
+        </register>		
         <register>
           <name>IDATAR2</name>
           <displayName>IDATAR2</displayName>
@@ -8335,25 +8316,37 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
           </fields>
         </register>
         <register>
-          <name>RDATAR_TKEY_DISCHG_TKEY_DR</name>
-          <displayName>RDATAR_TKEY_DISCHG_TKEY_DR</displayName>
-          <description>regular data register_start and discharge time register_tkey data register</description>
+          <name>RDATAR_TKEY_DR</name>
+          <displayName>RDATAR_TKEY_DR</displayName>
+          <description>regular data register_tkey data register</description>
           <addressOffset>0x4C</addressOffset>
           <size>0x20</size>
-          <access>read-only_write-only</access>
+          <access>read-only</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
-              <name>DATA0_10_TKACT_DCG_DATA</name>
+              <name>DATA0_15_DATA</name>
               <description>Regular data_converted data</description>
               <bitOffset>0</bitOffset>
-              <bitWidth>11</bitWidth>
+              <bitWidth>16</bitWidth>
             </field>
+          </fields>
+        </register>
+        <register>
+          <name>TKEY_DISCHG</name>
+          <displayName>TKEY_DISCHG</displayName>
+		  <alternateRegister>RDATAR_TKEY_DR</alternateRegister>
+          <description>start and discharge time register</description>
+          <addressOffset>0x4C</addressOffset>
+          <size>0x20</size>
+          <access>write-only</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
             <field>
-              <name>DATA11_15_DATA</name>
-              <description>Regular data_converted data</description>
-              <bitOffset>11</bitOffset>
-              <bitWidth>5</bitWidth>
+              <name>TKACT_DCG</name>
+              <description>Touch key start and discharge time register</description>
+              <bitOffset>0</bitOffset>
+              <bitWidth>11</bitWidth>
             </field>
           </fields>
         </register>
@@ -8683,12 +8676,6 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocatio
               <name>MER</name>
               <description>Mass Erase</description>
               <bitOffset>2</bitOffset>
-              <bitWidth>1</bitWidth>
-            </field>
-            <field>
-              <name>OBPG</name>
-              <description>Option byte programming</description>
-              <bitOffset>4</bitOffset>
               <bitWidth>1</bitWidth>
             </field>
             <field>

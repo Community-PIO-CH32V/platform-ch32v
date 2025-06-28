@@ -6,7 +6,7 @@
     <vendorID>WCH</vendorID>    <!-- device vendor short name -->
     <name>CH583SFR</name>    <!-- name of part-->
     <series>CH58x</series>    <!-- device series the device belongs to -->
-    <version>1.0</version>    <!-- version of this description, adding CMSIS-SVD 1.1 tags -->
+    <version>1.1</version>    <!-- version of this description, adding CMSIS-SVD 1.1 tags -->
     <description>WCH wireless MCU CH58x Family Support, Drivers</description>
     <cpu>        <!-- details about the cpu embedded in the device -->
         <name>RISC-V</name>
@@ -189,7 +189,7 @@
                     <description>RWA, sleep clock off control byte 0, SAM</description>
                     <addressOffset>0x0C</addressOffset>
                     <size>8</size>
-                    <access>Read or  Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -239,7 +239,7 @@
                     <description>RWA, sleep clock off control byte 1, SAM</description>
                     <addressOffset>0x0D</addressOffset>
                     <size>8</size>
-                    <access>Read or  Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -279,7 +279,7 @@
                     <description>RWA, wake control, SAM</description>
                     <addressOffset>0x0E</addressOffset>
                     <size>8</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x20</resetValue>
                     <fields>
                         <field>
@@ -319,7 +319,7 @@
                     <description>RWA, peripherals power down control, SAM</description>
                     <addressOffset>0x0F</addressOffset>
                     <size>8</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -519,7 +519,7 @@
                     <description>RWA, power plan before sleep instruction, SAM</description>
                     <addressOffset>0x20</addressOffset>
                     <size>16</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x11DF</resetValue>
                     <fields>
                         <field>
@@ -581,7 +581,7 @@
                     <description>RWA, aux power adjust control, SAM</description>
                     <addressOffset>0x22</addressOffset>
                     <size>8</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -603,7 +603,7 @@
                     <description>RWA, battery voltage detector control, SAM</description>
                     <addressOffset>0x24</addressOffset>
                     <size>8</size>
-                    <access>Read / Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -633,7 +633,7 @@
                     <description>RWA, battery voltage detector configuration, SAM</description>
                     <addressOffset>0x25</addressOffset>
                     <size>8</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x01</resetValue>
                     <fields>
                         <field>
@@ -668,7 +668,7 @@
                     <description>RWA, internal 32KHz oscillator tune control, SAM</description>
                     <addressOffset>0x2C</addressOffset>
                     <size>16</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x1011</resetValue>
                     <fields>
                         <field>
@@ -683,7 +683,7 @@
                     <description>RWA, external 32KHz oscillator tune control, SAM</description>
                     <addressOffset>0x2E</addressOffset>
                     <size>8</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0xC3</resetValue>
                     <fields>
                         <field>
@@ -703,7 +703,7 @@
                     <description>RWA, 32KHz oscillator configure</description>
                     <addressOffset>0x2F</addressOffset>
                     <size>8</size>
-                    <access>Read or  Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0xX2</resetValue>
                     <fields>
                         <field>
@@ -777,7 +777,7 @@
                     <description>RWA, RTC mode control, SAM</description>
                     <addressOffset>0x31</addressOffset>
                     <size>8</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x02</resetValue>
                     <fields>
                         <field>
@@ -817,7 +817,7 @@
                     <description>RWA, RTC trigger value, SAM</description>
                     <addressOffset>0x34</addressOffset>
                     <size>32</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x00000000</resetValue>
                     <fields>
                         <field>
@@ -877,7 +877,7 @@
                     <description>WO, safe accessing sign register, must write SAFE_ACCESS_SIG1 then SAFE_ACCESS_SIG2 to enter safe accessing mode</description>
                     <addressOffset>0x40</addressOffset>
                     <size>8</size>
-                    <access>read/write</access>
+                    <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -907,7 +907,7 @@
                     <description>RF, chip ID register, always is ID_CH58*</description>
                     <addressOffset>0x41</addressOffset>
                     <size>8</size>
-                    <access>-Read only for Fixed value</access>
+                    <access>Read-only</access>
                     <resetValue>0x83</resetValue>
                     <fields>
                         <field>
@@ -922,7 +922,7 @@
                     <description>RF, safe accessing ID register, always 0x0C</description>
                     <addressOffset>0x42</addressOffset>
                     <size>8</size>
-                    <access>-Read only for Fixed value</access>
+                    <access>Read-only</access>
                     <resetValue>0x0C</resetValue>
                     <fields>
                         <field>
@@ -948,10 +948,10 @@
                     </fields>
                 </register>
                 <register>
-                    <name>R8_RESET_STATUS/R8_GLOB_ROM_CFG</name>
+                    <name>R8_RESET_STATUS_R8_GLOB_ROM_CFG</name>
                     <description>RWA, reset status, SAM or flash ROM configuration</description>
                     <addressOffset>0x44</addressOffset>
-                    <access>-Read only for Fixed value</access>
+                    <access>Read-only</access>
                     <size>8</size>
                     <resetValue>0x01</resetValue>
                     <fields>
@@ -1026,7 +1026,7 @@
                     <name>R8_RST_WDOG_CTRL</name>
                     <description>RWA, reset and watch-dog control, SAM</description>
                     <addressOffset>0x46</addressOffset>
-                    <access> Read or Write under safe Accessing mode </access>
+                    <access>Read-Write</access>
                     <size>8</size>
                     <resetValue>0x00</resetValue>
                     <fields>
@@ -1073,7 +1073,7 @@
                     <addressOffset>0x4B</addressOffset>
                     <size>8</size>
                     <resetValue>0x4A</resetValue>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>read-write</access>
                     <fields>
                         <field>
                             <name>RB_PLL_CFG_DAT</name>
@@ -1094,7 +1094,7 @@
                     <description>RWA, external 32MHz oscillator tune control, SAM</description>
                     <addressOffset>0x4E</addressOffset>
                     <size>8</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x32</resetValue>
                     <fields>
                         <field>
@@ -1141,7 +1141,7 @@
                     <description>RWA, oscillator frequency calibration control, SAM</description>
                     <addressOffset>0x53</addressOffset>
                     <size>8</size>
-                    <access>Read or Write under safe Accessing mode</access>
+                    <access>Read-Write</access>
                     <resetValue>0x09</resetValue>
                     <fields>
                         <field>
@@ -1181,14 +1181,14 @@
                     <description>RO, oscillator frequency calibration overflow times</description>
                     <addressOffset>0x52</addressOffset>
                     <size>8</size>
-                    <access>Read Only</access>
+                    <access>Read-only</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
                             <name>R8_OSC_CAL_OV_CNT</name>
                             <description>RO, oscillator frequency calibration overflow times</description>
                             <bitRange>[7:0]</bitRange>
-                            <access>read only</access>
+                            <access>read-only</access>
                         </field>
                     </fields>
                 </register>
@@ -1384,7 +1384,7 @@
                     <description>RO, ADC DMA control and status register</description>
                     <addressOffset>0x60</addressOffset>
                     <size>8</size>
-                    <access>write-read</access>
+                    <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -1399,7 +1399,7 @@
                     <description>RW, ADC DMA control</description>
                     <addressOffset>0x61</addressOffset>
                     <size>8</size>
-                    <access>write-read</access>
+                    <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -1439,7 +1439,7 @@
                     <description>RO, ADC interrupt flag</description>
                     <addressOffset>0x62</addressOffset>
                     <size>8</size>
-                    <access>write-read</access>
+                    <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -1459,7 +1459,7 @@
                     <description>RO, ADC interrupt flag</description>
                     <addressOffset>0x63</addressOffset>
                     <size>8</size>
-                    <access>write-read</access>
+                    <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -1489,7 +1489,7 @@
                     <description>RW, ADC DMA begin address</description>
                     <addressOffset>0x68</addressOffset>
                     <size>8</size>
-                    <access>write-read</access>
+                    <access>read-write</access>
                     <resetValue>0x00000000</resetValue>
                     <fields>
                         <field>
@@ -1504,7 +1504,7 @@
                     <description>RW, ADC DMA end address</description>
                     <addressOffset>0x6C</addressOffset>
                     <size>8</size>
-                    <access>write-read</access>
+                    <access>read-write</access>
                     <resetValue>0x00000000</resetValue>
                     <fields>
                         <field>
@@ -1973,7 +1973,7 @@
                     <description>RW1, TMR0 interrupt flag</description>
                     <addressOffset>0x06</addressOffset>
                     <size>8</size>
-                    <access>Read / Write 1 to Clear</access>
+                    <access>Read-Write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -2182,7 +2182,7 @@
                     <addressOffset>0x06</addressOffset>
                     <size>8</size>
                     <resetValue>0x00</resetValue>
-                    <access>Read or Write 1 to Clear</access>
+                    <access>Read-Write</access>
                     <fields>
                         <field>
                             <name>RB_TMR_IF_CYC_END</name>
@@ -2514,7 +2514,7 @@
                     <description>RO, TMR2 FIFO register, only low 26 bit</description>
                     <addressOffset>0x10</addressOffset>
                     <size>32</size>
-                    <access>write-only or read-only</access>
+                    <access>read-write</access>
                     <resetValue>0x00000000</resetValue>
                     <fields>
                         <field>
@@ -2667,7 +2667,7 @@
                     <description>RW1, TMR3 interrupt flag</description>
                     <addressOffset>0x06</addressOffset>
                     <size>8</size>
-                    <access>Read or Write 1 to Clear</access>
+                    <access>Read-Write</access>
                     <resetValue>0x00</resetValue>
                     <fields>
                         <field>
@@ -2747,7 +2747,7 @@
                     <description>RO/WO, TMR3 FIFO register, only low 26 bit</description>
                     <addressOffset>0x10</addressOffset>
                     <size>32</size>
-                    <access>read-only or write-only</access>
+                    <access>read-write</access>
                     <resetValue>0x00000000</resetValue>
                     <fields>
                         <field>
@@ -6566,11 +6566,6 @@
                             <name>RB_UIE_DEV_NAK</name>
                             <description>enable interrupt for NAK responded for USB device mode</description>
                             <bitRange>[6:6]</bitRange>
-                        </field>
-                        <field>
-                            <name>RB_UIE_DEV_SOF</name>
-                            <description>enable interrupt for SOF received for USB device mode</description>
-                            <bitRange>[7:7]</bitRange>
                         </field>
                     </fields>
                 </register>
