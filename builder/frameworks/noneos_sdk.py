@@ -8,6 +8,8 @@ board = env.BoardConfig()
 # convert MCU name (e.g. "ch32v307") to series (e.g. "ch32v30x")
 if board.get("build.series", "") in ("ch32x035"):
     chip_series: str = board.get("build.series", "")
+elif board.get("build.mcu", "").lower().startswith("ch32v00") and not board.get("build.mcu", "").lower().startswith("ch32v003"):
+    chip_series = "ch32v00Xx"
 else:
     chip_series = board.get("build.series", "")[0:-1].lower() + "x"
 # import default build settings
@@ -39,9 +41,13 @@ def get_linker_script(mcu: str):
     ram = board.get("upload.maximum_ram_size", 0)
     flash = board.get("upload.maximum_size", 0)
     flash_start = int(board.get("upload.offset_address", "0x00000000"), 0)
-    # linker scripts use 256 bytes of stack only for v003 series, otherwise
+    # linker scripts use 256 bytes or 512 of stack only for v00x series, otherwise
     # always 2K.
-    stack_size = 256 if mcu.startswith("ch32v003") else 2048
+    stack_size = 2048
+    if ram <= 2048: # ch32v003
+        stack_size = 256
+    elif ram <= 4096: # some ch32v00x
+        stack_size = 512
     # custom stack size wanted?
     if board.get("build.stack_size", "") != "":
         stack_size = int(board.get("build.stack_size"))
@@ -83,8 +89,10 @@ def get_startup_filename(board):
             startup_file = v
     if startup_file is None:
         chip_name = str(board.get("build.mcu", "")).lower()
-        if chip_name.startswith("ch32v0"):
+        if chip_name.startswith("ch32v003"):
             return "startup_ch32v00x.S"
+        elif chip_name.startswith("ch32v00"):
+            return "startup_ch32v00Xx.S"
         elif chip_name.startswith("ch32v1"):
             return "startup_ch32v10x.S"
         elif chip_name.startswith("ch5"):

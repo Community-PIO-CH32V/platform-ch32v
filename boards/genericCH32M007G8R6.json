@@ -1,0 +1,44 @@
+{
+  "build": {
+    "extra_flags": "-DCH32M007G8 -DCH32M00X -DCH32M00x -DCH32M007 -DCH32V007_M007",
+    "f_cpu": "48000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32e",
+    "march": "rv32ecxw",
+    "mcu": "ch32m007g8r6",
+    "series": "ch32m007"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32M007xx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "freertos",
+    "harmony-liteos",
+    "rt-thread",
+    "tencent-os"
+  ],
+  "name": "Generic CH32M007G8R6",
+  "upload": {
+    "maximum_ram_size": 8192,
+    "maximum_size": 66560,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp",
+      "wlink"
+    ]
+  },
+  "url": "http://www.wch-ic.com/products/CH32M007.html",
+  "vendor": "W.CH"
+}

@@ -1,0 +1,41 @@
+{
+  "build": {
+    "extra_flags": "-DCH32V005E6 -DCH32V00X -DCH32V00x -DCH32V005 -DCH32V00Xx",
+    "f_cpu": "48000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32e",
+    "march": "rv32ecxw",
+    "mcu": "ch32v005e6r6",
+    "series": "ch32v005"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32V00Xxx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "ch32v003fun"
+  ],
+  "name": "Generic CH32V005E6R6",
+  "upload": {
+    "maximum_ram_size": 6144,
+    "maximum_size": 32768,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp",
+      "wlink"
+    ]
+  },
+  "url": "http://www.wch-ic.com/products/CH32V005.html",
+  "vendor": "W.CH"
+}

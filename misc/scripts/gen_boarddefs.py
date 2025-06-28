@@ -25,7 +25,8 @@ class ChipInfo:
             "CH32V20x_D8": ["CH32V203RB"],
             "CH32V20x_D8W": ["CH32V208GB", "CH32V208CB", "CH32V208RB", "CH32V208WB"],
             "CH32V30x_D8": ["CH32V303CB", "CH32V303RB", "CH32V303RC", "CH32V303VC"],
-            "CH32V30x_D8C": ["CH32V305FB", "CH32V305RB", "CH32V307RC", "CH32V307WC", "CH32V307VC", "CH32V317"]
+            "CH32V30x_D8C": ["CH32V305FB", "CH32V305RB", "CH32V307RC", "CH32V307WC", "CH32V307VC", "CH32V317"],
+            "CH32V007_M007": ["CH32V007", "CH32M007"],
         }
         for dev_class, devs in dev_classes.items():
             if any([self.name.upper().startswith(chip) for chip in devs]):
@@ -34,7 +35,7 @@ class ChipInfo:
         # same as ch58x
         name_upper = self.name.upper()
         if any([name_upper.startswith("CH32V103"),
-                name_upper.startswith("CH32V003"),
+                name_upper.startswith("CH32V00"),
                 name_upper.startswith("CH56"),
                 name_upper.startswith("CH57"),
                 name_upper.startswith("CH58"),
@@ -61,7 +62,8 @@ class ChipInfo:
             return ("rv32imacxw", "ilp32")
         elif name_lower.startswith("ch32v1"):
             return ("rv32imac", "ilp32")
-        elif name_lower.startswith("ch32v0"):
+        # applies to ch32v002, 003, 004, 005, 007, 007, M007
+        elif name_lower.startswith("ch32v0") or name_lower.startswith("ch32m0"):
             return ("rv32ecxw", "ilp32e")
         # applies to ch56x, ch57x, ch58x
         elif name_lower.startswith("ch5"):
@@ -94,6 +96,8 @@ class ChipInfo:
     def get_svd_file(self) -> str:
         if self.name.lower().startswith("ch32v317"):
             return "CH32V317xx.svd"
+        if self.name.lower().startswith("ch32v00") and not self.name.lower().startswith("ch32v003"):
+            return "CH32V00Xxx.svd"
         return self.exact_series().upper() + "xx.svd"
 
 chip_db: List[ChipInfo] = [
@@ -119,11 +123,38 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH591F", 192+24+32, 24+2, 60, "QFN28"),
     ChipInfo("CH591D", 192+24+32, 24+2, 60, "QFN20"),
     ChipInfo("CH591R", 192+24+32, 24+2, 60, "TSSOP16"),
+    # "CH32V00X" actually V002, V004, V005, V006, V007
+    ChipInfo("CH32V002J4M6", 16, 2, 48, "SOP8"),
+    ChipInfo("CH32V002D4U6", 16, 2, 48, "QFN12"),
+    ChipInfo("CH32V002A4M6", 16, 2, 48, "SOP16"),
+    ChipInfo("CH32V002F4U6", 16, 2, 48, "QFN20"),
+    ChipInfo("CH32V002F4P6", 16, 2, 48, "TSSOP20"),
     # CH32V003
     ChipInfo("CH32V003F4P6", 16, 2, 48, "TSSOP20"),
     ChipInfo("CH32V003F4U6", 16, 2, 48, "QFN20"),
     ChipInfo("CH32V003A4M6", 16, 2, 48, "SOP16"),
     ChipInfo("CH32V003J4M6", 16, 2, 48, "SOP8"),
+    # CH32V004
+    ChipInfo("CH32V004F6P1", 32, 6, 48, "TSSOP20"),
+    ChipInfo("CH32V004F6U1", 32, 6, 48, "QFN20"),
+    # CH32V005
+    ChipInfo("CH32V005D6U6", 32, 6, 48, "QFN12"),
+    ChipInfo("CH32V005F6P6", 32, 6, 48, "TSSOP20"),
+    ChipInfo("CH32V005F6U6", 32, 6, 48, "QFN20"),
+    ChipInfo("CH32V005E6R6", 32, 6, 48, "QFN20"),
+    # CH32V006
+    ChipInfo("CH32V006F8P6", 62, 8, 48, "TSSOP20"),
+    ChipInfo("CH32V006F8U6", 62, 8, 48, "QFN20"),
+    ChipInfo("CH32V006F4P6", 16, 4, 48, "QFN20"),
+    ChipInfo("CH32V006E8R6", 62, 8, 48, "QFN20"),
+    ChipInfo("CH32V006K8U6", 62, 8, 48, "QFN32"),
+    # CH32V007
+    ChipInfo("CH32V007E8R6", 62, 8, 48, "QSOP24"),
+    ChipInfo("CH32V007K8U6", 62, 8, 48, "QFN32"),
+    # CH32M007
+    ChipInfo("CH32M007E8R6", 65, 8, 48, "QSOP24"),
+    ChipInfo("CH32M007E8U6", 65, 8, 48, "QFN26C3"),
+    ChipInfo("CH32M007G8R6", 65, 8, 48, "QSOP28"),
     # CH32V103
     ChipInfo("CH32V103C6T6", 32, 10, 72, "LQFP48"),
     ChipInfo("CH32V103C8U6", 64, 20, 72, "QFN48"),
@@ -353,6 +384,10 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
             f"-D{info.name[0:len('ch32vxx')]}x",
             f"-D{info.name[0:len('ch32vxxx')]}",
         ]
+        if chip_l.startswith("ch32v00") and not chip_l.startswith("ch32v003"):
+            extra_flags += [
+                f"-DCH32V00Xx",
+            ]
     classification_macro = info.get_classification_macro()
     if classification_macro is not None:
         extra_flags += ["-D" + classification_macro]

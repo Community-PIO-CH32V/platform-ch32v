@@ -1,0 +1,41 @@
+{
+  "build": {
+    "extra_flags": "-DCH32V007E8 -DCH32V00X -DCH32V00x -DCH32V007 -DCH32V00Xx -DCH32V007_M007",
+    "f_cpu": "48000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32e",
+    "march": "rv32ecxw",
+    "mcu": "ch32v007e8r6",
+    "series": "ch32v007"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32V00Xxx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "ch32v003fun"
+  ],
+  "name": "Generic CH32V007E8R6",
+  "upload": {
+    "maximum_ram_size": 8192,
+    "maximum_size": 63488,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp",
+      "wlink"
+    ]
+  },
+  "url": "http://www.wch-ic.com/products/CH32V007.html",
+  "vendor": "W.CH"
+}
