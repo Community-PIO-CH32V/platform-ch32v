@@ -25,7 +25,7 @@ class ChipInfo:
             "CH32V20x_D8": ["CH32V203RB"],
             "CH32V20x_D8W": ["CH32V208GB", "CH32V208CB", "CH32V208RB", "CH32V208WB"],
             "CH32V30x_D8": ["CH32V303CB", "CH32V303RB", "CH32V303RC", "CH32V303VC"],
-            "CH32V30x_D8C": ["CH32V305FB", "CH32V305RB", "CH32V307RC", "CH32V307WC", "CH32V307VC", "CH32V317"],
+            "CH32V30x_D8C": ["CH32V305", "CH32V307", "CH32V317"],
             "CH32V007_M007": ["CH32V007", "CH32M007"],
         }
         for dev_class, devs in dev_classes.items():
@@ -183,6 +183,8 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH32V303RCT6", 256, 64, 144, "LQFP64M"),
     ChipInfo("CH32V303VCT6", 256, 64, 144, "LQFP100"),
     ChipInfo("CH32V305FBP6", 128, 32, 144, "TSSOP20"),
+    ChipInfo("CH32V305GBU6", 128, 32, 144, "QFN28"),
+    ChipInfo("CH32V305CCT6", 256, 64, 144, "LQFP48"),
     ChipInfo("CH32V305RBT6", 128, 32, 144, "LQFP64M"),
     ChipInfo("CH32V307RCT6", 256, 64, 144, "LQFP64M"),
     ChipInfo("CH32V307WCU6", 256, 64, 144, "QFN64X8"),

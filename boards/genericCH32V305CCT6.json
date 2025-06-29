@@ -1,0 +1,45 @@
+{
+  "build": {
+    "extra_flags": "-DCH32V305CC -DCH32V30X -DCH32V30x -DCH32V305 -DCH32V30x_D8C",
+    "f_cpu": "144000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imacxw",
+    "mcu": "ch32v305cct6",
+    "series": "ch32v305"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32V305xx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "freertos",
+    "harmony-liteos",
+    "rt-thread",
+    "tencent-os",
+    "ch32v003fun"
+  ],
+  "name": "Generic CH32V305CCT6",
+  "upload": {
+    "maximum_ram_size": 65536,
+    "maximum_size": 262144,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp",
+      "wlink"
+    ]
+  },
+  "url": "http://www.wch-ic.com/products/CH32V305.html",
+  "vendor": "W.CH"
+}
