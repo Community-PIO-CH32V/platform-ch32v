@@ -1,12 +1,14 @@
-#if defined(CH32V00X)
+#if defined(CH32V003)
 #include <ch32v00x.h>
+#elif defined (CH32V00Xx) /* v00{2,4,5,6,7}, m007 */
+#include <ch32v00X.h>
 #elif defined(CH32V10X)
 #include <ch32v10x.h>
 #elif defined(CH32V20X)
 #include <ch32v20x.h>
 #elif defined(CH32V30X) || defined(CH32V31X)
 #include <ch32v30x.h>
-#elif defined(CH32X035) || defined(CH32X033)
+#elif defined (CH32X03X) /* both X033 and X035 */
 #include <ch32x035.h>
 #elif defined(CH32L10X)
 #include <ch32l103.h>
