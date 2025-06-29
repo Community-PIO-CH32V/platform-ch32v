@@ -1,6 +1,6 @@
 #if defined(CH32V003)
 #include <ch32v00x.h>
-#elif defined (CH32V00Xx) // ch32v00x except v003
+#elif defined (CH32V00Xx) /* l10x, v00{2,4,5,6,7}, m007 */
 #include <ch32v00X.h>
 #elif defined(CH32V10X)
 #include <ch32v10x.h>
@@ -17,7 +17,7 @@
 
 #define BLINKY_GPIO_PORT GPIOC
 #define BLINKY_GPIO_PIN GPIO_Pin_1
-#if defined(CH32L10X) || defined (CH32V00Xx)
+#if defined(CH32L10X) || defined (CH32V00Xx) // l10x, v00{2,4,5,6,7}, m007
 #define BLINKY_CLOCK_ENABLE RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOC, ENABLE)
 #else
 #define BLINKY_CLOCK_ENABLE RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE)
