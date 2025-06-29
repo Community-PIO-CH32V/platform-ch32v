@@ -26,7 +26,7 @@
   ],
   "name": "Generic CH32V002J4M6",
   "upload": {
-    "maximum_ram_size": 2048,
+    "maximum_ram_size": 4096,
     "maximum_size": 16384,
     "protocol": "wch-link",
     "protocols": [

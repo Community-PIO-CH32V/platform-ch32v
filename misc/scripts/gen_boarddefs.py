@@ -139,11 +139,11 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH643L", 62, 20, 48, "LQFP48"),
     ChipInfo("CH643U", 62, 20, 48, "QSOP28"),
     # "CH32V00X" actually V002, V004, V005, V006, V007
-    ChipInfo("CH32V002J4M6", 16, 2, 48, "SOP8"),
-    ChipInfo("CH32V002D4U6", 16, 2, 48, "QFN12"),
-    ChipInfo("CH32V002A4M6", 16, 2, 48, "SOP16"),
-    ChipInfo("CH32V002F4U6", 16, 2, 48, "QFN20"),
-    ChipInfo("CH32V002F4P6", 16, 2, 48, "TSSOP20"),
+    ChipInfo("CH32V002J4M6", 16, 4, 48, "SOP8"),
+    ChipInfo("CH32V002D4U6", 16, 4, 48, "QFN12"),
+    ChipInfo("CH32V002A4M6", 16, 4, 48, "SOP16"),
+    ChipInfo("CH32V002F4U6", 16, 4, 48, "QFN20"),
+    ChipInfo("CH32V002F4P6", 16, 4, 48, "TSSOP20"),
     # CH32V003
     ChipInfo("CH32V003F4P6", 16, 2, 48, "TSSOP20"),
     ChipInfo("CH32V003F4U6", 16, 2, 48, "QFN20"),
