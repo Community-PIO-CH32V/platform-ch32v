@@ -11,6 +11,8 @@ if board.get("build.series", "") in ("ch32x035"):
     chip_series: str = board.get("build.series", "")
 elif (mcu_l.startswith("ch32v00") and not mcu_l.lower().startswith("ch32v003")) or mcu_l.startswith("ch32m007"):
     chip_series = "ch32v00Xx"
+elif (mcu_l.startswith("ch6")):
+    chip_series = mcu_l[0:len("ch6xx")]
 else:
     chip_series = board.get("build.series", "")[0:-1].lower() + "x"
 # import default build settings
@@ -96,7 +98,7 @@ def get_startup_filename(board):
             return "startup_ch32v00Xx.S"
         elif chip_name.startswith("ch32v1"):
             return "startup_ch32v10x.S"
-        elif chip_name.startswith("ch5"):
+        elif chip_name.startswith("ch5") or chip_name.startswith("ch6"):
             return "startup_" + board.get("build.series").lower()[0:len("ch5xx")] + ".S"
     if startup_file is None:
         print("Failed to find startup file for board " + str(board))

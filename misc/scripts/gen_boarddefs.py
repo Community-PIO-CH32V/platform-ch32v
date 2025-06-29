@@ -40,6 +40,7 @@ class ChipInfo:
                 name_upper.startswith("CH57"),
                 name_upper.startswith("CH58"),
                 name_upper.startswith("CH59"),
+                name_upper.startswith("CH64"),
                 name_upper.startswith("CH32X03"),
                 name_upper.startswith("CH32L10")
                 ]):
@@ -63,8 +64,10 @@ class ChipInfo:
         elif name_lower.startswith("ch32v1"):
             return ("rv32imac", "ilp32")
         # applies to ch32v002, 003, 004, 005, 007, 007, M007
-        elif name_lower.startswith("ch32v0") or name_lower.startswith("ch32m0"):
+        elif name_lower.startswith("ch32v0") or name_lower.startswith("ch32m0") or name_lower.startswith("ch641"):
             return ("rv32ecxw", "ilp32e")
+        elif name_lower.startswith("ch643"):
+            return ("rv32imacxw", "ilp32")
         # applies to ch56x, ch57x, ch58x
         elif name_lower.startswith("ch5"):
             return ("rv32imac", "ilp32")
@@ -98,6 +101,8 @@ class ChipInfo:
             return "CH32V317xx.svd"
         if self.name.lower().startswith("ch32v00") and not self.name.lower().startswith("ch32v003"):
             return "CH32V00Xxx.svd"
+        if self.name.lower().startswith("ch5") or self.name.lower().startswith("ch6"):
+            return self.name.upper()[0:len("chxxx")] + ".svd"
         return self.exact_series().upper() + "xx.svd"
 
 chip_db: List[ChipInfo] = [
@@ -123,6 +128,16 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH591F", 192+24+32, 24+2, 60, "QFN28"),
     ChipInfo("CH591D", 192+24+32, 24+2, 60, "QFN20"),
     ChipInfo("CH591R", 192+24+32, 24+2, 60, "TSSOP16"),
+    # CH641
+    ChipInfo("CH641F", 16, 2, 48, "QFN28"),
+    ChipInfo("CH641D", 16, 2, 48, "QFN20"),
+    ChipInfo("CH641X", 16, 2, 48, "QFN20"),
+    ChipInfo("CH641P", 16, 2, 48, "QFN16"),
+    # CH643
+    ChipInfo("CH643W", 62, 20, 48, "QFN80"),
+    ChipInfo("CH643Q", 62, 20, 48, "LQFP64"),
+    ChipInfo("CH643L", 62, 20, 48, "LQFP48"),
+    ChipInfo("CH643U", 62, 20, 48, "QSOP28"),
     # "CH32V00X" actually V002, V004, V005, V006, V007
     ChipInfo("CH32V002J4M6", 16, 2, 48, "SOP8"),
     ChipInfo("CH32V002D4U6", 16, 2, 48, "QFN12"),
@@ -342,7 +357,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
     # every series but CH32V003 can do FreeRTOS (if RAM is big enough)
     # same with Harmony LiteOS, RT-Thread and TencentOS
     chip_l = info.name.lower()
-    if not chip_l.startswith("ch32v00") and not chip_l.startswith("ch5"):
+    if not chip_l.startswith("ch32v00") and not chip_l.startswith("ch5") and not chip_l.startswith("ch6"):
         base_json["frameworks"].append("freertos")
         base_json["frameworks"].append("harmony-liteos")
         base_json["frameworks"].append("rt-thread")
@@ -375,7 +390,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
     extra_flags = [
         f"-D{info.chip_without_package()}"
     ]
-    if chip_l.startswith("ch5"):
+    if chip_l.startswith("ch5") or chip_l.startswith("ch6"):
         extra_flags += [
             f"-D{info.name[0:len('ch5x')]}X",
             f"-D{info.name[0:len('ch5xx')]}",

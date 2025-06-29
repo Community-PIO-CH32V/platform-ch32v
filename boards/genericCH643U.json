@@ -1,7 +1,7 @@
 {
   "build": {
-    "extra_flags": "-DCH58 -DCH58X -DCH581",
-    "f_cpu": "20000000L",
+    "extra_flags": "-DCH64 -DCH64X -DCH643",
+    "f_cpu": "48000000L",
     "hwids": [
       [
         "0x1A86",
@@ -9,26 +9,24 @@
       ]
     ],
     "mabi": "ilp32",
-    "march": "rv32imac",
-    "mcu": "ch581f",
-    "series": "ch58x"
+    "march": "rv32imacxw",
+    "mcu": "ch643u",
+    "series": "ch643u"
   },
   "debug": {
     "onboard_tools": [
       "wch-link"
     ],
     "openocd_config": "wch-riscv.cfg",
-    "svd_path": "CH581.svd"
+    "svd_path": "CH643.svd"
   },
   "frameworks": [
-    "noneos-sdk",
-    "freertos",
-    "rt-thread"
+    "noneos-sdk"
   ],
-  "name": "Generic CH581F",
+  "name": "Generic CH643U",
   "upload": {
-    "maximum_ram_size": 32768,
-    "maximum_size": 229376,
+    "maximum_ram_size": 20480,
+    "maximum_size": 63488,
     "protocol": "wch-link",
     "protocols": [
       "wch-link",
@@ -37,6 +35,6 @@
       "wlink"
     ]
   },
-  "url": "http://www.wch-ic.com/products/CH58X.html",
+  "url": "http://www.wch-ic.com/products/CH643U.html",
   "vendor": "W.CH"
 }

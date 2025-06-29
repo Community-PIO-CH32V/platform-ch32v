@@ -1,32 +1,32 @@
 {
   "build": {
-    "extra_flags": "-DCH57 -DCH57X -DCH573",
-    "f_cpu": "20000000L",
+    "extra_flags": "-DCH64 -DCH64X -DCH641",
+    "f_cpu": "48000000L",
     "hwids": [
       [
         "0x1A86",
         "0x8010"
       ]
     ],
-    "mabi": "ilp32",
-    "march": "rv32imac",
-    "mcu": "ch573f",
-    "series": "ch57x"
+    "mabi": "ilp32e",
+    "march": "rv32ecxw",
+    "mcu": "ch641p",
+    "series": "ch641p"
   },
   "debug": {
     "onboard_tools": [
       "wch-link"
     ],
     "openocd_config": "wch-riscv.cfg",
-    "svd_path": "CH573.svd"
+    "svd_path": "CH641.svd"
   },
   "frameworks": [
     "noneos-sdk"
   ],
-  "name": "Generic CH573F",
+  "name": "Generic CH641P",
   "upload": {
-    "maximum_ram_size": 18432,
-    "maximum_size": 491520,
+    "maximum_ram_size": 2048,
+    "maximum_size": 16384,
     "protocol": "wch-link",
     "protocols": [
       "wch-link",
@@ -35,6 +35,6 @@
       "wlink"
     ]
   },
-  "url": "http://www.wch-ic.com/products/CH57X.html",
+  "url": "http://www.wch-ic.com/products/CH641P.html",
   "vendor": "W.CH"
 }

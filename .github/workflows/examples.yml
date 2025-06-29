@@ -17,6 +17,7 @@ jobs:
           - "examples/blinky-ch32v003fun"
           - "examples/blinky-none-os"
           - "examples/blinky-none-os-ch5xx"
+          - "examples/blinky-none-os-ch6xx"
           - "examples/ch32fun-blink"
           - "examples/ch32fun-oled"
           - "examples/uart-printf-none-os"
