@@ -146,7 +146,7 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH32V006F8P6", 62, 8, 48, "TSSOP20"),
     ChipInfo("CH32V006F8U6", 62, 8, 48, "QFN20"),
     ChipInfo("CH32V006F4P6", 16, 4, 48, "QFN20"),
-    ChipInfo("CH32V006E8R6", 62, 8, 48, "QFN20"),
+    ChipInfo("CH32V006E8R6", 62, 8, 48, "QSOP24"),
     ChipInfo("CH32V006K8U6", 62, 8, 48, "QFN32"),
     # CH32V007
     ChipInfo("CH32V007E8R6", 62, 8, 48, "QSOP24"),
@@ -384,7 +384,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
             f"-D{info.name[0:len('ch32vxx')]}x",
             f"-D{info.name[0:len('ch32vxxx')]}",
         ]
-        if chip_l.startswith("ch32v00") and not chip_l.startswith("ch32v003"):
+        if (chip_l.startswith("ch32v00") and not chip_l.startswith("ch32v003")) or chip_l.startswith("ch32m007"):
             extra_flags += [
                 f"-DCH32V00Xx",
             ]

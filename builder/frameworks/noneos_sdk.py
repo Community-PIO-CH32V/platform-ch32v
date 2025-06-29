@@ -5,10 +5,11 @@ from SCons.Script import DefaultEnvironment
 env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
+mcu_l = board.get("build.mcu", "").lower()
 # convert MCU name (e.g. "ch32v307") to series (e.g. "ch32v30x")
 if board.get("build.series", "") in ("ch32x035"):
     chip_series: str = board.get("build.series", "")
-elif board.get("build.mcu", "").lower().startswith("ch32v00") and not board.get("build.mcu", "").lower().startswith("ch32v003"):
+elif (mcu_l.startswith("ch32v00") and not mcu_l.lower().startswith("ch32v003")) or mcu_l.startswith("ch32m007"):
     chip_series = "ch32v00Xx"
 else:
     chip_series = board.get("build.series", "")[0:-1].lower() + "x"
@@ -46,7 +47,7 @@ def get_linker_script(mcu: str):
     stack_size = 2048
     if ram <= 2048: # ch32v003
         stack_size = 256
-    elif ram <= 4096: # some ch32v00x
+    elif ram <= 8192: # some ch32v00x
         stack_size = 512
     # custom stack size wanted?
     if board.get("build.stack_size", "") != "":
@@ -91,7 +92,7 @@ def get_startup_filename(board):
         chip_name = str(board.get("build.mcu", "")).lower()
         if chip_name.startswith("ch32v003"):
             return "startup_ch32v00x.S"
-        elif chip_name.startswith("ch32v00"):
+        elif chip_name.startswith("ch32v00") or chip_name.startswith("ch32m007"):
             return "startup_ch32v00Xx.S"
         elif chip_name.startswith("ch32v1"):
             return "startup_ch32v10x.S"
