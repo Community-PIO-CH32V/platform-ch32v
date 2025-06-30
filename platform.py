@@ -87,7 +87,7 @@ class Ch32vPlatform(PlatformBase):
         # Mac toolchain is broken.
         # Linux toolchain misses libprintf.a.
         # Force usage of GCC8 again until they fix their stuff.
-        FORCE_DOWNGRADE_TO_GCC8 = True
+        FORCE_DOWNGRADE_TO_GCC8 = False
         if "arduino" in frameworks or FORCE_DOWNGRADE_TO_GCC8:
             # we downgrade the GCC version to just 8 because with 12, there are build errors.
             gcc_branch = ""

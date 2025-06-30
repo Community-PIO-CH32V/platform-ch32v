@@ -9,7 +9,7 @@
       ]
     ],
     "mabi": "ilp32e",
-    "march": "rv32ecxw",
+    "march": "rv32ec_zmmul_xw",
     "mcu": "ch641p",
     "series": "ch641p"
   },
