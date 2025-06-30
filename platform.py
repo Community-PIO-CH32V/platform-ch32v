@@ -84,12 +84,10 @@ class Ch32vPlatform(PlatformBase):
         # (temporary)
         frameworks = variables.get("pioframework", [])
         gcc_branch = "#gcc12"
-        # Mac toolchain is broken.
-        # Linux toolchain misses libprintf.a.
-        # Force usage of GCC8 again until they fix their stuff.
+        # TODO make this user selectible
+        # some users may have build errors with GCC12.
         FORCE_DOWNGRADE_TO_GCC8 = False
-        if "arduino" in frameworks or FORCE_DOWNGRADE_TO_GCC8:
-            # we downgrade the GCC version to just 8 because with 12, there are build errors.
+        if FORCE_DOWNGRADE_TO_GCC8:
             gcc_branch = ""
         self.packages["toolchain-riscv"]["version"] = Ch32vPlatform.riscv_toolchain[sys_type] + gcc_branch
         if not variables.get("board"):
