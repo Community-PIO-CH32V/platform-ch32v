@@ -63,9 +63,12 @@ class ChipInfo:
             return ("rv32imacxw", "ilp32")
         elif name_lower.startswith("ch32v1"):
             return ("rv32imac", "ilp32")
-        # applies to ch32v002, 003, 004, 005, 007, 007, M007
-        elif name_lower.startswith("ch32v0") or name_lower.startswith("ch32m0") or name_lower.startswith("ch641"):
+        # applies only to ch32003
+        elif name_lower.startswith("ch32v003") :
             return ("rv32ecxw", "ilp32e")
+        # applies to ch32v002, 004, 005, 007, 007, M007
+        elif name_lower.startswith("ch32v0") or name_lower.startswith("ch32m0") or name_lower.startswith("ch641"):
+            return ("rv32ec_zmmul_xw", "ilp32e")
         elif name_lower.startswith("ch643"):
             return ("rv32imacxw", "ilp32")
         # applies to ch56x, ch57x, ch58x
