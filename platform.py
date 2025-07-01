@@ -87,7 +87,8 @@ class Ch32vPlatform(PlatformBase):
         # TODO make this user selectible
         # some users may have build errors with GCC12.
         FORCE_DOWNGRADE_TO_GCC8 = False
-        if FORCE_DOWNGRADE_TO_GCC8:
+        # Temporary fix for "No GCC12 toolchain for MacOS x86_64". Email pending.
+        if FORCE_DOWNGRADE_TO_GCC8 or sys_type == "darwin_x86_64":
             gcc_branch = ""
         self.packages["toolchain-riscv"]["version"] = Ch32vPlatform.riscv_toolchain[sys_type] + gcc_branch
         if not variables.get("board"):
