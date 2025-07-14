@@ -291,10 +291,20 @@ known_boards: List[KnownBoard] = [
                             }
                         }
                    }),
+    KnownBoard("adafruit_qtpy_ch32v203", "Adafruit QT Py CH32V203", get_chip("CH32V203G6U6"),
+               "https://www.adafruit.com/product/5996", "Adafruit", {
+                       "build.arduino": { 
+                            "openwch": { 
+                                "variant": "CH32V20x/CH32V203G6_ADAFRUIT_QTPY", 
+                                "variant_h": "variant_CH32V203G6_ADAFRUIT_QTPY.h"
+                            }
+                        },
+                        "upload.protocol": "isp"
+                   }),
     KnownBoard("ch32v203c8t6_evt_r0", "CH32V203C8T6-EVT-R0", get_chip("CH32V203C8T6"),
-               "https://www.aliexpress.com/item/1005004895791296.html", "W.CH"),
+               "https://www.aliexpress.com/item/1005004895791296.html", "W.CH", clock_source="hse+pll"),
     KnownBoard("ch32v307_evt", "CH32V307 EVT", get_chip("CH32V307VCT6"),
-               "https://www.aliexpress.com/item/1005004511264952.html", "SCDZ"),
+               "https://www.aliexpress.com/item/1005004511264952.html", "SCDZ", clock_source="hse+pll"),
     KnownBoard("ch32x035c8t6_evt_r0", "CH32X035C8T6-EVT-R0", get_chip("CH32X035C8T6"), 
                "https://www.aliexpress.com/item/1005005793197807.html", "W.CH"),
     KnownBoard("ch32x035f8u6_evt_r0", "CH32X035F8U6-EVT-R0", get_chip("CH32X035F8U6"), 
@@ -304,7 +314,7 @@ known_boards: List[KnownBoard] = [
     KnownBoard("usb_pdmon_ch32x035g8u6", "USB PDMon", get_chip("CH32X035G8U6"), 
                "https://github.com/dragonlock2/kicadboards/tree/main/breakouts/usb_pdmon", "Matthew Tran"),
     KnownBoard("ch32l103c8t6_evt_r0", "CH32L103C8T6-EVT-R0", get_chip("CH32L103C8T6"), 
-               "https://ja.aliexpress.com/item/1005006671545123.html", "W.CH"),
+               "https://ja.aliexpress.com/item/1005006671545123.html", "W.CH", clock_source="hse+pll"),
 ]
 
 # Describe known OpenWCH Arduino variants so that we can auto-add them
@@ -340,14 +350,18 @@ def add_openwch_arduino_info(base_json: dict[str, Any], patch_info: dict[str, An
     if "arduino" not in base_json["frameworks"]:
         base_json["frameworks"].append("arduino")
     base_json["build"]["core"] = "openwch"
-    patch_info.update( {
-        "build.arduino": { 
-            "openwch": { 
-                "variant": matching_variant.variant_folder, 
-                "variant_h": matching_variant.variant_h
-            }
-        }   
-    })
+    if "build.arduino" in patch_info and "openwch" in patch_info["build.arduino"]:
+        print("Info: Not overriding already set OpenWCH settings")
+        return
+    else:
+        patch_info.update( {
+            "build.arduino": { 
+                "openwch": { 
+                    "variant": matching_variant.variant_folder, 
+                    "variant_h": matching_variant.variant_h
+                }
+            }   
+        })
     if matching_variant.extra_macros is not None:
         base_json["build"]["extra_flags"] += matching_variant.extra_macros
 

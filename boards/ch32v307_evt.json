@@ -6,7 +6,7 @@
         "variant_h": "variant_CH32V307VCT6.h"
       }
     },
-    "clock_source": "hsi+pll",
+    "clock_source": "hse+pll",
     "core": "openwch",
     "extra_flags": "-DCH32V30x_C -DCH32V307VC -DCH32V30X -DCH32V30x -DCH32V307 -DCH32V30x_D8C",
     "f_cpu": "144000000L",
