@@ -1,5 +1,6 @@
 {
   "build": {
+    "clock_source": "hsi",
     "core": "ch32v003",
     "extra_flags": "-DCH32V003A4 -DCH32V00X -DCH32V00x -DCH32V003",
     "f_cpu": "48000000L",

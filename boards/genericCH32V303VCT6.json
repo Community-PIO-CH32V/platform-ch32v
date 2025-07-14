@@ -1,5 +1,6 @@
 {
   "build": {
+    "clock_source": "hsi",
     "extra_flags": "-DCH32V303VC -DCH32V30X -DCH32V30x -DCH32V303 -DCH32V30x_D8",
     "f_cpu": "144000000L",
     "hwids": [

@@ -1,5 +1,6 @@
 {
   "build": {
+    "clock_source": "hsi",
     "extra_flags": "-DCH58 -DCH58X -DCH581",
     "f_cpu": "20000000L",
     "hwids": [

@@ -6,8 +6,9 @@
         "variant_h": "variant_CH32L103C8T6.h"
       }
     },
+    "clock_source": "hsi",
     "core": "openwch",
-    "extra_flags": "-DCH32L103C8 -DCH32L10X -DCH32L10x -DCH32L103",
+    "extra_flags": "-DCH32L103C8 -DCH32L10X -DCH32L10x -DCH32L103 h s i",
     "f_cpu": "96000000L",
     "hwids": [
       [

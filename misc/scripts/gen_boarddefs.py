@@ -101,6 +101,8 @@ class ChipInfo:
         # Arduino core also calls this "CH32VM00X"
         elif name_lower.startswith("ch32v0") or name_lower.startswith("ch32m0") or name_lower.startswith("ch641"):
             return "ch32v00Xx"
+        elif name_lower.startswith("ch641"):
+            return "ch641"
         elif name_lower.startswith("ch643"):
             return "ch643"
         # applies to ch56x, ch57x, ch58x
@@ -277,6 +279,7 @@ class KnownBoard:
     url: str
     vendor: str
     add_info: Optional[Dict[str, Any]] = field(default_factory=dict)
+    clock_source: str = "hsi"
 
 known_boards: List[KnownBoard] = [
     KnownBoard("ch32v003f4p6_evt_r0", "CH32V003F4P6-EVT-R0", get_chip("CH32V003F4P6"),
@@ -348,7 +351,7 @@ def add_openwch_arduino_info(base_json: dict[str, Any], patch_info: dict[str, An
     if matching_variant.extra_macros is not None:
         base_json["build"]["extra_flags"] += matching_variant.extra_macros
 
-def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_info: Optional[Dict[str, Any]] = None, addtl_extra_flags:List[str] = None):
+def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_info: Optional[Dict[str, Any]] = None, addtl_extra_flags:List[str] = None, clock_soure: str = "hsi"):
     # simplifies things later
     if patch_info is None:
         patch_info = dict()
@@ -368,6 +371,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
             "mcu": info.name.lower(),
             "series": info.exact_series().lower(),
             "spl_series": info.spl_series(),
+            "clock_source": clock_soure
         },
         "debug": {
             "onboard_tools": [
@@ -485,7 +489,7 @@ def main():
         output_path = base_path / f"{known_board.file_name}.json"
         patch_dict = {"url": known_board.url, "vendor": known_board.vendor}
         patch_dict.update(known_board.add_info)
-        create_board_json(known_board.chip, known_board.board_name, output_path, patch_dict)
+        create_board_json(known_board.chip, known_board.board_name, output_path, patch_dict, known_board.clock_source)
     pass
 
 
