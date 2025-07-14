@@ -1,5 +1,6 @@
 {
   "build": {
+    "clock_source": "hsi+pll",
     "extra_flags": "-DCH32V303CB -DCH32V30X -DCH32V30x -DCH32V303 -DCH32V30x_D8",
     "f_cpu": "144000000L",
     "hwids": [
@@ -11,7 +12,8 @@
     "mabi": "ilp32",
     "march": "rv32imacxw",
     "mcu": "ch32v303cbt6",
-    "series": "ch32v303"
+    "series": "ch32v303",
+    "spl_series": "ch32v30x"
   },
   "debug": {
     "onboard_tools": [

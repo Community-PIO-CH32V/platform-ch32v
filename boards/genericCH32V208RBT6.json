@@ -1,5 +1,6 @@
 {
   "build": {
+    "clock_source": "hsi+pll",
     "extra_flags": "-DCH32V208RB -DCH32V20X -DCH32V20x -DCH32V208 -DCH32V20x_D8W",
     "f_cpu": "144000000L",
     "hwids": [
@@ -11,7 +12,8 @@
     "mabi": "ilp32",
     "march": "rv32imacxw",
     "mcu": "ch32v208rbt6",
-    "series": "ch32v208"
+    "series": "ch32v208",
+    "spl_series": "ch32v20x"
   },
   "debug": {
     "onboard_tools": [

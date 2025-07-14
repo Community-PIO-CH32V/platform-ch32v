@@ -86,6 +86,44 @@ class ChipInfo:
     def chip_without_package(self) -> str:
         return self.name[:-2]
 
+    def spl_series(self) -> str:
+        name_lower = self.name.lower() 
+        if name_lower.startswith("ch32v3"):
+            return "ch32v30x"
+        elif name_lower.startswith("ch32v2"):
+            return "ch32v20x"
+        elif name_lower.startswith("ch32v1"):
+            return "ch32v10x"
+        # applies only to ch32003
+        elif name_lower.startswith("ch32v003") :
+            return "ch32v00x"
+        # applies to ch32v002, 004, 005, 007, 007, M007
+        # Arduino core also calls this "CH32VM00X"
+        elif name_lower.startswith("ch32v0") or name_lower.startswith("ch32m0"):
+            return "ch32v00Xx"
+        elif name_lower.startswith("ch641"):
+            return "ch641"
+        elif name_lower.startswith("ch643"):
+            return "ch643"
+        # applies to ch56x, ch57x, ch58x
+        elif name_lower.startswith("ch56"):
+            return "ch56x"
+        elif name_lower.startswith("ch57"):
+            return "ch57x"
+        elif name_lower.startswith("ch58"):
+            return "ch58x"
+        elif name_lower.startswith("ch59"):
+            return "ch59x"
+        # both x035 and x033 deliberately
+        elif name_lower.startswith("ch32x03"):
+            return "ch32x035"
+        elif name_lower.startswith("ch32l1"):
+            return "ch32l10x"
+        else:
+            print("ERROR: UNKNOWN SPL FOLDER FOR " + self.name)
+            exit(-1)
+            return "unknown"
+
     def exact_series(self) -> str:
         if self.name.lower().startswith("ch5"):
             return self.name[0:len("ch58")].upper() + "X"
@@ -241,6 +279,7 @@ class KnownBoard:
     url: str
     vendor: str
     add_info: Optional[Dict[str, Any]] = field(default_factory=dict)
+    clock_source: str = "hsi+pll"
 
 known_boards: List[KnownBoard] = [
     KnownBoard("ch32v003f4p6_evt_r0", "CH32V003F4P6-EVT-R0", get_chip("CH32V003F4P6"),
@@ -252,10 +291,20 @@ known_boards: List[KnownBoard] = [
                             }
                         }
                    }),
+    KnownBoard("adafruit_qtpy_ch32v203", "Adafruit QT Py CH32V203", get_chip("CH32V203G6U6"),
+               "https://www.adafruit.com/product/5996", "Adafruit", {
+                       "build.arduino": { 
+                            "openwch": { 
+                                "variant": "CH32V20x/CH32V203G6_ADAFRUIT_QTPY", 
+                                "variant_h": "variant_CH32V203G6_ADAFRUIT_QTPY.h"
+                            }
+                        },
+                        "upload.protocol": "isp"
+                   }),
     KnownBoard("ch32v203c8t6_evt_r0", "CH32V203C8T6-EVT-R0", get_chip("CH32V203C8T6"),
-               "https://www.aliexpress.com/item/1005004895791296.html", "W.CH"),
+               "https://www.aliexpress.com/item/1005004895791296.html", "W.CH", clock_source="hse+pll"),
     KnownBoard("ch32v307_evt", "CH32V307 EVT", get_chip("CH32V307VCT6"),
-               "https://www.aliexpress.com/item/1005004511264952.html", "SCDZ"),
+               "https://www.aliexpress.com/item/1005004511264952.html", "SCDZ", clock_source="hse+pll"),
     KnownBoard("ch32x035c8t6_evt_r0", "CH32X035C8T6-EVT-R0", get_chip("CH32X035C8T6"), 
                "https://www.aliexpress.com/item/1005005793197807.html", "W.CH"),
     KnownBoard("ch32x035f8u6_evt_r0", "CH32X035F8U6-EVT-R0", get_chip("CH32X035F8U6"), 
@@ -265,7 +314,7 @@ known_boards: List[KnownBoard] = [
     KnownBoard("usb_pdmon_ch32x035g8u6", "USB PDMon", get_chip("CH32X035G8U6"), 
                "https://github.com/dragonlock2/kicadboards/tree/main/breakouts/usb_pdmon", "Matthew Tran"),
     KnownBoard("ch32l103c8t6_evt_r0", "CH32L103C8T6-EVT-R0", get_chip("CH32L103C8T6"), 
-               "https://ja.aliexpress.com/item/1005006671545123.html", "W.CH"),
+               "https://ja.aliexpress.com/item/1005006671545123.html", "W.CH", clock_source="hse+pll"),
 ]
 
 # Describe known OpenWCH Arduino variants so that we can auto-add them
@@ -301,18 +350,22 @@ def add_openwch_arduino_info(base_json: dict[str, Any], patch_info: dict[str, An
     if "arduino" not in base_json["frameworks"]:
         base_json["frameworks"].append("arduino")
     base_json["build"]["core"] = "openwch"
-    patch_info.update( {
-        "build.arduino": { 
-            "openwch": { 
-                "variant": matching_variant.variant_folder, 
-                "variant_h": matching_variant.variant_h
-            }
-        }   
-    })
+    if "build.arduino" in patch_info and "openwch" in patch_info["build.arduino"]:
+        print("Info: Not overriding already set OpenWCH settings")
+        return
+    else:
+        patch_info.update( {
+            "build.arduino": { 
+                "openwch": { 
+                    "variant": matching_variant.variant_folder, 
+                    "variant_h": matching_variant.variant_h
+                }
+            }   
+        })
     if matching_variant.extra_macros is not None:
         base_json["build"]["extra_flags"] += matching_variant.extra_macros
 
-def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_info: Optional[Dict[str, Any]] = None, addtl_extra_flags:List[str] = None):
+def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_info: Optional[Dict[str, Any]] = None, addtl_extra_flags:List[str] = None, clock_soure: str = "hsi+pll"):
     # simplifies things later
     if patch_info is None:
         patch_info = dict()
@@ -330,7 +383,9 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
             "mabi": abi,
             "march": arch,
             "mcu": info.name.lower(),
-            "series": info.exact_series().lower()
+            "series": info.exact_series().lower(),
+            "spl_series": info.spl_series(),
+            "clock_source": clock_soure
         },
         "debug": {
             "onboard_tools": [
@@ -448,7 +503,7 @@ def main():
         output_path = base_path / f"{known_board.file_name}.json"
         patch_dict = {"url": known_board.url, "vendor": known_board.vendor}
         patch_dict.update(known_board.add_info)
-        create_board_json(known_board.chip, known_board.board_name, output_path, patch_dict)
+        create_board_json(known_board.chip, known_board.board_name, output_path, patch_dict, addtl_extra_flags=None, clock_soure=known_board.clock_source)
     pass
 
 

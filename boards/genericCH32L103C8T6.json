@@ -6,6 +6,7 @@
         "variant_h": "variant_CH32L103C8T6.h"
       }
     },
+    "clock_source": "hsi+pll",
     "core": "openwch",
     "extra_flags": "-DCH32L103C8 -DCH32L10X -DCH32L10x -DCH32L103",
     "f_cpu": "96000000L",
@@ -19,6 +20,7 @@
     "march": "rv32imacxw",
     "mcu": "ch32l103c8t6",
     "series": "ch32l103",
+    "spl_series": "ch32l10x",
     "variant": "ch32l103_evt"
   },
   "debug": {

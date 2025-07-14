@@ -1,5 +1,6 @@
 {
   "build": {
+    "clock_source": "hsi+pll",
     "extra_flags": "-DCH32L103G8 -DCH32L10X -DCH32L10x -DCH32L103",
     "f_cpu": "96000000L",
     "hwids": [
@@ -12,6 +13,7 @@
     "march": "rv32imacxw",
     "mcu": "ch32l103g8r6",
     "series": "ch32l103",
+    "spl_series": "ch32l10x",
     "variant": "ch32l103_evt"
   },
   "debug": {

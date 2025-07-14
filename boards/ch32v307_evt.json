@@ -6,6 +6,7 @@
         "variant_h": "variant_CH32V307VCT6.h"
       }
     },
+    "clock_source": "hse+pll",
     "core": "openwch",
     "extra_flags": "-DCH32V30x_C -DCH32V307VC -DCH32V30X -DCH32V30x -DCH32V307 -DCH32V30x_D8C",
     "f_cpu": "144000000L",
@@ -19,6 +20,7 @@
     "march": "rv32imacxw",
     "mcu": "ch32v307vct6",
     "series": "ch32v307",
+    "spl_series": "ch32v30x",
     "variant": "ch32v307_evt"
   },
   "debug": {

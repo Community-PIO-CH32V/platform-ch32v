@@ -7,10 +7,7 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
 mcu = env.BoardConfig().get("build.mcu")
-if mcu.startswith("ch32x03"):
-    chip_series: str = board.get("build.series", "")
-else:
-    chip_series: str = board.get("build.series", "")[0:-1] + "x"
+chip_series: str = board.get("build.spl_series", "")
 
 if chip_series.startswith("ch5"):
     # we need to make use of that special startup file which redirects all interrupts speciall
@@ -38,7 +35,7 @@ env.Append(
         "$PROJECT_INCLUDE_DIR"
     ],
     CPPDEFINES=[
-        # the startup.S file needs very nifty different code if Harmony LiteOS is running
+        # the startup.S file needs very nifty different code if RT-Thread is running
         # affects mstatus (Machine Status) registers
         # otherwise tasks just won't execute.
         "__PIO_BUILD_RT_THREAD__"

@@ -6,6 +6,7 @@
         "variant_h": "variant_CH32V203G8.h"
       }
     },
+    "clock_source": "hsi+pll",
     "core": "openwch",
     "extra_flags": "-DCH32V203G8 -DCH32V20X -DCH32V20x -DCH32V203 -DCH32V20x_D6",
     "f_cpu": "144000000L",
@@ -18,7 +19,8 @@
     "mabi": "ilp32",
     "march": "rv32imacxw",
     "mcu": "ch32v203g8r6",
-    "series": "ch32v203"
+    "series": "ch32v203",
+    "spl_series": "ch32v20x"
   },
   "debug": {
     "onboard_tools": [

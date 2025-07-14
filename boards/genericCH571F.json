@@ -1,5 +1,6 @@
 {
   "build": {
+    "clock_source": "hsi+pll",
     "extra_flags": "-DCH57 -DCH57X -DCH571",
     "f_cpu": "20000000L",
     "hwids": [
@@ -11,7 +12,8 @@
     "mabi": "ilp32",
     "march": "rv32imac",
     "mcu": "ch571f",
-    "series": "ch57x"
+    "series": "ch57x",
+    "spl_series": "ch57x"
   },
   "debug": {
     "onboard_tools": [

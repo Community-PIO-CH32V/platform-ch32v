@@ -6,6 +6,7 @@
         "variant_h": "variant_CH32X035G8U.h"
       }
     },
+    "clock_source": "hsi+pll",
     "core": "openwch",
     "extra_flags": "-DCH32X035G8 -DCH32X03X -DCH32X03x -DCH32X035",
     "f_cpu": "48000000L",
@@ -18,7 +19,8 @@
     "mabi": "ilp32",
     "march": "rv32imacxw",
     "mcu": "ch32x035g8u6",
-    "series": "ch32x035"
+    "series": "ch32x035",
+    "spl_series": "ch32x035"
   },
   "debug": {
     "onboard_tools": [

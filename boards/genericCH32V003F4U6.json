@@ -6,6 +6,7 @@
         "variant_h": "variant_CH32V003F4.h"
       }
     },
+    "clock_source": "hsi+pll",
     "core": "openwch",
     "extra_flags": "-DCH32V003F4 -DCH32V00X -DCH32V00x -DCH32V003",
     "f_cpu": "48000000L",
@@ -19,6 +20,7 @@
     "march": "rv32ecxw",
     "mcu": "ch32v003f4u6",
     "series": "ch32v003",
+    "spl_series": "ch32v00x",
     "variant": "CH32V003"
   },
   "debug": {

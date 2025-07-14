@@ -1,5 +1,6 @@
 {
   "build": {
+    "clock_source": "hsi+pll",
     "extra_flags": "-DCH64 -DCH64X -DCH643",
     "f_cpu": "48000000L",
     "hwids": [
@@ -11,7 +12,8 @@
     "mabi": "ilp32",
     "march": "rv32imacxw",
     "mcu": "ch643q",
-    "series": "ch643q"
+    "series": "ch643q",
+    "spl_series": "ch643"
   },
   "debug": {
     "onboard_tools": [

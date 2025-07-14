@@ -6,15 +6,8 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
 mcu_l = board.get("build.mcu", "").lower()
-# convert MCU name (e.g. "ch32v307") to series (e.g. "ch32v30x")
-if board.get("build.series", "") in ("ch32x035"):
-    chip_series: str = board.get("build.series", "")
-elif (mcu_l.startswith("ch32v00") and not mcu_l.lower().startswith("ch32v003")) or mcu_l.startswith("ch32m007"):
-    chip_series = "ch32v00Xx"
-elif (mcu_l.startswith("ch6")):
-    chip_series = mcu_l[0:len("ch6xx")]
-else:
-    chip_series = board.get("build.series", "")[0:-1].lower() + "x"
+# for a MCU name (e.g. "ch32v307") we need the series (e.g. "ch32v30x")
+chip_series: str = board.get("build.spl_series", "")
 # import default build settings
 env.SConscript("_bare.py")
 

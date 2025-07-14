@@ -1,5 +1,6 @@
 {
   "build": {
+    "clock_source": "hsi+pll",
     "core": "ch32v003",
     "extra_flags": "-DCH32V003A4 -DCH32V00X -DCH32V00x -DCH32V003",
     "f_cpu": "48000000L",
@@ -13,6 +14,7 @@
     "march": "rv32ecxw",
     "mcu": "ch32v003a4m6",
     "series": "ch32v003",
+    "spl_series": "ch32v00x",
     "variant": "CH32V003"
   },
   "debug": {

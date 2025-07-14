@@ -1,5 +1,6 @@
 {
   "build": {
+    "clock_source": "hsi+pll",
     "extra_flags": "-DCH32M007G8 -DCH32M00X -DCH32M00x -DCH32M007 -DCH32V00Xx -DCH32V007_M007",
     "f_cpu": "48000000L",
     "hwids": [
@@ -11,7 +12,8 @@
     "mabi": "ilp32e",
     "march": "rv32ec_zmmul_xw",
     "mcu": "ch32m007g8r6",
-    "series": "ch32m007"
+    "series": "ch32m007",
+    "spl_series": "ch32v00Xx"
   },
   "debug": {
     "onboard_tools": [
