@@ -1,6 +1,6 @@
 {
   "build": {
-    "clock_source": "hsi",
+    "clock_source": "hsi+pll",
     "extra_flags": "-DCH32V305GB -DCH32V30X -DCH32V30x -DCH32V305 -DCH32V30x_D8C",
     "f_cpu": "144000000L",
     "hwids": [

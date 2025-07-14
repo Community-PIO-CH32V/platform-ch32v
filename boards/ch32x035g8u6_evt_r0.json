@@ -6,9 +6,9 @@
         "variant_h": "variant_CH32X035G8U.h"
       }
     },
-    "clock_source": "hsi",
+    "clock_source": "hsi+pll",
     "core": "openwch",
-    "extra_flags": "-DCH32X035G8 -DCH32X03X -DCH32X03x -DCH32X035 h s i",
+    "extra_flags": "-DCH32X035G8 -DCH32X03X -DCH32X03x -DCH32X035",
     "f_cpu": "48000000L",
     "hwids": [
       [
