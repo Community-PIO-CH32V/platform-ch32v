@@ -11,7 +11,8 @@
     "mabi": "ilp32e",
     "march": "rv32ec_zmmul_xw",
     "mcu": "ch32v007e8r6",
-    "series": "ch32v007"
+    "series": "ch32v007",
+    "spl_series": "ch32v00Xx"
   },
   "debug": {
     "onboard_tools": [

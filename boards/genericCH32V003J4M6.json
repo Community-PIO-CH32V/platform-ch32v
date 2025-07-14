@@ -13,6 +13,7 @@
     "march": "rv32ecxw",
     "mcu": "ch32v003j4m6",
     "series": "ch32v003",
+    "spl_series": "ch32v00x",
     "variant": "CH32V003"
   },
   "debug": {

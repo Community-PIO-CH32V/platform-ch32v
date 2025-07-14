@@ -19,6 +19,7 @@
     "march": "rv32imacxw",
     "mcu": "ch32v307vct6",
     "series": "ch32v307",
+    "spl_series": "ch32v30x",
     "variant": "ch32v307_evt"
   },
   "debug": {

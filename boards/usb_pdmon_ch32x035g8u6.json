@@ -19,6 +19,7 @@
     "march": "rv32imacxw",
     "mcu": "ch32x035g8u6",
     "series": "ch32x035",
+    "spl_series": "ch32x035",
     "zephyr": {
       "variant": "usb_pdmon"
     }

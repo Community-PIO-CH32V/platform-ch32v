@@ -86,6 +86,42 @@ class ChipInfo:
     def chip_without_package(self) -> str:
         return self.name[:-2]
 
+    def spl_series(self) -> str:
+        name_lower = self.name.lower() 
+        if name_lower.startswith("ch32v3"):
+            return "ch32v30x"
+        elif name_lower.startswith("ch32v2"):
+            return "ch32v20x"
+        elif name_lower.startswith("ch32v1"):
+            return "ch32v10x"
+        # applies only to ch32003
+        elif name_lower.startswith("ch32v003") :
+            return "ch32v00x"
+        # applies to ch32v002, 004, 005, 007, 007, M007
+        # Arduino core also calls this "CH32VM00X"
+        elif name_lower.startswith("ch32v0") or name_lower.startswith("ch32m0") or name_lower.startswith("ch641"):
+            return "ch32v00Xx"
+        elif name_lower.startswith("ch643"):
+            return "ch643"
+        # applies to ch56x, ch57x, ch58x
+        elif name_lower.startswith("ch56"):
+            return "ch56x"
+        elif name_lower.startswith("ch57"):
+            return "ch57x"
+        elif name_lower.startswith("ch58"):
+            return "ch58x"
+        elif name_lower.startswith("ch59"):
+            return "ch59x"
+        # both x035 and x033 deliberately
+        elif name_lower.startswith("ch32x03"):
+            return "ch32x035"
+        elif name_lower.startswith("ch32l1"):
+            return "ch32l10x"
+        else:
+            print("ERROR: UNKNOWN SPL FOLDER FOR " + self.name)
+            exit(-1)
+            return "unknown"
+
     def exact_series(self) -> str:
         if self.name.lower().startswith("ch5"):
             return self.name[0:len("ch58")].upper() + "X"
@@ -330,7 +366,8 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
             "mabi": abi,
             "march": arch,
             "mcu": info.name.lower(),
-            "series": info.exact_series().lower()
+            "series": info.exact_series().lower(),
+            "spl_series": info.spl_series(),
         },
         "debug": {
             "onboard_tools": [

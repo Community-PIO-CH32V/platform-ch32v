@@ -18,7 +18,8 @@
     "mabi": "ilp32",
     "march": "rv32imacxw",
     "mcu": "ch32v203g6u6",
-    "series": "ch32v203"
+    "series": "ch32v203",
+    "spl_series": "ch32v20x"
   },
   "debug": {
     "onboard_tools": [

@@ -11,7 +11,8 @@
     "mabi": "ilp32",
     "march": "rv32imac",
     "mcu": "ch591d",
-    "series": "ch59x"
+    "series": "ch59x",
+    "spl_series": "ch59x"
   },
   "debug": {
     "onboard_tools": [

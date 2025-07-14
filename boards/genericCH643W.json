@@ -11,7 +11,8 @@
     "mabi": "ilp32",
     "march": "rv32imacxw",
     "mcu": "ch643w",
-    "series": "ch643w"
+    "series": "ch643w",
+    "spl_series": "ch643"
   },
   "debug": {
     "onboard_tools": [
