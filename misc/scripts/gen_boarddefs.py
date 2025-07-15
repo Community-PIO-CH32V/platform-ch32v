@@ -284,13 +284,23 @@ class KnownBoard:
 known_boards: List[KnownBoard] = [
     KnownBoard("ch32v003f4p6_evt_r0", "CH32V003F4P6-EVT-R0", get_chip("CH32V003F4P6"),
                "https://www.aliexpress.com/item/1005004895791296.html", "W.CH", {
-                       "build.arduino": { 
-                            "openwch": { 
-                                "variant": "CH32V00x/CH32V003F4", 
+                       "build.arduino": {
+                            "openwch": {
+                                "variant": "CH32V00x/CH32V003F4",
                                 "variant_h": "variant_CH32V003F4.h"
                             }
                         }
                    }),
+    KnownBoard("suzuno32rv", "BitTradeOne Suzuno32RV", get_chip("CH32V203C8T6"),
+               "https://www.github.com/verylowfreq/board_suzuno32rv", "BitTradeUno", {
+                       "build.arduino": {
+                            "openwch": {
+                                "variant": "CH32V20x/CH32V203C8",
+                                "variant_h": "variant_CH32V203C8.h"
+                            }
+                        },
+                        "upload.protocol": "isp"
+                   }, clock_source="hse+pll"),
     KnownBoard("adafruit_qtpy_ch32v203", "Adafruit QT Py CH32V203", get_chip("CH32V203G6U6"),
                "https://www.adafruit.com/product/5996", "Adafruit", {
                        "build.arduino": { 

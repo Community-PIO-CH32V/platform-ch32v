@@ -1,0 +1,55 @@
+{
+  "build": {
+    "arduino": {
+      "openwch": {
+        "variant": "CH32V20x/CH32V203C8",
+        "variant_h": "variant_CH32V203C8.h"
+      }
+    },
+    "clock_source": "hse+pll",
+    "core": "openwch",
+    "extra_flags": "-DCH32V203C8 -DCH32V20X -DCH32V20x -DCH32V203 -DCH32V20x_D6",
+    "f_cpu": "144000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imacxw",
+    "mcu": "ch32v203c8t6",
+    "series": "ch32v203",
+    "spl_series": "ch32v20x"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32V203xx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "freertos",
+    "harmony-liteos",
+    "rt-thread",
+    "tencent-os",
+    "ch32v003fun",
+    "arduino"
+  ],
+  "name": "BitTradeOne Suzuno32RV",
+  "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 65536,
+    "protocol": "isp",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp",
+      "wlink"
+    ]
+  },
+  "url": "https://www.github.com/verylowfreq/board_suzuno32rv",
+  "vendor": "BitTradeUno"
+}

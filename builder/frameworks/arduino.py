@@ -56,3 +56,8 @@ if not isfile(build_script):
     env.Exit(1)
 
 SConscript(build_script)
+
+# for all Arduino cores: Define sysclock. Some cores might not use the WCH SDK as their base,
+# but still defining an unused macro won't do any harm for them.
+from common_clk_config import validate_and_define_sysclk
+validate_and_define_sysclk(env)
