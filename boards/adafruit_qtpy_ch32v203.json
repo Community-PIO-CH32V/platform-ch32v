@@ -41,7 +41,7 @@
   "name": "Adafruit QT Py CH32V203",
   "upload": {
     "maximum_ram_size": 10240,
-    "maximum_size": 32768,
+    "maximum_size": 229376,
     "protocol": "isp",
     "protocols": [
       "wch-link",

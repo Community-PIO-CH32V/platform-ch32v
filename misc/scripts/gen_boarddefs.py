@@ -217,6 +217,7 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH32V103C8T6", 64, 20, 72, "LQFP48"),
     ChipInfo("CH32V103R8T6", 64, 20, 72, "LQFP64M"),
     # CH32V203
+    # Note. These seem to actually all have 224K of flash, just the first 32, 64 or 128K being fast 
     ChipInfo("CH32V203F6T6", 32, 10, 144, "TSSOP20"),
     ChipInfo("CH32V203F8P6", 64, 20, 144, "TSSOP20"),
     ChipInfo("CH32V203F8U6", 64, 20, 144, "QFN20X3"),
@@ -280,6 +281,7 @@ class KnownBoard:
     vendor: str
     add_info: Optional[Dict[str, Any]] = field(default_factory=dict)
     clock_source: str = "hsi+pll"
+    extra_flags: list[str] = field(default_factory=list)
 
 known_boards: List[KnownBoard] = [
     KnownBoard("ch32v003f4p6_evt_r0", "CH32V003F4P6-EVT-R0", get_chip("CH32V003F4P6"),
@@ -309,7 +311,8 @@ known_boards: List[KnownBoard] = [
                                 "variant_h": "variant_CH32V203G6_ADAFRUIT_QTPY.h"
                             }
                         },
-                        "upload.protocol": "isp"
+                        "upload.protocol": "isp",
+                        "upload.maximum_size": 224*1024 # actually 224K of flash, only first 32K zero-wait-state
                    }),
     KnownBoard("ch32v203c8t6_evt_r0", "CH32V203C8T6-EVT-R0", get_chip("CH32V203C8T6"),
                "https://www.aliexpress.com/item/1005004895791296.html", "W.CH", clock_source="hse+pll"),
@@ -513,7 +516,7 @@ def main():
         output_path = base_path / f"{known_board.file_name}.json"
         patch_dict = {"url": known_board.url, "vendor": known_board.vendor}
         patch_dict.update(known_board.add_info)
-        create_board_json(known_board.chip, known_board.board_name, output_path, patch_dict, addtl_extra_flags=None, clock_soure=known_board.clock_source)
+        create_board_json(known_board.chip, known_board.board_name, output_path, patch_dict, addtl_extra_flags=known_board.extra_flags, clock_soure=known_board.clock_source)
     pass
 
 
