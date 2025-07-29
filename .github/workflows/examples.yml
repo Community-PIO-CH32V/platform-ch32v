@@ -31,6 +31,7 @@ jobs:
           - "examples/hello-world-tencent-os"
           - "examples/blinky-cpp-none-os"
           - "examples/baremetal-ch32v003"
+          - "examples/baremetal-ch32v003-blinky"
           - "examples/sdi-printf-ch32v003"
           - "examples/tinyusb-arduino"
           - "examples/usb-cdc-wch32v307-none-os"

@@ -1,0 +1,13 @@
+.set RCC, 0x40021000
+.set RCC_APB2PCENR, 0x18
+.set IOPCEN, 1<<4
+.set GPIOC, 0x40011000
+.set CFGLR, 0x0
+.set OUTDR, 0xc
+.set PINA, 0
+.set PINB, 1
+.set PINA_Clear, ~((0xf)<<(4*PINA))
+.set PINB_Clear, ~((0xf)<<(4*PINB))
+.set ResetValue, 0x44444444
+.set PINB_Output_PP_2MHz, 0x2<<(4*PINB)
+.set PINA_Output_PP_2MHz, 0x2<<(4*PINA)
