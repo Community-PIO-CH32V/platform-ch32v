@@ -119,27 +119,29 @@ env.BuildSources(
 )
 
 startup_filename = board.get("build.startup", None)
-if get_flag_value("use_builtin_startup_file", True) or startup_filename:
-    if startup_filename is None:
-        env.Append(CPPPATH=[join(FRAMEWORK_DIR, "Startup")])
-        startup_filename = get_startup_filename(board)
-    else:
-        # evaluate possible variables in the path
-        startup_filename = env.subst(startup_filename)
-        # if not absolute path, assume relative to project dir.
-        if not isabs(startup_filename):
-            startup_filename = join(env.subst("$PROJECT_DIR"), startup_filename)
-        startup_filename = realpath(startup_filename)
-        env.Append(CPPPATH=[dirname(startup_filename)])
-        print("Using custom startup file: %s" % startup_filename)
-        if not isfile(startup_filename):
-            print("Provided startup file not found: %s" % startup_filename)
-            env.Exit(-1)
-    startup_file_filter = "-<*> +<%s>" % startup_filename
+if startup_filename :
+    # evaluate possible variables in the path
+    startup_filename = env.subst(startup_filename)
+    # if not absolute path, assume relative to project dir.
+    if not isabs(startup_filename):
+        startup_filename = join(env.subst("$PROJECT_DIR"), startup_filename)
+    startup_filename = realpath(startup_filename)
+    env.Append(CPPPATH=[dirname(startup_filename)])
+    print("Using custom startup file: %s" % startup_filename)
+    if not isfile(startup_filename):
+        print("Provided startup file not found: %s" % startup_filename)
+        env.Exit(-1)
+    env.BuildSources(
+        join("$BUILD_DIR", "ProjectStartup"),
+        dirname(startup_filename),
+        "-<*> +<%s>" % startup_filename
+    )
+elif get_flag_value("use_builtin_startup_file", True):
+    env.Append(CPPPATH=[join(FRAMEWORK_DIR, "Startup")])
     env.BuildSources(
         join("$BUILD_DIR", "FrameworkNoneOSStartup"),
         join(FRAMEWORK_DIR, "Startup"),
-        startup_file_filter
+        "-<*> +<%s>" % get_startup_filename(board)
     )
 
 # for clock init etc.
