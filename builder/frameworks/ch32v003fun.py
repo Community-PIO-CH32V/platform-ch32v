@@ -20,6 +20,10 @@ FRAMEWORK_DIR = platform.get_package_dir("framework-ch32v003fun")
 MAIN_FUN_DIR = "ch32v003fun" if isdir(join(FRAMEWORK_DIR, "ch32v003fun")) else "ch32fun"
 CH32FUN_LDSCRIPT = "ch32v003fun.ld" if isdir(join(FRAMEWORK_DIR, "ch32v003fun")) else "ch32fun.ld"
 
+if chip_name.startswith("ch32v003"):
+    # get rid of the wrong chip identifier in board definition file for V003 series
+    env.ProcessUnFlags("-DCH32V00x")
+
 # Add include paths and defines
 env.Append(
     CPPPATH=[
