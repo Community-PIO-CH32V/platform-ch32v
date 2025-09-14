@@ -140,28 +140,30 @@ def get_ld_defines(chip_name: str):
             env.Exit(-1)
     return (target_mcu, mcu_package, target_mcu_ld)
 
-# retrieve needed macro values
-target_mcu, mcu_package, target_mcu_ld = get_ld_defines(chip_name)
+# if no custom LD script is given, generate one from the template
+if not board.get("build.ldscript", ""):
+    # retrieve needed macro values
+    target_mcu, mcu_package, target_mcu_ld = get_ld_defines(chip_name)
 
-# Let the LD script be generated right before the .elf is built
-env.AddPreAction(
-    "$BUILD_DIR/${PROGNAME}.elf",
-    env.VerboseAction(" ".join([
-        "$CC",
-        "-E",
-        "-P",
-        "-x",
-        "c",
-        "-DTARGET_MCU=%s" % target_mcu,
-        "-DMCU_PACKAGE=%d" % mcu_package,
-        "-DTARGET_MCU_LD=%d" % target_mcu_ld,
-        join(FRAMEWORK_DIR, MAIN_FUN_DIR, CH32FUN_LDSCRIPT),
-        ">",
-        join("$BUILD_DIR", "ldscript.ld")
-    ]), "Building %s" % join("$BUILD_DIR", "ldscript.ld"))
-)
-# Already put in the right path for the to-be-generated file
-env.Replace(LDSCRIPT_PATH=join("$BUILD_DIR", "ldscript.ld"))
+    # Let the LD script be generated right before the .elf is built
+    env.AddPreAction(
+        "$BUILD_DIR/${PROGNAME}.elf",
+        env.VerboseAction(" ".join([
+            "$CC",
+            "-E",
+            "-P",
+            "-x",
+            "c",
+            "-DTARGET_MCU=%s" % target_mcu,
+            "-DMCU_PACKAGE=%d" % mcu_package,
+            "-DTARGET_MCU_LD=%d" % target_mcu_ld,
+            join(FRAMEWORK_DIR, MAIN_FUN_DIR, CH32FUN_LDSCRIPT),
+            ">",
+            join("$BUILD_DIR", "ldscript.ld")
+        ]), "Building %s" % join("$BUILD_DIR", "ldscript.ld"))
+    )
+    # Already put in the right path for the to-be-generated file
+    env.Replace(LDSCRIPT_PATH=join("$BUILD_DIR", "ldscript.ld"))
 
 # build actual ch32v003fun source file
 env.BuildSources(
