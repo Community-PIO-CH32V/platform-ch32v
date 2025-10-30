@@ -257,7 +257,7 @@ class Ch32vPlatform(PlatformBase):
         elif mcu.startswith("ch32l0"):
             header = "ch32l103.h"
         elif mcu.startswith("ch32x0"):
-            header = "ch32x305.h"
+            header = "ch32x035.h"
         elif mcu.startswith("ch641"):
             header = "ch641.h"
         elif mcu.startswith("ch643"):
