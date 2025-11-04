@@ -226,7 +226,7 @@ class Ch32vPlatform(PlatformBase):
                     # So, we have to tell PIO to preflash the binary using the regular upload command
                     "load_cmds": "preload",
                     "init_cmds": minichlink_reset_cmds + init_cmds,
-                    "port": "localhost:2000", # default port of that tool
+                    "port": "localhost:3333", # default port of that tool
                     "read_pattern": "GDBServer Running",
                 }
             debug["tools"][tool]["onboard"] = tool in debug.get("onboard_tools", [])
