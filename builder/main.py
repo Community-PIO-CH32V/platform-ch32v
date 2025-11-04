@@ -206,14 +206,17 @@ env.AddPlatformTarget("upload", upload_target, upload_actions, "Upload")
 #
 # Target: Disable / Enable / Check Code Read Protection, Erase
 #
-def generate_minichlink_action(args: List[str], action_name:str):
-    wchisp_path = os.path.join(
+def generate_minichlink_action(args: List[str], action_name:str, upload_protocol_is_minichlink: bool):
+    minichlink_path = os.path.join(
         platform.get_package_dir("tool-minichlink") or "",
         "minichlink"
     )
-    cmd = ["\"%s\"" % wchisp_path]
-    cmd.append("$UPLOADERFLAGS")
+    cmd = ["\"%s\"" % minichlink_path]
+    # we don't want uploader flags pertaining to other uploaders like wch-linke.
+    if upload_protocol_is_minichlink:
+        cmd.append("$UPLOADERFLAGS")
     cmd.extend(args)
+    # print("Returning action: " + str(cmd))
     return env.VerboseAction(" ".join(cmd), action_name)
 
 def generate_wlink_action(args: List[str], action_name:str):
@@ -337,24 +340,25 @@ elif upload_protocol == "isp":
         "Reset (ISP)"
     )
 # make minichlink SDI printf monitor show up even when it's not the selected upload protocol
+is_minichlink = upload_protocol == "minichlink"
 if upload_protocol == "minichlink" or "ch32v003fun" in frameworks or len(frameworks) == 0:
     env.AddPlatformTarget(
         "sdi_printf_monitor", None, generate_minichlink_action([
             "-T"
-        ], "Starting SDI Printf Monitor"),
+        ], "Starting SDI Printf Monitor", is_minichlink),
         "Monitor SDI Printf (ch32v003fun)"
     )
 if upload_protocol == "minichlink":
     env.AddPlatformTarget(
         "enable_flash_protection", None, generate_minichlink_action([
             "-P"
-        ], "Enabling Flash Protection"),
+        ], "Enabling Flash Protection", is_minichlink),
         "Enable Flash Protection"
     )
     env.AddPlatformTarget(
         "disable_flash_protection", None, generate_minichlink_action([
             "-p"
-        ], "Disabling Flash Protection"),
+        ], "Disabling Flash Protection", is_minichlink),
         "Disable Flash Protection"
     )
 
