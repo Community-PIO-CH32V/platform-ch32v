@@ -99,6 +99,9 @@ def validate_and_define_sysclk(env: Environment):
 
             macro_name = f"SYSCLK_FREQ_{f_cpu // 1_000_000}MHz_{'HSI' if clock_source.startswith('hsi') else 'HSE'}"
             defines.append((macro_name, f_cpu))
+            # some SDK files have misspellings, e.g. "48MHZ_HSI" and "8MHz_HSI" in ch32v003.
+            # support both by uppercasing the macro name.
+            defines.append((macro_name.upper(), f_cpu))
             applied_macro = f"{macro_name}={f_cpu}"
             applied_freq = f_cpu
 
