@@ -1,0 +1,43 @@
+{
+  "build": {
+    "clock_source": "hsi+pll",
+    "extra_flags": "-DCH57 -DCH57xQ -DCH5xx -DCH57X -DCH57x -DCH572",
+    "f_cpu": "100000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imc_zba_zbb_zbc_zbs_xw",
+    "mcu": "ch572q",
+    "series": "ch572",
+    "spl_series": "ch572"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH572.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "ch32v003fun"
+  ],
+  "name": "Generic CH572Q",
+  "upload": {
+    "maximum_ram_size": 12288,
+    "maximum_size": 253952,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp",
+      "wlink"
+    ]
+  },
+  "url": "http://www.wch-ic.com/products/CH572.html",
+  "vendor": "W.CH"
+}

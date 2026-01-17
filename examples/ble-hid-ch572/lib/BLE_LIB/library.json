@@ -1,0 +1,11 @@
+{
+    "name": "W.CH BLE LIB",
+    "version": "1.0.0",
+    "build": {
+      "flags": [
+        "-L.",
+        "-lCH572BLE_PERI"
+      ],
+      "libArchive": false
+    }
+  }

@@ -72,8 +72,10 @@ class ChipInfo:
         elif name_lower.startswith("ch643"):
             return ("rv32imacxw", "ilp32")
         # applies to ch56x, ch57x, ch58x
-        elif name_lower.startswith("ch5"):
+        elif name_lower.startswith("ch5") and not name_lower.startswith("ch570") and not name_lower.startswith("ch572"):
             return ("rv32imac", "ilp32")
+        elif name_lower.startswith("ch5") and (name_lower.startswith("ch570") or name_lower.startswith("ch572")):
+            return ("rv32imc_zba_zbb_zbc_zbs_xw", "ilp32")
         elif name_lower.startswith("ch32x03"):
             return ("rv32imacxw", "ilp32")
         elif name_lower.startswith("ch32l1"):
@@ -108,8 +110,10 @@ class ChipInfo:
         # applies to ch56x, ch57x, ch58x
         elif name_lower.startswith("ch56"):
             return "ch56x"
-        elif name_lower.startswith("ch57"):
+        elif name_lower.startswith("ch57") and not name_lower.startswith("ch570") and not name_lower.startswith("ch572"):
             return "ch57x"
+        elif name_lower.startswith("ch57") and (name_lower.startswith("ch570") or name_lower.startswith("ch572")):
+            return "ch572"
         elif name_lower.startswith("ch58"):
             return "ch58x"
         elif name_lower.startswith("ch59"):
@@ -125,7 +129,7 @@ class ChipInfo:
             return "unknown"
 
     def exact_series(self) -> str:
-        if self.name.lower().startswith("ch5"):
+        if self.name.lower().startswith("ch5") and not self.name.lower().startswith("ch570") and not self.name.lower().startswith("ch572"):
             return self.name[0:len("ch58")].upper() + "X"
         # Hack: Even ch32x033 is recognized as x035 series.
         # This simplifies folder handling for frameworks like
@@ -135,6 +139,8 @@ class ChipInfo:
         # Hack: A ch32v317 uses the same SDK as the ch32v307.
         if self.name.lower().startswith("ch32v317"):
             return "ch32v307"
+        if self.name.lower().startswith("ch57") and (self.name.lower().startswith("ch570") or self.name.lower().startswith("ch572")):
+            return "ch572"
         return self.name[0:len("ch32vxxx")]
     
     def get_svd_file(self) -> str:
@@ -158,6 +164,12 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH571F", 192+32, 16+2, 20, "QFN28"),
     ChipInfo("CH571D", 192+32, 16+2, 20, "QFN20"),
     ChipInfo("CH571K", 192+32, 16+2, 20, "ESSOP10"),
+    ChipInfo("CH572D", 240+8, 12, 100, "QFN20"),
+    ChipInfo("CH572Q", 240+8, 12, 100, "DFN10X3"),
+    ChipInfo("CH572R", 240+8, 12, 100, "TSSOP16"),
+    ChipInfo("CH570D", 240+8, 12, 100, "QFN20"),
+    ChipInfo("CH570Q", 240+8, 12, 100, "DFN10X3"),
+    ChipInfo("CH570E", 240+8, 12, 100, "SOP8"),
     # CH58x (has +32K data flash)
     ChipInfo("CH583M", 448+32, 32, 20, "QFN48"),
     ChipInfo("CH582M", 448+32, 32, 20, "QFN48"),

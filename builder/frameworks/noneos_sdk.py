@@ -177,8 +177,10 @@ libs.append(env.BuildLibrary(
 # mandatory for compilation
 if chip_series.startswith("ch57") or chip_series.startswith("ch58") or chip_series.startswith("ch59"):
     env.Append(LIBPATH=[join(FRAMEWORK_DIR, "Peripheral", chip_series, "src")])
-    if chip_series.startswith("ch57"):
-        libs += ["ISP573"]
+    if chip_series.startswith("ch57") and not chip_series.startswith("ch572") and not chip_series.startswith("ch570"):
+        libs += ["ISP573"] # actually for 571 and 573 
+    elif chip_series.startswith("ch572") or chip_series.startswith("ch570"):
+        libs += ["ISP572"]  # for 570 and 572
     elif chip_series.startswith("ch58"):
         libs += ["ISP583"]
     else:
