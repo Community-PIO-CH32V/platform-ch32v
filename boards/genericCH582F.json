@@ -1,7 +1,7 @@
 {
   "build": {
     "clock_source": "hsi+pll",
-    "extra_flags": "-DCH58 -DCH58X -DCH582",
+    "extra_flags": "-DCH58 -DCH58xF -DCH5xx -DCH58X -DCH58x -DCH582",
     "f_cpu": "20000000L",
     "hwids": [
       [
@@ -25,7 +25,8 @@
   "frameworks": [
     "noneos-sdk",
     "freertos",
-    "rt-thread"
+    "rt-thread",
+    "ch32v003fun"
   ],
   "name": "Generic CH582F",
   "upload": {

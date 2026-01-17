@@ -1,7 +1,7 @@
 {
   "build": {
     "clock_source": "hsi+pll",
-    "extra_flags": "-DCH59 -DCH59X -DCH591",
+    "extra_flags": "-DCH59 -DCH59xD -DCH5xx -DCH59X -DCH59x -DCH591",
     "f_cpu": "60000000L",
     "hwids": [
       [
@@ -25,7 +25,8 @@
   "frameworks": [
     "noneos-sdk",
     "freertos",
-    "rt-thread"
+    "rt-thread",
+    "ch32v003fun"
   ],
   "name": "Generic CH591D",
   "upload": {

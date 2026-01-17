@@ -1,7 +1,7 @@
 {
   "build": {
     "clock_source": "hsi+pll",
-    "extra_flags": "-DCH57 -DCH57X -DCH573",
+    "extra_flags": "-DCH57 -DCH57xX -DCH5xx -DCH57X -DCH57x -DCH573",
     "f_cpu": "20000000L",
     "hwids": [
       [
@@ -23,7 +23,8 @@
     "svd_path": "CH573.svd"
   },
   "frameworks": [
-    "noneos-sdk"
+    "noneos-sdk",
+    "ch32v003fun"
   ],
   "name": "Generic CH573X",
   "upload": {

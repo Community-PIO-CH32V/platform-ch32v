@@ -453,7 +453,7 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         # experiment
         base_json["frameworks"].append("zephyr")
         base_json["build"]["zephyr"] = {"variant": "usb_pdmon"}
-    if chip_l.startswith("ch32v") or chip_l.startswith("ch32x"):
+    if chip_l.startswith("ch32v") or chip_l.startswith("ch32x") or chip_l.startswith("ch5"):
         base_json["frameworks"].append("ch32v003fun")
     add_openwch_arduino_info(base_json, patch_info, info, board_name)
 
@@ -463,7 +463,10 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
     ]
     if chip_l.startswith("ch5") or chip_l.startswith("ch6"):
         extra_flags += [
+            f"-D{info.name[0:len('chxx')]}x{info.name[-1]}",
+            f"-D{info.name[0:len('ch5')]}xx",
             f"-D{info.name[0:len('ch5x')]}X",
+            f"-D{info.name[0:len('ch5x')]}x",
             f"-D{info.name[0:len('ch5xx')]}",
         ]
     else:

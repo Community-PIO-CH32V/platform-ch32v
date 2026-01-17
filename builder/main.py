@@ -28,6 +28,7 @@ from SCons.Script import (
 env = DefaultEnvironment()
 platform = env.PioPlatform()
 board_config = env.BoardConfig()
+chip_name = str(board_config.get("build.mcu", "")).lower()
 
 # Depending on whether we're using GCC8 or GCC12, the compiler executable's names need to be adapted.
 # Attempt proper detection by looking at the package version.
@@ -178,7 +179,8 @@ elif upload_protocol == "isp":
     )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 elif upload_protocol == "minichlink":
-    flash_start = board_config.get("upload.offset_address", "0x08000000")
+    # target address can be a hex value of a symbolic name like "flash", "bootloader", "eeprom", "ram", "options"
+    flash_start = board_config.get("upload.offset_address", "flash")
     env.Replace(
         UPLOADER="minichlink",
         UPLOADERFLAGS="", # write binary
@@ -346,7 +348,7 @@ if upload_protocol == "minichlink" or "ch32v003fun" in frameworks or len(framewo
         "sdi_printf_monitor", None, generate_minichlink_action([
             "-T"
         ], "Starting SDI Printf Monitor", is_minichlink),
-        "Monitor SDI Printf (ch32v003fun)"
+        "Monitor SDI Printf (ch32fun)"
     )
 if upload_protocol == "minichlink":
     env.AddPlatformTarget(

@@ -1,7 +1,7 @@
 {
   "build": {
     "clock_source": "hsi+pll",
-    "extra_flags": "-DCH64 -DCH64X -DCH643",
+    "extra_flags": "-DCH64 -DCH64xQ -DCH6xx -DCH64X -DCH64x -DCH643",
     "f_cpu": "48000000L",
     "hwids": [
       [

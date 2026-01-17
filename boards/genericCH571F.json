@@ -1,7 +1,7 @@
 {
   "build": {
     "clock_source": "hsi+pll",
-    "extra_flags": "-DCH57 -DCH57X -DCH571",
+    "extra_flags": "-DCH57 -DCH57xF -DCH5xx -DCH57X -DCH57x -DCH571",
     "f_cpu": "20000000L",
     "hwids": [
       [
@@ -23,7 +23,8 @@
     "svd_path": "CH571.svd"
   },
   "frameworks": [
-    "noneos-sdk"
+    "noneos-sdk",
+    "ch32v003fun"
   ],
   "name": "Generic CH571F",
   "upload": {
