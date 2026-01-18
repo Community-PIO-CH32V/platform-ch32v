@@ -13,7 +13,7 @@ $testBases = @(
     @{ board = "ch32l103c8t6_evt_r0"; frameworks = @("noneos-sdk", "freertos") },
     
     # CH32X series
-    @{ board = "ch32x035c8t6_evt_r0"; frameworks = @("noneos-sdk") },
+    @{ board = "ch32x035c8t6_evt_r0"; frameworks = @("noneos-sdk", "freertos") },
     
     # CH5x series (each variant: CH570, CH571, CH572, CH573, CH56x)
     @{ board = "genericCH570D"; frameworks = @("noneos-sdk") },
@@ -23,9 +23,11 @@ $testBases = @(
     @{ board = "genericCH565M"; frameworks = @("noneos-sdk") },
     
     # CH58x and CH59x series (with FreeRTOS support)
-    @{ board = "genericCH581F"; frameworks = @("noneos-sdk") },
+    @{ board = "genericCH581F"; frameworks = @("noneos-sdk", "freertos") },
     @{ board = "genericCH582F"; frameworks = @("noneos-sdk", "freertos") },
-    @{ board = "genericCH591D"; frameworks = @("noneos-sdk") },
+    @{ board = "genericCH583M"; frameworks = @("noneos-sdk", "freertos") },
+    @{ board = "genericCH591D"; frameworks = @("noneos-sdk", "freertos") },
+    @{ board = "genericCH592X"; frameworks = @("noneos-sdk", "freertos") },
     
     # CH6xx series
     @{ board = "genericCH641F"; frameworks = @("noneos-sdk") },
