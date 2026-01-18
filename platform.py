@@ -241,135 +241,172 @@ class Ch32vPlatform(PlatformBase):
                     ["-c", "adapter speed %s" % debug_config.speed]
                 )
 
-    def get_noneos_header_for_mcu(self, mcu):
-        header = None
-        if mcu.startswith("ch32v00") or mcu.startswith("ch32m0"):
-            if mcu.startswith("ch32v003"):
-                header = "ch32v00x.h"
-            else:
-                header = "ch32v00X.h"
-        elif mcu.startswith("ch32v10"):
-            header = "ch32v10x.h"
-        elif mcu.startswith("ch32v20"):
-            header = "ch32v20x.h"
-        elif mcu.startswith("ch32v30"):
-            header = "ch32v30x.h"
-        elif mcu.startswith("ch32l0"):
-            header = "ch32l103.h"
-        elif mcu.startswith("ch32x0"):
-            header = "ch32x035.h"
-        elif mcu.startswith("ch641"):
-            header = "ch641.h"
-        elif mcu.startswith("ch643"):
-            header = "ch643.h"
-        elif mcu.startswith("ch5"):
-            header = mcu[0:len("ch5x")].upper() + "x_common.h"
-        return header
-
     def generate_sample_code(self, config, environment):
+        # Generate sample code for the environment and framework
         frameworks = config.get(f"env:{environment}", "framework", None)
         if frameworks is None or len(frameworks) != 1 or (len(frameworks) == 1 and frameworks[0] == "arduino"):
             raise NotImplementedError()
-        # we've made sure this is a single framework project.
+        
         framework = frameworks[0]
-        main_content = ""
-        is_cpp_project = False
         board = config.get("env:%s" % environment, "board")
         board_config = self.board_config(board)
         mcu = str(board_config.get("build.mcu", "")).lower()
-        additional_files: list[tuple[str, str]] = []
-        # commonly needed
-        is_l10x = mcu.startswith("ch32l1")
-        is_v00Xx = mcu.startswith("ch32m0") or (mcu.startswith("ch32v00") and not mcu.startswith("ch32v003"))
-        is_ch6x = mcu.startswith("ch6")
-        is_ch5x = mcu.startswith("ch5")
-        if framework == "noneos-sdk":
-            gpio_port = "GPIOC" if not is_ch6x else "GPIOA"
-            gpio_pin = "GPIO_Pin_1" if not is_ch6x else "GPIO_Pin_0"
-            gpio_clock_enable = ""
-            if is_l10x or is_v00Xx:
-                gpio_clock_enable = "RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOC, ENABLE)"
-            elif is_ch6x:
-                gpio_clock_enable = "RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE)"
+        series = str(board_config.get("build.series", "")).lower()
+        src_dir = config.get("platformio", "src_dir")
+        
+        # Generate code using the dedicated generator
+        generator = self.SampleCodeGenerator()
+        files = generator.generate_for_framework(framework, mcu, series)
+        
+        # Write generated files
+        return generator.write_files(src_dir, files)
+    
+    # Nested code generation classes
+    class ChipSeriesInfo:
+        # Detects and stores chip series characteristics
+        
+        def __init__(self, mcu: str, series: str = ""):
+            self.mcu = mcu.lower()
+            self.series = series.lower()
+            self.is_l10x = self.mcu.startswith("ch32l1")
+            self.is_v00xx = self.mcu.startswith("ch32m0") or (
+                self.mcu.startswith("ch32v00") and not self.mcu.startswith("ch32v003")
+            )
+            self.is_ch6x = self.mcu.startswith("ch6")
+            self.is_ch5x = self.mcu.startswith("ch5")
+            self.is_ch56x = self.series == "ch56x"
+            self.is_ch570_ch572 = self.series == "ch572"
+            self.is_ch571_ch573 = self.series == "ch57x"
+    
+    class NoneOSCodeGenerator:
+        # Generates NoneOS SDK sample code
+        
+        @staticmethod
+        def get_gpio_config(chip_info) -> dict:
+            # Returns GPIO config for the chip series
+            if chip_info.is_ch6x:
+                return {
+                    "port": "GPIOA",
+                    "pin": "GPIO_Pin_0",
+                    "clock_enable": "RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE)",
+                    "speed": "GPIO_Speed_50MHz"
+                }
             else:
-                gpio_clock_enable = "RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE)"
-            hdr = self.get_noneos_header_for_mcu(mcu)
-            if hdr is None:
-                raise NotImplementedError(
-                    "Cannot determine NoneOS SDK header for the selected board"
-                )
-            if not is_ch5x:
-                main_content = """
-#include <%s>
+                return {
+                    "port": "GPIOC",
+                    "pin": "GPIO_Pin_1",
+                    "clock_enable": (
+                        "RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOC, ENABLE)"
+                        if chip_info.is_l10x or chip_info.is_v00xx
+                        else "RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE)"
+                    ),
+                    "speed": "GPIO_Speed_30MHz" if chip_info.is_v00xx else "GPIO_Speed_50MHz"
+                }
+        
+        @staticmethod
+        def generate_standard_ch_code(chip_info, header: str) -> str:
+            # Generates standard CH32V main code (non-CH5x)
+            gpio_cfg = Ch32vPlatform.NoneOSCodeGenerator.get_gpio_config(chip_info)
+            
+            return f"""
+#include <{header}>
 #include <debug.h>
 
-#define BLINKY_GPIO_PORT %s
-#define BLINKY_GPIO_PIN %s
-#define BLINKY_CLOCK_ENABLE %s
+#define BLINKY_GPIO_PORT {gpio_cfg['port']}
+#define BLINKY_GPIO_PIN {gpio_cfg['pin']}
+#define BLINKY_CLOCK_ENABLE {gpio_cfg['clock_enable']}
 
 void NMI_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void HardFault_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
-int main(void) {
+int main(void) {{
     SystemCoreClockUpdate();
     Delay_Init();
 
-    GPIO_InitTypeDef GPIO_InitStructure = {0};
+    GPIO_InitTypeDef GPIO_InitStructure = {{0}};
     BLINKY_CLOCK_ENABLE;
     GPIO_InitStructure.GPIO_Pin = BLINKY_GPIO_PIN;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-    GPIO_InitStructure.GPIO_Speed = %s;
+    GPIO_InitStructure.GPIO_Speed = {gpio_cfg['speed']};
     GPIO_Init(BLINKY_GPIO_PORT, &GPIO_InitStructure);
 
     uint8_t ledState = 0;
-    while (1) {
+    while (1) {{
         GPIO_WriteBit(BLINKY_GPIO_PORT, BLINKY_GPIO_PIN, ledState);
         ledState ^= 1;
         Delay_Ms(1000);
-    }
+    }}
     return 0;
-}
+}}
 
-void NMI_Handler(void) {}
+void NMI_Handler(void) {{}}
 void HardFault_Handler(void)
-{
+{{
     while (1)
-    {
-    }
-}
-                """ % (
-                    hdr,
-                    gpio_port,
-                    gpio_pin,
-                    gpio_clock_enable,
-                    "GPIO_Speed_30MHz" if is_v00Xx else "GPIO_Speed_50MHz"
-                )
+    {{
+    }}
+}}
+            """
+        
+        @staticmethod
+        def generate_ch5x_code(chip_info, header: str) -> str:
+            # Generates CH5x specific main code with proper differentiation
+            if chip_info.is_ch56x:
+                # CH56x uses different initialization
+                init_code = "SystemInit(FREQ_SYS);\n    Delay_Init(FREQ_SYS);"
+                gpio_modecfg = "GPIO_Slowascent_PP_16mA"
+            elif chip_info.is_ch570_ch572:
+                # CH570/CH572 use HSE+PLL clock
+                init_code = "SetSysClock(CLK_SOURCE_HSE_PLL_60MHz);"
+                gpio_modecfg = "GPIO_ModeOut_PP_20mA"
             else:
-                is_ch56x = mcu.startswith("ch56")
-                init_code = "SetSysClock(CLK_SOURCE_PLL_60MHz);" if not is_ch56x else "SystemInit(FREQ_SYS);\n    Delay_Init(FREQ_SYS);"
-                gpio_modecfg = "GPIO_Slowascent_PP_16mA" if is_ch56x else "GPIO_ModeOut_PP_20mA"
-                main_content = """
-#include <%s>
+                # CH571/CH573/CH58x/CH59x use PLL clock (without HSE prefix)
+                init_code = "SetSysClock(CLK_SOURCE_PLL_60MHz);"
+                gpio_modecfg = "GPIO_ModeOut_PP_20mA"
+            
+            return f"""
+#include <{header}>
 #define BLINKY_GPIO_PIN  GPIO_Pin_8
 
 int main(void)
-{
-    %s
+{{
+    {init_code}
     GPIOA_SetBits(BLINKY_GPIO_PIN);
-    GPIOA_ModeCfg(BLINKY_GPIO_PIN, %s);
-    while(1) {
+    GPIOA_ModeCfg(BLINKY_GPIO_PIN, {gpio_modecfg});
+    while(1) {{
         DelayMs(1000);
         GPIOA_InverseBits(BLINKY_GPIO_PIN);
-    }
-}
-                """ % (
-                    hdr,
-                    init_code,
-                    gpio_modecfg
-                )
-        elif framework == "freertos":
-            if not is_ch5x and not is_ch6x:
-                main_content = """
+    }}
+}}
+            """
+        
+        @staticmethod
+        def generate(chip_info, header: str) -> str:
+            # Generates appropriate main code for the chip series
+            if chip_info.is_ch5x:
+                return Ch32vPlatform.NoneOSCodeGenerator.generate_ch5x_code(chip_info, header)
+            else:
+                return Ch32vPlatform.NoneOSCodeGenerator.generate_standard_ch_code(chip_info, header)
+    
+    class FreeRTOSCodeGenerator:
+        # Generates FreeRTOS sample code
+        
+        @staticmethod
+        def generate(chip_info) -> tuple[str, str]:
+            # Returns (main_code, freertos_config)
+            if chip_info.is_ch5x or chip_info.is_ch6x:
+                main_code = Ch32vPlatform.FreeRTOSCodeGenerator.generate_minimal_code(chip_info)
+                freertos_config = Ch32vPlatform.FreeRTOSCodeGenerator.get_freertos_config_ch5x(chip_info)
+            else:
+                main_code = Ch32vPlatform.FreeRTOSCodeGenerator.generate_standard_code()
+                freertos_config = Ch32vPlatform.FreeRTOSCodeGenerator.get_freertos_config()
+            
+            return main_code, freertos_config
+        
+        @staticmethod
+        def generate_standard_code() -> str:
+            # FreeRTOS code for standard chips (non-CH5x/CH6x)
+            return """
 #include "debug.h"
 #include "FreeRTOS.h"
 #include "task.h"
@@ -401,9 +438,25 @@ int main(void)
         printf("shouldn't run at here!!\\n");
     }
 }
-                """
+            """
+        
+        @staticmethod
+        def generate_minimal_code(chip_info=None) -> str:
+            # Minimal FreeRTOS code for CH5x/CH6x chips
+            if chip_info and (chip_info.is_ch5x or chip_info.is_ch6x):
+                # CH5x/CH6x minimal code without debug.h
+                return """
+#include "FreeRTOS.h"
+#include "task.h"
+
+int main(void)
+{
+    vTaskStartScheduler();
+}
+            """
             else:
-                main_content = """
+                # Default minimal code (shouldn't be reached in practice)
+                return """
 #include "debug.h"
 #include "FreeRTOS.h"
 #include "task.h"
@@ -415,13 +468,14 @@ int main(void)
     USART_Printf_Init(115200);
     vTaskStartScheduler();
 }
-                """
-            additional_files.append((
-                "FreeRTOSConfig.h",
-                """
+            """
+        
+        @staticmethod
+        def get_freertos_config() -> str:
+            # FreeRTOS configuration header content
+            return """
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
-#include "debug.h"
 
 /*-----------------------------------------------------------
  * Application specific definitions.
@@ -437,6 +491,7 @@ int main(void)
 
 /* See https://www.freertos.org/Using-FreeRTOS-on-RISC-V.html */
 
+#include <debug.h>
 /* don't have MTIME */
 #define configMTIME_BASE_ADDRESS     ( 0 )
 #define configMTIMECMP_BASE_ADDRESS  ( 0 )
@@ -500,23 +555,194 @@ header file. */
 
 
 #endif /* FREERTOS_CONFIG_H */
-                """
-            ))
-        else:
-            raise NotImplementedError(
-                "Sample code generation is not implemented for the '%s' framework" % framework
-            )
+            """
+        
+        @staticmethod
+        def get_freertos_config_ch5x(chip_info) -> str:
+            # FreeRTOS configuration for CH5x series (no debug.h available)
+            # Determine which header to include based on chip series
+            if chip_info.is_ch56x:
+                include_header = '#include "CH56x_common.h"'
+            elif chip_info.series == "ch572":
+                include_header = '#include "CH57x_common.h"'
+            elif chip_info.series == "ch57x":
+                include_header = '#include "CH57x_common.h"'
+            elif chip_info.series == "ch58x":
+                include_header = '#include "CH58x_common.h"'
+            elif chip_info.series == "ch59x":
+                include_header = '#include "CH59x_common.h"'
+            else:
+                include_header = '#include "CH57x_common.h"'  # default fallback
+            
+            return f"""
+#ifndef FREERTOS_CONFIG_H
+#define FREERTOS_CONFIG_H
 
-        src_dir = config.get("platformio", "src_dir")
-        main_path = os.path.join(src_dir, "main.%s" % ("cpp" if is_cpp_project else "c"))
-        if os.path.isfile(main_path):
+{include_header}
+#include <stdio.h>
+
+/*-----------------------------------------------------------
+ * Application specific definitions.
+ *
+ * These definitions should be adjusted for your particular hardware and
+ * application requirements.
+ *
+ * THESE PARAMETERS ARE DESCRIBED WITHIN THE 'CONFIGURATION' SECTION OF THE
+ * FreeRTOS API DOCUMENTATION AVAILABLE ON THE FreeRTOS.org WEB SITE.
+ *
+ * See http://www.freertos.org/a00110.html.
+ *----------------------------------------------------------*/
+
+/* See https://www.freertos.org/Using-FreeRTOS-on-RISC-V.html */
+
+/* don't have MTIME */
+#define configMTIME_BASE_ADDRESS         ( 0 )
+#define configMTIMECMP_BASE_ADDRESS      ( 0 )
+
+#define configUSE_PREEMPTION                    1
+#define configUSE_TIME_SLICING                  0
+#define configUSE_IDLE_HOOK                     0
+#define configUSE_TICK_HOOK                     0
+#define configCPU_CLOCK_HZ                      FREQ_SYS
+#define configTICK_RATE_HZ                      ( ( TickType_t ) 500 )
+#define configMAX_PRIORITIES                    ( 15 )
+#define configMINIMAL_STACK_SIZE                ( ( unsigned short ) 128 )
+#define configTOTAL_HEAP_SIZE                   ( ( size_t ) ( 12 * 1024 ) )
+#define configMAX_TASK_NAME_LEN                 ( 16 )
+#define configUSE_TRACE_FACILITY                0
+#define configUSE_16_BIT_TICKS                  0
+#define configIDLE_SHOULD_YIELD                 0
+#define configUSE_MUTEXES                       1
+#define configQUEUE_REGISTRY_SIZE               8
+#define configCHECK_FOR_STACK_OVERFLOW          0
+#define configUSE_RECURSIVE_MUTEXES             1
+#define configUSE_MALLOC_FAILED_HOOK            0
+#define configUSE_APPLICATION_TASK_TAG          0
+#define configUSE_COUNTING_SEMAPHORES           1
+#define configGENERATE_RUN_TIME_STATS           0
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
+
+/* Co-routine definitions. */
+#define configUSE_CO_ROUTINES             0
+#define configMAX_CO_ROUTINE_PRIORITIES   ( 2 )
+
+/* Software timer definitions. */
+#define configUSE_TIMERS                1
+#define configTIMER_TASK_PRIORITY       ( configMAX_PRIORITIES - 1 )
+#define configTIMER_QUEUE_LENGTH        4
+#define configTIMER_TASK_STACK_DEPTH    ( configMINIMAL_STACK_SIZE )
+
+/* Set the following definitions to 1 to include the API function, or zero
+to exclude the API function. */
+#define INCLUDE_vTaskPrioritySet           1
+#define INCLUDE_uxTaskPriorityGet          1
+#define INCLUDE_vTaskDelete                1
+#define INCLUDE_vTaskCleanUpResources      1
+#define INCLUDE_vTaskSuspend               1
+#define INCLUDE_vTaskDelayUntil            1
+#define INCLUDE_vTaskDelay                 1
+#define INCLUDE_eTaskGetState              1
+#define INCLUDE_xTimerPendFunctionCall     1
+#define INCLUDE_xTaskAbortDelay            1
+#define INCLUDE_xTaskGetHandle             1
+#define INCLUDE_xSemaphoreGetMutexHolder   1
+
+/* Normal assert() semantics without relying on the provision of an assert.h
+header file. */
+#define configASSERT( x ) if( ( x ) == 0 ) {{ taskDISABLE_INTERRUPTS(); printf("err at line %d of file \\"%s\\". \\r\\n ",__LINE__,__FILE__); while(1); }}
+
+/* Map to the platform printf function. */
+#define configPRINT_STRING( pcString )  printf( pcString )
+
+#endif /* FREERTOS_CONFIG_H */
+            """
+          
+    class SampleCodeGenerator:
+        # Main entry point for sample code generation
+        
+        def generate_for_framework(self, framework: str, mcu: str, series: str = "") -> dict[str, str]:
+            # Generates sample code for the framework
+            chip_info = Ch32vPlatform.ChipSeriesInfo(mcu, series)
+            
+            if framework == "noneos-sdk":
+                return self._generate_noneos(chip_info)
+            elif framework == "freertos":
+                return self._generate_freertos(chip_info)
+            else:
+                raise NotImplementedError(
+                    f"Sample code generation is not implemented for the '{framework}' framework"
+                )
+        
+        def _generate_noneos(self, chip_info) -> dict[str, str]:
+            # Generates NoneOS SDK sample code
+            header = self._get_noneos_header_for_mcu(chip_info)
+            if header is None:
+                raise NotImplementedError(
+                    "Cannot determine NoneOS SDK header for the selected board"
+                )
+            
+            main_code = Ch32vPlatform.NoneOSCodeGenerator.generate(chip_info, header)
+            return {"main.c": main_code}
+        
+        def _generate_freertos(self, chip_info) -> dict[str, str]:
+            # Generates FreeRTOS sample code
+            main_code, freertos_config = Ch32vPlatform.FreeRTOSCodeGenerator.generate(chip_info)
+            return {
+                "main.c": main_code,
+                "FreeRTOSConfig.h": freertos_config
+            }
+        
+        @staticmethod
+        def _get_noneos_header_for_mcu(chip_info) -> str:
+            # Determines the NoneOS SDK header file based on MCU and series
+            mcu = chip_info.mcu
+            series = chip_info.series
+            
+            if mcu.startswith("ch32v00") or mcu.startswith("ch32m0"):
+                if mcu.startswith("ch32v003"):
+                    return "ch32v00x.h"
+                else:
+                    return "ch32v00X.h"
+            elif mcu.startswith("ch32v10"):
+                return "ch32v10x.h"
+            elif mcu.startswith("ch32v20"):
+                return "ch32v20x.h"
+            elif mcu.startswith("ch32v30"):
+                return "ch32v30x.h"
+            elif mcu.startswith("ch32l1"):
+                return "ch32l103.h"
+            elif mcu.startswith("ch32x0"):
+                return "ch32x035.h"
+            elif mcu.startswith("ch641"):
+                return "ch641.h"
+            elif mcu.startswith("ch643"):
+                return "ch643.h"
+            elif mcu.startswith("ch5"):
+                # For CH5x, use the series info to get correct header
+                if series == "ch56x":
+                    return "CH56x_common.h"
+                elif series == "ch572":
+                    return "CH57x_common.h"
+                elif series == "ch57x":
+                    return "CH57x_common.h"
+                elif series == "ch58x":
+                    return "CH58x_common.h"
+                elif series == "ch59x":
+                    return "CH59x_common.h"
+                else:
+                    # Fallback: construct from series
+                    return series.upper() + "_common.h" if series else None
             return None
-        if not os.path.isdir(src_dir):
-            os.makedirs(src_dir)
-        with open(main_path, mode="w", encoding="utf8") as fp:
-            fp.write(main_content.strip())
-        for ap in additional_files:
-            additional_file_path = os.path.join(src_dir, ap[0])
-            with open(additional_file_path, mode="w", encoding="utf8") as fp:
-                fp.write(ap[1].strip())
-        return True
+        
+        def write_files(self, src_dir: str, files: dict[str, str]) -> bool:
+            # Create source directory if needed
+            if not os.path.isdir(src_dir):
+                os.makedirs(src_dir)
+            
+            # Write all files
+            for filename, content in files.items():
+                file_path = os.path.join(src_dir, filename)
+                with open(file_path, mode="w", encoding="utf8") as fp:
+                    fp.write(content.strip())
+            
+            return True
