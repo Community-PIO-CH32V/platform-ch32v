@@ -11,6 +11,16 @@ data_limit = 0 if mcu.startswith("ch32v0") else 8
 
 machine_arch = str(board.get("build.march"))
 
+# the MAC x64 toolchain only has GCC8, not GCC12. Thus, we need to strip some
+# unsupported extensions. "xw" end "rv32ec" "rv32imc" are supported, the reset not.
+remap_arch = {
+    "rv32ec_zmmul_xw": "rv32ecxw",
+    "rv32imc_zba_zbb_zbc_zbs_xw": "rv32imcxw"
+}
+is_gcc_12 = platform.get_package_version("toolchain-riscv").split(".")[1].startswith("12")
+if not is_gcc_12 and machine_arch in remap_arch:
+    machine_arch = remap_arch[machine_arch]
+
 def get_flag_value(flag_name:str, default_val:bool):
     flag_val = board.get("build.%s" % flag_name, default_val)
     flag_val = str(flag_val).lower() in ("1", "yes", "true")
