@@ -72,6 +72,8 @@ class ChipInfo:
         elif name_lower.startswith("ch643"):
             return ("rv32imacxw", "ilp32")
         # applies to ch56x, ch57x, ch58x
+        elif name_lower.startswith("ch5") and (name_lower.startswith("ch585") or name_lower.startswith("ch584")):
+            return ("rv32imc_zba_zbb_zbc_zbs_xw", "ilp32")
         elif name_lower.startswith("ch5") and not name_lower.startswith("ch570") and not name_lower.startswith("ch572"):
             return ("rv32imac", "ilp32")
         elif name_lower.startswith("ch5") and (name_lower.startswith("ch570") or name_lower.startswith("ch572")):
@@ -114,8 +116,10 @@ class ChipInfo:
             return "ch57x"
         elif name_lower.startswith("ch57") and (name_lower.startswith("ch570") or name_lower.startswith("ch572")):
             return "ch572"
-        elif name_lower.startswith("ch58"):
+        elif name_lower.startswith("ch58") and not name_lower.startswith("ch585") and not name_lower.startswith("ch584"):
             return "ch58x"
+        elif name_lower.startswith("ch58") and (name_lower.startswith("ch585") or name_lower.startswith("ch584")):
+            return "ch585"
         elif name_lower.startswith("ch59"):
             return "ch59x"
         # both x035 and x033 deliberately
@@ -129,6 +133,8 @@ class ChipInfo:
             return "unknown"
 
     def exact_series(self) -> str:
+        if self.name.lower().startswith("ch58") and (self.name.lower().startswith("ch585") or self.name.lower().startswith("ch584")):
+            return "ch585"
         if self.name.lower().startswith("ch5") and not self.name.lower().startswith("ch570") and not self.name.lower().startswith("ch572"):
             return self.name[0:len("ch58")].upper() + "X"
         # Hack: Even ch32x033 is recognized as x035 series.
@@ -175,6 +181,14 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH582M", 448+32, 32, 20, "QFN48"),
     ChipInfo("CH582F", 448+32, 32, 20, "QFN28"),
     ChipInfo("CH581F", 192+32, 32, 20, "QFN28"),
+    # CH585 and CH584 (32K data flash, 24K bootloader, 448k codeflash)
+    ChipInfo("CH585M", 448+32, 128, 78, "QFN48"),
+    ChipInfo("CH585F", 448+32, 128, 78, "QFN32"),
+    ChipInfo("CH585C", 448+32, 128, 78, "QFN26C3"),
+    ChipInfo("CH585D", 448+32, 128, 78, "QFN20"),
+    ChipInfo("CH584M", 448+32, 128, 78, "QFN48"),
+    ChipInfo("CH584F", 448+32, 128, 78, "QFN32"),
+
     # CH59x (has +32K data flash, +24K bootloader)
     ChipInfo("CH592X", 448+24+32, 24+2, 60, "QFN32"),
     ChipInfo("CH592F", 448+24+32, 24+2, 60, "QFN28"),
@@ -448,6 +462,8 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
     if chip_l.startswith("ch58"):
         base_json["frameworks"].append("freertos")
         base_json["frameworks"].append("rt-thread")
+    if chip_l.startswith("ch585") or chip_l.startswith("ch584"):
+        base_json["frameworks"].append("harmony-liteos")
     if chip_l.startswith("ch59"):
         base_json["frameworks"].append("freertos")
         base_json["frameworks"].append("rt-thread")

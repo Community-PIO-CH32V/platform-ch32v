@@ -1,6 +1,7 @@
 #include "ch32v_it.h"
 #include "los_interrupt.h"
 
+#if !defined(CH58x)
 void NMI_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void HardFault_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
@@ -33,3 +34,4 @@ void HardFault_Handler(void)
   HalIntExit();
   FREE_INT_SP();
 }
+#endif

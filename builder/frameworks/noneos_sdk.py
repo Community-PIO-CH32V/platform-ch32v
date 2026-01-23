@@ -33,6 +33,8 @@ def get_linker_script(mcu: str):
 
     # for now, when building for ch56x, ch57x, ch58x, use the original linker scripts..
     if mcu.lower().startswith("ch5"):
+        if mcu.lower().startswith("ch585") or mcu.lower().startswith("ch584"):
+            return join(FRAMEWORK_DIR, "platformio", "ldscripts", "Link_CH585") + ".ld"
         return join(FRAMEWORK_DIR, "platformio", "ldscripts", "Link_" + board.get("build.series", "")[0:-1].upper() + "x") + ".ld"
     ram = board.get("upload.maximum_ram_size", 0)
     flash = board.get("upload.maximum_size", 0)
@@ -181,8 +183,10 @@ if chip_series.startswith("ch57") or chip_series.startswith("ch58") or chip_seri
         libs += ["ISP573"] # actually for 571 and 573 
     elif chip_series.startswith("ch572") or chip_series.startswith("ch570"):
         libs += ["ISP572"]  # for 570 and 572
-    elif chip_series.startswith("ch58"):
+    elif chip_series.startswith("ch58") and not chip_series.startswith("ch585") and not chip_series.startswith("ch584"):
         libs += ["ISP583"]
+    elif chip_series.startswith("ch585") or chip_series.startswith("ch584"):
+        libs += ["ISP585"]
     else:
         libs += ["ISP592"]
 

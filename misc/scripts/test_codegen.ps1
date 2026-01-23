@@ -26,6 +26,9 @@ $testBases = @(
     @{ board = "genericCH581F"; frameworks = @("noneos-sdk", "freertos") },
     @{ board = "genericCH582F"; frameworks = @("noneos-sdk", "freertos") },
     @{ board = "genericCH583M"; frameworks = @("noneos-sdk", "freertos") },
+    @{ board = "genericCH584F"; frameworks = @("noneos-sdk", "freertos") },
+    @{ board = "genericCH585D"; frameworks = @("noneos-sdk", "freertos") },
+
     @{ board = "genericCH591D"; frameworks = @("noneos-sdk", "freertos") },
     @{ board = "genericCH592X"; frameworks = @("noneos-sdk", "freertos") },
     

@@ -1,8 +1,11 @@
 #ifndef __CH32V_IT_H
 #define __CH32V_IT_H
 
+#if !defined(CH58x)
 #include "debug.h"
-
+#else
+#include <stdio.h>
+#endif
 
 #define GET_INT_SP()   asm("csrrw sp,mscratch,sp")
 #define FREE_INT_SP()  asm("csrrw sp,mscratch,sp")
