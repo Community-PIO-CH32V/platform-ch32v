@@ -43,28 +43,12 @@ extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
-#if defined(CH32V10X)
-#include <ch32v10x.h>
-#elif defined(CH32V20X)
-#include <ch32v20x.h>
-#elif defined(CH32V30X) || defined(CH32V31X)
-#include <ch32v30x.h>
-#elif defined(CH32X035) || defined(CH32X033)
-#include <ch32x035.h>
-#elif defined(CH32L10X)
-#include <ch32l103.h>
-#elif defined(CH58x)
-#include <CH58x_common.h>
-#endif
-extern uint32_t SystemCoreClock;
+#include "CH58x_common.h"
+
 /*=============================================================================
                                         System clock module configuration
 =============================================================================*/
-#if defined(CH32V10X)
-#define OS_SYS_CLOCK                                        (SystemCoreClock / 8)
-#else
-#define OS_SYS_CLOCK                                        (SystemCoreClock)
-#endif
+#define OS_SYS_CLOCK                                        (60000000)
 #define LOSCFG_BASE_CORE_TICK_PER_SECOND                    (1000UL)
 #define LOSCFG_BASE_CORE_TICK_HW_TIME                       1
 #define LOSCFG_BASE_CORE_TICK_WTIMER                        0
@@ -78,7 +62,7 @@ extern uint32_t SystemCoreClock;
                                        Task module configuration
 =============================================================================*/
 #define LOSCFG_BASE_CORE_TSK_LIMIT                          12
-#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE                (0x500U)
+#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE                (0x200U)
 #define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE             (0x2D0U)
 #define LOSCFG_BASE_CORE_TSK_MIN_STACK_SIZE                 (0x130U)
 #define LOSCFG_BASE_CORE_TIMESLICE                          1
@@ -108,17 +92,13 @@ extern uint32_t SystemCoreClock;
 /*=============================================================================
                                        Memory module configuration
 =============================================================================*/
-#if defined(CH32V10X)
-#define LOSCFG_SYS_HEAP_SIZE                                0x03500UL
-#else
-#define LOSCFG_SYS_HEAP_SIZE                                0x04000UL
-#endif
-#define OS_SYS_MEM_SIZE                                     0x00000800
+#define LOSCFG_SYS_HEAP_SIZE                                0x02800UL
 #define LOSCFG_BASE_MEM_NODE_INTEGRITY_CHECK                0
 #define LOSCFG_BASE_MEM_NODE_SIZE_CHECK                     1
 #define LOSCFG_MEM_MUL_POOL                                 0
-#define OS_SYS_MEM_NUM                                      20
 #define LOSCFG_KERNEL_MEM_SLAB                              0
+#define OS_SYS_MEM_SIZE                                     0x00000400
+#define OS_SYS_MEM_NUM                                      20
 /*=============================================================================
                                        Exception module configuration
 =============================================================================*/
@@ -131,6 +111,8 @@ extern uint32_t SystemCoreClock;
                                        enable backtrace
 ============================================================================= */
 #define LOSCFG_BACKTRACE_TYPE                               0
+
+#define LOSCFG_KERNEL_PM                                    0
 
 #ifdef __cplusplus
 #if __cplusplus

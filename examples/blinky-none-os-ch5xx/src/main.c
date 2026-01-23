@@ -16,12 +16,12 @@ int main(void)
     #if defined(CH56X)
     SystemInit(FREQ_SYS);
     Delay_Init(FREQ_SYS);
-    #else
-    #if defined(CH570) || defined(CH572)
+    #elif defined(CH570) || defined(CH572)
     SetSysClock(CLK_SOURCE_HSE_PLL_100MHz);
+    #elif defined(CH585) || defined(CH584)
+    SetSysClock(CLK_SOURCE_HSI_PLL_78MHz);
     #else
     SetSysClock(CLK_SOURCE_PLL_60MHz);
-    #endif
     #endif
     GPIOA_SetBits(BLINKY_GPIO_PIN);
     GPIOA_ModeCfg(BLINKY_GPIO_PIN,

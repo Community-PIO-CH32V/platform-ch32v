@@ -162,7 +162,11 @@ int main(void)
 #if(defined(DCDC_ENABLE)) && (DCDC_ENABLE == TRUE)
     PWR_DCDCCfg(ENABLE);
 #endif
+#if defined(CH585) || defined(CH584)
+    SetSysClock(CLK_SOURCE_HSI_PLL_78MHz);
+#else
     SetSysClock(CLK_SOURCE_PLL_60MHz);
+#endif
 #if(defined(HAL_SLEEP)) && (HAL_SLEEP == TRUE)
     GPIOA_ModeCfg(GPIO_Pin_All, GPIO_ModeIN_PU);
     GPIOB_ModeCfg(GPIO_Pin_All, GPIO_ModeIN_PU);

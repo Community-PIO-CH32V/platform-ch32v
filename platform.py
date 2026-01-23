@@ -277,6 +277,7 @@ class Ch32vPlatform(PlatformBase):
             self.is_ch56x = self.series == "ch56x"
             self.is_ch570_ch572 = self.series == "ch572"
             self.is_ch571_ch573 = self.series == "ch57x"
+            self.is_ch585_ch584 = self.series == "ch585"
     
     class NoneOSCodeGenerator:
         # Generates NoneOS SDK sample code
@@ -358,6 +359,9 @@ void HardFault_Handler(void)
             elif chip_info.is_ch570_ch572:
                 # CH570/CH572 use HSE+PLL clock
                 init_code = "SetSysClock(CLK_SOURCE_HSE_PLL_60MHz);"
+                gpio_modecfg = "GPIO_ModeOut_PP_20mA"
+            elif chip_info.is_ch585_ch584:
+                init_code = "SetSysClock(CLK_SOURCE_HSI_PLL_78MHz);"
                 gpio_modecfg = "GPIO_ModeOut_PP_20mA"
             else:
                 # CH571/CH573/CH58x/CH59x use PLL clock (without HSE prefix)
@@ -567,7 +571,7 @@ header file. */
                 include_header = '#include "CH57x_common.h"'
             elif chip_info.series == "ch57x":
                 include_header = '#include "CH57x_common.h"'
-            elif chip_info.series == "ch58x":
+            elif chip_info.series == "ch58x" or chip_info.is_ch585_ch584:
                 include_header = '#include "CH58x_common.h"'
             elif chip_info.series == "ch59x":
                 include_header = '#include "CH59x_common.h"'
@@ -725,7 +729,7 @@ header file. */
                     return "CH57x_common.h"
                 elif series == "ch57x":
                     return "CH57x_common.h"
-                elif series == "ch58x":
+                elif series == "ch58x" or series == "ch585":
                     return "CH58x_common.h"
                 elif series == "ch59x":
                     return "CH59x_common.h"

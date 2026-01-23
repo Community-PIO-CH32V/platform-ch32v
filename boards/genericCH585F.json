@@ -1,0 +1,46 @@
+{
+  "build": {
+    "clock_source": "hsi+pll",
+    "extra_flags": "-DCH58 -DCH58xF -DCH5xx -DCH58X -DCH58x -DCH585",
+    "f_cpu": "78000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imc_zba_zbb_zbc_zbs_xw",
+    "mcu": "ch585f",
+    "series": "ch585",
+    "spl_series": "ch585"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH585.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "freertos",
+    "rt-thread",
+    "harmony-liteos",
+    "ch32v003fun"
+  ],
+  "name": "Generic CH585F",
+  "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 491520,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp",
+      "wlink"
+    ]
+  },
+  "url": "http://www.wch-ic.com/products/CH585.html",
+  "vendor": "W.CH"
+}

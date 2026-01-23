@@ -7,6 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        #os: [ubuntu-latest, windows-latest, macos-latest, macos-15-intel]
         os: [ubuntu-latest, windows-latest, macos-latest]
         example:
           - "examples/adc-cpu-temp-none-os"
@@ -28,6 +29,7 @@ jobs:
           - "examples/blinky-freertos"
           - "examples/blinky-freertos-ch58x-ch59x"
           - "examples/hello-world-harmony-liteos"
+          - "examples/hello-world-harmony-liteos-ch5xx"
           - "examples/hello-world-rt-thread"
           - "examples/hello-world-rt-thread-ch5xx"
           - "examples/hello-world-tencent-os"

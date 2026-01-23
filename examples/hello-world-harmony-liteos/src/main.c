@@ -1,5 +1,7 @@
 #include "ch32v_it.h"
+#if !defined(CH58x)
 #include "debug.h"
+#endif
 #include "los_tick.h"
 #include "los_task.h"
 #include "los_config.h"
