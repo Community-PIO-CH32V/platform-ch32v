@@ -1,0 +1,44 @@
+{
+  "build": {
+    "clock_source": "hsi+pll",
+    "cpu_core": "v3f",
+    "extra_flags": "-DCH32H417RE -DCH32H41X -DCH32H41x -DCH32H417 -DCore_V3F",
+    "f_cpu": "400000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imac_zba_zbb_zbc_zbs_xw",
+    "mcu": "ch32h417reu6",
+    "series": "ch32h417",
+    "spl_series": "ch32h417"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-dual-core.cfg",
+    "svd_path": "CH32H417xx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "ch32v003fun"
+  ],
+  "name": "Generic CH32H417REU6 (V3F Master)",
+  "upload": {
+    "maximum_ram_size": 131072,
+    "maximum_size": 983040,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp",
+      "wlink"
+    ]
+  },
+  "url": "http://www.wch-ic.com/products/CH32H417.html",
+  "vendor": "W.CH"
+}

@@ -1,6 +1,12 @@
 #include "ch32fun.h"
 #include <stdio.h>
 
+#if defined(CH32H41x)
+#define MODE_OUTPUT GPIO_CNF_OUT_PP, GPIO_Speed_180MHz
+#else
+#define MODE_OUTPUT GPIO_Speed_10MHz | GPIO_CNF_OUT_PP
+#endif
+
 int main()
 {
 	SystemInit();
@@ -8,10 +14,10 @@ int main()
 	// Enable GPIOs
 	funGpioInitAll();
 	
-	funPinMode( PD0, GPIO_Speed_10MHz | GPIO_CNF_OUT_PP );
-	funPinMode( PD4, GPIO_Speed_10MHz | GPIO_CNF_OUT_PP );
-	funPinMode( PD6, GPIO_Speed_10MHz | GPIO_CNF_OUT_PP );
-	funPinMode( PC0, GPIO_Speed_10MHz | GPIO_CNF_OUT_PP );
+	funPinMode( PD0, MODE_OUTPUT );
+	funPinMode( PD4, MODE_OUTPUT );
+	funPinMode( PD6, MODE_OUTPUT );
+	funPinMode( PC0, MODE_OUTPUT );
 
 	while(1)
 	{

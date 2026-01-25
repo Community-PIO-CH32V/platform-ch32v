@@ -21,6 +21,7 @@ jobs:
           - "examples/blinky-none-os"
           - "examples/blinky-none-os-ch5xx"
           - "examples/blinky-none-os-ch6xx"
+          - "examples/blinky-none-os-h41x-dual"
           - "examples/ch32fun-blink"
           - "examples/ch32fun-oled"
           - "examples/ch32fun-rv003usb-composite-hid"

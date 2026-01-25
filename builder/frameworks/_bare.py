@@ -21,6 +21,13 @@ is_gcc_12 = platform.get_package_version("toolchain-riscv").split(".")[1].starts
 if not is_gcc_12 and machine_arch in remap_arch:
     machine_arch = remap_arch[machine_arch]
 
+if mcu.startswith("ch5") or mcu.startswith("ch32h41"):
+    # building h417 ch32fun firmwares need this, somehow?
+    # regular none-sdk firwmares do not. weird.
+    safe_restore_flag = "-mno-save-restore"
+else:
+    safe_restore_flag = "-msave-restore"
+
 def get_flag_value(flag_name:str, default_val:bool):
     flag_val = board.get("build.%s" % flag_name, default_val)
     flag_val = str(flag_val).lower() in ("1", "yes", "true")
@@ -58,7 +65,7 @@ env.Append(
         "-g",
         "-Wall",
         "-msmall-data-limit=%d" % data_limit,
-        "-mno-save-restore" if mcu.startswith("ch5") else "-msave-restore",
+        safe_restore_flag,
         "-fmessage-length=0",
         "-fsigned-char",
         "-ffunction-sections",

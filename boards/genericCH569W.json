@@ -20,7 +20,7 @@
       "wch-link"
     ],
     "openocd_config": "wch-riscv.cfg",
-    "svd_path": "CH569.svd"
+    "svd_path": "CH56Xxx.svd"
   },
   "frameworks": [
     "noneos-sdk",

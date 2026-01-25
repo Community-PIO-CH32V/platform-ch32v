@@ -20,14 +20,11 @@
       "wch-link"
     ],
     "openocd_config": "wch-riscv.cfg",
-    "svd_path": "CH32M007xx.svd"
+    "svd_path": "CH32V00Xxx.svd"
   },
   "frameworks": [
     "noneos-sdk",
-    "freertos",
-    "harmony-liteos",
-    "rt-thread",
-    "tencent-os"
+    "ch32v003fun"
   ],
   "name": "Generic CH32M007E8R6",
   "upload": {

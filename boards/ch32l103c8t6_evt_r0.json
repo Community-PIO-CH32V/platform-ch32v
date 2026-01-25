@@ -36,6 +36,7 @@
     "harmony-liteos",
     "rt-thread",
     "tencent-os",
+    "ch32v003fun",
     "arduino"
   ],
   "name": "CH32L103C8T6-EVT-R0",

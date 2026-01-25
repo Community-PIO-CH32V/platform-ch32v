@@ -201,6 +201,16 @@ class Ch32vPlatform(PlatformBase):
                 server_args.extend([
                     "-c", "gdb_port 3333; tcl_port disabled; telnet_port disabled"
                 ])
+                debug_port = "localhost:3333"
+                # for h41x dual core chips: enable " -c page_erase". We can see that based on the openocd_config ("wch-dual-core.cfg")
+                if debug.get("openocd_config", "").find("wch-dual-core.cfg") != -1:
+                    server_args.extend([
+                        "-c", "page_erase"
+                    ])
+                    # check if we are v3f (core0) or v5f (core1)
+                    # for debugging core 1 we have to connect to localhost:3334 instead of :3333
+                    if board.manifest.get("build", {}).get("cpu_core", "v3f") == "v5f":
+                        debug_port = "localhost:3334"
                 debug["tools"][tool] = {
                     "init_cmds": openocd_reset_cmds + init_cmds,
                     "server": {
@@ -209,7 +219,7 @@ class Ch32vPlatform(PlatformBase):
                         "arguments": server_args,
                     },
                     # reference opened port
-                    "port": "localhost:3333"
+                    "port": debug_port
                 }
             elif tool == "minichlink":
                 debug["tools"][tool] = {

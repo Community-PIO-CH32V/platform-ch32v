@@ -28,7 +28,7 @@ def get_flag_value(flag_name:str, default_val:bool):
 class CustomTemplate(Template):
 	delimiter = "#"
 
-def get_linker_script(mcu: str):
+def get_linker_script(mcu: str, core: str) -> str:
     default_ldscript = join(env.subst("$BUILD_DIR"), "Link.ld")
 
     # for now, when building for ch56x, ch57x, ch58x, use the original linker scripts..
@@ -36,6 +36,10 @@ def get_linker_script(mcu: str):
         if mcu.lower().startswith("ch585") or mcu.lower().startswith("ch584"):
             return join(FRAMEWORK_DIR, "platformio", "ldscripts", "Link_CH585") + ".ld"
         return join(FRAMEWORK_DIR, "platformio", "ldscripts", "Link_" + board.get("build.series", "")[0:-1].upper() + "x") + ".ld"
+    # again special stuff for H41x series, they share some FLASH and RAM and have seperate linker scripts
+    # e.g., Link_CH32H417_v3f.ld or Link_CH32H417_v5f.ld
+    if mcu.lower().startswith("ch32h41"):
+        return join(FRAMEWORK_DIR, "platformio", "ldscripts", "Link_CH32H417_" + core.lower()) + ".ld"
     ram = board.get("upload.maximum_ram_size", 0)
     flash = board.get("upload.maximum_size", 0)
     flash_start = int(board.get("upload.offset_address", "0x00000000"), 0)
@@ -95,6 +99,13 @@ def get_startup_filename(board):
             return "startup_ch32v10x.S"
         elif chip_name.startswith("ch5") or chip_name.startswith("ch6"):
             return "startup_" + board.get("build.series").lower()[0:len("ch5xx")] + ".S"
+        # for H41x series we have to also check whether to use the v3f or v5f startup file (startup_ch32h417_v3f.S vs startup_ch32h417_v5f.S)
+        elif chip_name.startswith("ch32h41"):
+            cpu_core = str(board.get("build.cpu_core", "v3f")).lower()
+            if cpu_core == "v3f":
+                return "startup_ch32h417_v3f.S"
+            else:
+                return "startup_ch32h417_v5f.S"
     if startup_file is None:
         print("Failed to find startup file for board " + str(board))
         env.Exit(-1)
@@ -111,7 +122,7 @@ env.Append(
 
 if not board.get("build.ldscript", ""):
     env.Replace(
-        LDSCRIPT_PATH=get_linker_script(board.get("build.mcu")))
+        LDSCRIPT_PATH=get_linker_script(board.get("build.mcu"), board.get("build.cpu_core", "v3f")))
 
 libs = []
 
@@ -148,10 +159,16 @@ elif get_flag_value("use_builtin_startup_file", True):
 
 # for clock init etc.
 if get_flag_value("use_builtin_system_code", True) and has_system_code:
-    env.Append(CPPPATH=[join(FRAMEWORK_DIR, "System", chip_series)])
+    # actually the H41x insists on being special again. depending on the core,
+    # its in ch32h417/v3f or ch32h417/v5f (relative to System folder).
+    system_folder = chip_series
+    if chip_series.startswith("ch32h41"):
+        core = str(board.get("build.cpu_core", "v3f")).lower()
+        system_folder = join("ch32h417", core.lower())
+    env.Append(CPPPATH=[join(FRAMEWORK_DIR, "System", system_folder)])
     env.BuildSources(
         join("$BUILD_DIR", "FrameworkNoneOSSSystem"),
-        join(FRAMEWORK_DIR, "System", chip_series)
+        join(FRAMEWORK_DIR, "System", system_folder)
     )
 
 # By default, include the Debug.h/.c code.

@@ -28,7 +28,8 @@
     "freertos",
     "harmony-liteos",
     "rt-thread",
-    "tencent-os"
+    "tencent-os",
+    "ch32v003fun"
   ],
   "name": "Generic CH32L103F8P6",
   "upload": {

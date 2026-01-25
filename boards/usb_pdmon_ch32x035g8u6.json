@@ -38,8 +38,8 @@
     "harmony-liteos",
     "rt-thread",
     "tencent-os",
-    "zephyr",
     "ch32v003fun",
+    "zephyr",
     "arduino"
   ],
   "name": "USB PDMon",

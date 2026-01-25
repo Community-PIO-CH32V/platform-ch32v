@@ -47,9 +47,9 @@ def validate_and_define_sysclk(env: Environment):
     ALLOWED_SOURCES = {"hsi", "hse", "hsi+pll", "hse+pll", "hsilp"}
 
     board_config = env.BoardConfig()
-    spl_series = board_config.get("build.spl_series")
-    clock_source = board_config.get("build.clock_source")
-    f_cpu_str = board_config.get("build.f_cpu", "0")
+    spl_series = str(board_config.get("build.spl_series"))
+    clock_source = str(board_config.get("build.clock_source"))
+    f_cpu_str = str(board_config.get("build.f_cpu", "0"))
 
     match = re.match(r"\d+", f_cpu_str)
     if not match:
@@ -71,6 +71,30 @@ def validate_and_define_sysclk(env: Environment):
             )
         defines.append(("FREQ_SYS", f_cpu))
         applied_macro = f"FREQ_SYS={f_cpu}"
+        applied_freq = f_cpu
+    elif spl_series.startswith("ch32h41"):
+        # the V3F sets up the PLL for both itself and the V5F.
+        # configuring SYSCLK mainly and the dividers.
+        # the V5F system code only reads the configured frequency.
+        # get the board_build.cpu_core to see if we are the v3f if it exists
+        cpu_core = str(board_config.get("build.cpu_core", "v3f"))
+        if cpu_core != "v3f":
+            print(f"Skipping clock macro configuration for CPU core {cpu_core}.")
+            return
+        # interpret f_cpu as sysclock.
+        SYSCLOCK_PLL_MACROS = {
+            400_000_000: "SYSCLK_400M_CoreCLK_V5F_400M_V3F_100M",
+            480_000_000: "SYSCLK_480M_CoreCLK_V5F_240M_V3F_120M",
+            # 480 MHz sysclock can also run V5F at 480MHz and V3F at 120MHz, but "with a temperature not exceeding 70 °C and good heat dissipation"
+            # ignore that for now. (SYSCLK_480M_CoreCLK_V5F_480M_V3F_120M_HSE)
+        }
+        if clock_source not in ("hsi+pll", "hse+pll"):
+            raise UserError(f"Invalid clock source {clock_source} for {spl_series}. Must be 'hsi+pll' or 'hse+pll'")
+        if f_cpu not in SYSCLOCK_PLL_MACROS:
+            raise UserError(f"Invalid frequency {f_cpu} Hz for {spl_series}. Allowed: {', '.join(str(f) for f in SYSCLOCK_PLL_MACROS.keys())} Hz")
+        macro_name = SYSCLOCK_PLL_MACROS[f_cpu] + ("_HSI" if clock_source == "hsi+pll" else "_HSE")
+        defines.append((macro_name, f_cpu))
+        applied_macro = macro_name
         applied_freq = f_cpu
     # CH57x, CH58x, CH59x series use an explicit call with a constant, no FREQ_SYS macro
     elif spl_series.startswith("ch5"):
