@@ -37051,7 +37051,7 @@
 				</register>
 			</registers>
 		</peripheral>
-		<peripheral derivedFrom="CAN1">
+		<peripheral>
 			<name>CAN2</name>
 			<baseAddress>0x40006800</baseAddress>
 			<interrupt>
@@ -46358,8 +46358,6 @@
 				<description>UHSIF global interrupt</description>
 				<value>145</value>
 			</interrupt>
-			<registers>
-			</registers>
 		</peripheral>
 		<peripheral>
 			<name>SDIO</name>
