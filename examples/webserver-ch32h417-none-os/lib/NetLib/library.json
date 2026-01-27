@@ -1,0 +1,12 @@
+{
+    "name": "W.CH NetLib",
+    "version": "1.27.0",
+    "build": {
+      "flags": [
+        "-L.",
+        "-lwchnet"
+      ],
+      "srcDir": ".",
+      "srcFilter": "-<*> +<eth_driver_100M.c>"
+    }
+  }
