@@ -1,0 +1,52 @@
+{
+  "build": {
+    "arduino": {
+      "openwch": {
+        "variant": "CH32V00x/CH32V003F4",
+        "variant_h": "variant_CH32V003F4.h"
+      }
+    },
+    "clock_source": "hsi+pll",
+    "core": "openwch",
+    "extra_flags": "-DCH32V003F4 -DCH32V00X -DCH32V00x -DCH32V003",
+    "f_cpu": "48000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32e",
+    "march": "rv32ecxw",
+    "mcu": "ch32v003f4p6",
+    "series": "ch32v003",
+    "spl_series": "ch32v00x",
+    "variant": "CH32V003"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32V003xx.svd"
+  },
+  "frameworks": [
+    "arduino",
+    "ch32v003fun",
+    "noneos-sdk"
+  ],
+  "name": "UIAPduino Pro micro CH32V003 v1.4",
+  "upload": {
+    "maximum_ram_size": 2048,
+    "maximum_size": 16384,
+    "protocol": "wch-link",
+    "protocols": [
+      "minichlink",
+      "wch-link",
+      "isp",
+      "wlink"
+    ]
+  },
+  "url": "https://www.uiap.jp/uiapduino/pro-micro/ch32v003/v1dot4",
+  "vendor": "UIAP, Umeta & Ikki Automotive Parts"
+}
