@@ -35,7 +35,7 @@
     "ch32v003fun",
     "noneos-sdk"
   ],
-  "name": "UIAPduino Pro micro CH32V003 v1.4",
+  "name": "UIAPduino Pro Micro CH32V003 v1.4",
   "upload": {
     "maximum_ram_size": 2048,
     "maximum_size": 16384,

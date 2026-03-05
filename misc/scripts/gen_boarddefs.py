@@ -274,7 +274,7 @@ known_boards: List[KnownBoard] = [
                             }
                         }
                    }),
-    KnownBoard("UIAPduino_Pro_micro_CH32V003_v1dot4", "UIAPduino Pro micro CH32V003 v1.4", get_chip("CH32V003F4P6"),
+    KnownBoard("UIAPduino_Pro_Micro_CH32V003_v1dot4", "UIAPduino Pro Micro CH32V003 v1.4", get_chip("CH32V003F4P6"),
             "https://www.uiap.jp/uiapduino/pro-micro/ch32v003/v1dot4", "UIAP, Umeta & Ikki Automotive Parts", {
                     "build.arduino": {
                         "openwch": {
