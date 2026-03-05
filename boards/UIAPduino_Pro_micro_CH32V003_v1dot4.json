@@ -39,7 +39,7 @@
   "upload": {
     "maximum_ram_size": 2048,
     "maximum_size": 16384,
-    "protocol": "wch-link",
+    "protocol": "minichlink",
     "protocols": [
       "minichlink",
       "wch-link",
