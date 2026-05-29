@@ -1,6 +1,6 @@
 #if defined(CH32V003)
 #include <ch32v00x.h>
-#elif defined (CH32V00Xx) /* v00{2,4,5,6,7}, m007 */
+#elif defined (CH32VM00X) /* v00{2,4,5,6,7}, m007 */
 #include <ch32v00X.h>
 #elif defined(CH32V10X)
 #include <ch32v10x.h>

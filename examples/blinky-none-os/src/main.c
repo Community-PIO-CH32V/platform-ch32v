@@ -1,6 +1,6 @@
 #if defined(CH32V003)
 #include <ch32v00x.h>
-#elif defined (CH32V00Xx) /* v00{2,4,5,6,7}, m007 */
+#elif defined (CH32VM00X) /* v00{2,4,5,6,7}, m007 */
 #include <ch32v00X.h>
 #elif defined(CH32V10X)
 #include <ch32v10x.h>
@@ -52,7 +52,7 @@ int main(void)
 	BLINKY_CLOCK_ENABLE;
 	GPIO_InitStructure.GPIO_Pin = BLINKY_GPIO_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	#if defined (CH32V00Xx) // all series have 50Mhz setting except v00X != v003..
+	#if defined (CH32VM00X) // all series have 50Mhz setting except v00X != v003..
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_30MHz;
 	#elif defined(CH32H41X)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_High;

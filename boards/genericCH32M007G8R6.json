@@ -1,7 +1,7 @@
 {
   "build": {
     "clock_source": "hsi+pll",
-    "extra_flags": "-DCH32M007G8 -DCH32M00X -DCH32M00x -DCH32M007 -DCH32V00Xx -DCH32V007_M007",
+    "extra_flags": "-DCH32M007G8 -DCH32V00Xx -DCH32VM00X -DCH32M007 -DCH32V007_M007",
     "f_cpu": "48000000L",
     "hwids": [
       [

@@ -138,11 +138,9 @@ class Ch32vPlatform(PlatformBase):
         )
         openocd_reset_cmds = [
             "define pio_reset_halt_target",
-            "   load",
             "   monitor reset halt",
             "end",
             "define pio_reset_run_target",
-            "   load",
             "   monitor reset",
             "end",
         ]
@@ -158,6 +156,7 @@ class Ch32vPlatform(PlatformBase):
             # compatible with only WCH's gdb version, decodes code generated with "xw" correctly
             "set disassembler-options xw",
             "set remotetimeout unlimited",
+            "set breakpoint always-inserted on",
             "target extended-remote $DEBUG_PORT",
             "$INIT_BREAK",
             "$LOAD_CMDS",

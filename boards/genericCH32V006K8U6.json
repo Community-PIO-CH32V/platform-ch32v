@@ -1,7 +1,14 @@
 {
   "build": {
+    "arduino": {
+      "openwch": {
+        "variant": "CH32VM00X/CH32V006K8",
+        "variant_h": "variant_CH32V006K8.h"
+      }
+    },
     "clock_source": "hsi+pll",
-    "extra_flags": "-DCH32V006K8 -DCH32V00X -DCH32V00x -DCH32V006 -DCH32V00Xx",
+    "core": "openwch",
+    "extra_flags": "-DCH32V006K8 -DCH32V00Xx -DCH32VM00X -DCH32V006",
     "f_cpu": "48000000L",
     "hwids": [
       [
@@ -24,7 +31,8 @@
   },
   "frameworks": [
     "noneos-sdk",
-    "ch32v003fun"
+    "ch32v003fun",
+    "arduino"
   ],
   "name": "Generic CH32V006K8U6",
   "upload": {
