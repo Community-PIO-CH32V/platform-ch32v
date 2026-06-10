@@ -72,6 +72,21 @@ def validate_and_define_sysclk(env: Environment):
         defines.append(("FREQ_SYS", f_cpu))
         applied_macro = f"FREQ_SYS={f_cpu}"
         applied_freq = f_cpu
+    elif spl_series.startswith("ch32v4"):
+        SYSCLOCK_PLL_MACROS = {
+            60_000_000: "SYSCLK_120MHz_HCLK_60MHz",
+            120_000_000: "SYSCLK_240MHz_HCLK_120MHz",
+            175_000_000: "SYSCLK_350MHz_HCLK_175MHz",
+            200_000_000: "SYSCLK_400MHz_HCLK_200MHz",
+        }
+        if clock_source not in ("hsi+pll", "hse+pll"):
+            raise UserError(f"Invalid clock source {clock_source} for {spl_series}. Must be 'hsi+pll' or 'hse+pll'")
+        if f_cpu not in SYSCLOCK_PLL_MACROS:
+            raise UserError(f"Invalid frequency {f_cpu} Hz for {spl_series}. Allowed: {', '.join(str(f) for f in SYSCLOCK_PLL_MACROS.keys())} Hz")
+        macro_name = SYSCLOCK_PLL_MACROS[f_cpu] + ("_HSI" if clock_source == "hsi+pll" else "_HSE")
+        defines.append((macro_name, f_cpu))
+        applied_macro = macro_name
+        applied_freq = f_cpu
     elif spl_series.startswith("ch32h41"):
         # the V3F sets up the PLL for both itself and the V5F.
         # configuring SYSCLK mainly and the dividers.

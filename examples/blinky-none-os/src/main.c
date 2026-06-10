@@ -8,6 +8,8 @@
 #include <ch32v20x.h>
 #elif defined(CH32V30X) || defined(CH32V31X)
 #include <ch32v30x.h>
+#elif defined(CH32V4X7)
+#include <ch32v4x7.h>
 #elif defined (CH32X03X) /* both X033 and X035 */
 #include <ch32x035.h>
 #elif defined(CH32L10X)
@@ -19,7 +21,8 @@
 
 #define BLINKY_GPIO_PORT GPIOC
 #define BLINKY_GPIO_PIN GPIO_Pin_1
-#if defined(CH32L10X) || defined (CH32V00Xx) // l10x, v00{2,4,5,6,7}, m007
+#if defined(CH32L10X) || defined (CH32V00Xx) || defined(CH32V4X7)
+// l10x, v00{2,4,5,6,7}, m007, v4x7
 #define BLINKY_CLOCK_ENABLE RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOC, ENABLE)
 #elif defined(CH32H41X)
 #define BLINKY_CLOCK_ENABLE RCC_HB2PeriphClockCmd(RCC_HB2Periph_GPIOC, ENABLE);
@@ -54,7 +57,7 @@ int main(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	#if defined (CH32VM00X) // all series have 50Mhz setting except v00X != v003..
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_30MHz;
-	#elif defined(CH32H41X)
+	#elif defined(CH32H41X)||defined(CH32V4X7)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_High;
 	#else
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;

@@ -58,9 +58,11 @@ void EXTI0_INT_INIT(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
     EXTI_InitTypeDef EXTI_InitStructure = {0};
+#ifndef CH32V4X7
     NVIC_InitTypeDef NVIC_InitStructure = {0};
+#endif
 
-#if defined(CH32L10X)
+#if defined(CH32L10X) || defined(CH32V4X7)
     RCC_PB2PeriphClockCmd(RCC_PB2Periph_AFIO | RCC_PB2Periph_GPIOA, ENABLE);
 #else
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO | RCC_APB2Periph_GPIOA, ENABLE);
@@ -78,6 +80,7 @@ void EXTI0_INT_INIT(void)
     EXTI_InitStructure.EXTI_LineCmd = ENABLE;
     EXTI_Init(&EXTI_InitStructure);
 
+#ifndef CH32V4X7
 #if defined(CH32X035) || defined(CH32X033)
     NVIC_InitStructure.NVIC_IRQChannel = EXTI7_0_IRQn;
 #else
@@ -87,6 +90,7 @@ void EXTI0_INT_INIT(void)
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 4;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
+#endif
 }
 
 /*********************************************************************
@@ -138,7 +142,7 @@ LITE_OS_SEC_TEXT_INIT int main(void)
 
     #ifdef NVIC_PriorityGroup_2
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-#else
+#elif defined(NVIC_PriorityGroup_1)
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 #endif
     SystemCoreClockUpdate();
