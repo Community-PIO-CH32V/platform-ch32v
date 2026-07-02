@@ -1,4 +1,4 @@
-from os.path import join, isdir
+from os.path import join, isdir, relpath
 import sys
 from SCons.Script import DefaultEnvironment
 
@@ -241,13 +241,16 @@ if not board.get("build.ldscript", ""):
             "-DTARGET_MCU=%s" % target_mcu,
             "-DMCU_PACKAGE=%d" % mcu_package,
             "-DTARGET_MCU_LD=%d" % target_mcu_ld,
-            join(FRAMEWORK_DIR, MAIN_FUN_DIR, CH32FUN_LDSCRIPT),
+            '"%s"' % join(FRAMEWORK_DIR, MAIN_FUN_DIR, CH32FUN_LDSCRIPT),
             ">",
-            join("$BUILD_DIR", "ldscript.ld")
+            '"%s"' % join("$BUILD_DIR", "ldscript.ld")
         ]), "Building %s" % join("$BUILD_DIR", "ldscript.ld"))
     )
     # Already put in the right path for the to-be-generated file
-    env.Replace(LDSCRIPT_PATH=join("$BUILD_DIR", "ldscript.ld"))
+    env.Replace(LDSCRIPT_PATH=relpath(
+        env.subst(join("$BUILD_DIR", "ldscript.ld")),
+        env.subst("$PROJECT_DIR")
+    ))
 
 # build actual ch32v003fun source file
 env.BuildSources(
