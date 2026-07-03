@@ -102,8 +102,7 @@ env.Append(
 # using their own build_flags.
 if not any("-Wl,-Map" in f for f in env.get("LINKFLAGS", [])):
     env.Append(LINKFLAGS=[
-        '-Wl,-Map="%s"' % os.path.join(
-            "$BUILD_DIR", os.path.basename(env.subst("${PROJECT_DIR}.map")))
+        '-Wl,-Map="%s"' % os.path.join("${BUILD_DIR}", "${PROGNAME}.map")
     ])
 
 # copy general C/C++ flags to assembler with cpp flags too, except
