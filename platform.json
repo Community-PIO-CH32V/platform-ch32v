@@ -144,7 +144,7 @@
     "tool-openocd-riscv-wch": {
       "type": "uploader",
       "owner": "community-ch32v",
-      "version": "~2.1100.240729"
+      "version": "~2.1100.260228"
     },
     "tool-wchisp": {
       "type": "uploader",
