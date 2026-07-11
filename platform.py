@@ -281,6 +281,7 @@ class Ch32vPlatform(PlatformBase):
             self.is_v00xx = self.mcu.startswith("ch32m0") or (
                 self.mcu.startswith("ch32v00") and not self.mcu.startswith("ch32v003")
             )
+            self.is_v4x7 = self.mcu.startswith("ch32v407") or self.mcu.startswith("ch32v467")
             self.is_ch6x = self.mcu.startswith("ch6")
             self.is_ch5x = self.mcu.startswith("ch5")
             self.is_ch56x = self.series == "ch56x"
@@ -307,10 +308,14 @@ class Ch32vPlatform(PlatformBase):
                     "pin": "GPIO_Pin_1",
                     "clock_enable": (
                         "RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOC, ENABLE)"
-                        if chip_info.is_l10x or chip_info.is_v00xx
+                        if chip_info.is_l10x or chip_info.is_v00xx or chip_info.is_v4x7
                         else "RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE)"
                     ),
-                    "speed": "GPIO_Speed_30MHz" if chip_info.is_v00xx else "GPIO_Speed_50MHz"
+                    "speed": (
+                        "GPIO_Speed_High" if chip_info.is_v4x7
+                        else "GPIO_Speed_30MHz" if chip_info.is_v00xx
+                        else "GPIO_Speed_50MHz"
+                    )
                 }
         
         @staticmethod
@@ -722,6 +727,10 @@ header file. */
                 return "ch32v20x.h"
             elif mcu.startswith("ch32v30"):
                 return "ch32v30x.h"
+            elif mcu.startswith("ch32v407"):
+                return "ch32v4x7.h"
+            elif mcu.startswith("ch32v467"):
+                return "ch32v4x7.h"
             elif mcu.startswith("ch32l1"):
                 return "ch32l103.h"
             elif mcu.startswith("ch32x0"):

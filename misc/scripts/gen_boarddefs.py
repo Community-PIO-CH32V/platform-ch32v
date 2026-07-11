@@ -26,6 +26,10 @@ CH32V303 = WCHChipSeries("QingKe V4C", "rv32imacxw", "ilp32", "CH32V303xx.svd", 
 CH32V305 = WCHChipSeries("QingKe V4C", "rv32imacxw", "ilp32", "CH32V305xx.svd", "ch32v30x", ALL_ADDITIONAL_FRAMEWORKS[:])
 CH32V307 = WCHChipSeries("QingKe V4C", "rv32imacxw", "ilp32", "CH32V307xx.svd", "ch32v30x", ALL_ADDITIONAL_FRAMEWORKS[:])
 CH32V317 = WCHChipSeries("QingKe V4C", "rv32imacxw", "ilp32", "CH32V317xx.svd", "ch32v30x", ALL_ADDITIONAL_FRAMEWORKS[:])
+# CH32V407 / CH32V467 (QingKe V3V core, shared "ch32v4x7" SDK series, no ch32v003fun / arduino support)
+CH32V4X7_FRAMEWORKS = ["freertos", "harmony-liteos", "rt-thread", "tencent-os"]
+CH32V407 = WCHChipSeries("QingKe V3V", "rv32imacxw", "ilp32", "CH32V4X7.svd", "ch32v4x7", CH32V4X7_FRAMEWORKS[:])
+CH32V467 = WCHChipSeries("QingKe V3V", "rv32imacxw", "ilp32", "CH32V4X7.svd", "ch32v4x7", CH32V4X7_FRAMEWORKS[:])
 CH32X035 = WCHChipSeries("QingKe V4B", "rv32imacxw", "ilp32", "CH32X035xx.svd", "ch32x035", ALL_ADDITIONAL_FRAMEWORKS[:])
 CH32L103 = WCHChipSeries("QingKe V4B", "rv32imacxw", "ilp32", "CH32L103xx.svd", "ch32l10x", ALL_ADDITIONAL_FRAMEWORKS[:])
 CH32H417 = WCHChipSeries("QingKe V3F + V5F", "rv32imac_zba_zbb_zbc_zbs_xw", "ilp32", "CH32H417xx.svd", "ch32h417", ["ch32v003fun"])
@@ -103,6 +107,9 @@ class ChipInfo:
         # Hack: A ch32v317 uses the same SDK as the ch32v307.
         if self.name.lower().startswith("ch32v317"):
             return "ch32v307"
+        # CH32V407/CH32V467 share the "ch32v4x7" SDK series naming.
+        if self.name.lower().startswith("ch32v407") or self.name.lower().startswith("ch32v467"):
+            return "ch32v4x7"
         return self.name[0:len("ch32vxxx")]
     
     def get_svd_file(self) -> str:
@@ -226,6 +233,14 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH32V317TCU6", 256, 64, 144, "QFN36C4", CH32V317),
     ChipInfo("CH32V317WCU6", 256, 64, 144, "QFN68", CH32V317),
     ChipInfo("CH32V317VCT6", 256, 64, 144, "LQFP100", CH32V317),
+    # CH32V407 (512K zero-wait flash, 200K zero-wait SRAM, max 200 MHz)
+    ChipInfo("CH32V407RET6", 512, 200, 200, "LQFP64", CH32V407),
+    ChipInfo("CH32V407VET6", 512, 200, 200, "LQFP100", CH32V407),
+    ChipInfo("CH32V407WEU6", 512, 200, 200, "QFN68", CH32V407),
+    # CH32V467 (CH32V407 + 4M/8M extended PSRAM)
+    ChipInfo("CH32V467RET6", 512, 200, 200, "LQFP64", CH32V467),
+    ChipInfo("CH32V467VET6", 512, 200, 200, "LQFP100", CH32V467),
+    ChipInfo("CH32V467WEU6", 512, 200, 200, "QFN68", CH32V467),
     # CH32X035/3
     ChipInfo("CH32X035R8T6", 62, 20, 48, "LQFP64M", CH32X035),
     ChipInfo("CH32X035C8T6", 62, 20, 48, "LQFP48", CH32X035),
@@ -436,6 +451,12 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         base_json["build"]["variant"] = "ch32v307_evt"
     if chip_l.startswith("ch32l103"):
         base_json["build"]["variant"] = "ch32l103_evt"
+    if chip_l.startswith("ch32v407") or chip_l.startswith("ch32v467"):
+        base_json["build"]["core"] = "openwch"
+        base_json["build"]["clock_source"] = "hse+pll"
+        base_json["build"]["variant"] = "ch32v407_evt" if chip_l.startswith("ch32v407") else "ch32v467_evt"
+        base_json["upload"]["protocols"] = ["wch-link"]
+        base_json["url"] = "http://www.wch.cn/products/CH32V407.html"
     if board_name == "USB PDMon":
         # experiment
         base_json["frameworks"].append("zephyr")
@@ -459,6 +480,11 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
             extra_flags += [
                 f"-DCH32V00Xx",
                 f"-DCH32VM00X",
+            ]
+        elif info.chip_type in (CH32V407, CH32V467):
+            extra_flags += [
+                f"-DCH32V4X7",
+                f"-DCH32V4x7",
             ]
         else:
             extra_flags += [

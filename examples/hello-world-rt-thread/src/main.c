@@ -15,6 +15,8 @@
 #include <ch32v20x.h>
 #elif defined(CH32V30X) || defined(CH32V31X)
 #include <ch32v30x.h>
+#elif defined(CH32V4X7)
+#include <ch32v4x7.h>
 #elif defined(CH32X035) || defined(CH32X033)
 #include <ch32x035.h>
 #elif defined(CH32L10X)
@@ -43,13 +45,18 @@
 void LED1_BLINK_INIT(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure={0};
-#if defined(CH32L10X)
+#if defined(CH32L10X) || defined(CH32V4X7)
     RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOC, ENABLE);
 #else
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 #endif
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+
+#if defined(CH32V4X7)
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_High;
+#else
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+#endif
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 }

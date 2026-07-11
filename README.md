@@ -50,6 +50,8 @@ If you use Mac, the usage of a Linux virtual machine may be required to run thes
     - [x] CH32V303 (QingKe V4F)
     - [x] CH32V305 (QingKe V4F)
     - [x] CH32V307 (QingKe V4F)
+    - [x] CH32V407 (QingKe V3V)
+    - [x] CH32V467 (QingKe V3V)
     - [x] CH32X035 (QingKe V4C)
     - [x] CH32L103 (QingKe V4C)
     - [x] CH56x (QingKe V3A)

@@ -1,0 +1,45 @@
+{
+  "build": {
+    "clock_source": "hse+pll",
+    "core": "openwch",
+    "extra_flags": "-DCH32V467VE -DCH32V4X7 -DCH32V4x7 -DCH32V467",
+    "f_cpu": "200000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imacxw",
+    "mcu": "ch32v467vet6",
+    "series": "ch32v4x7",
+    "spl_series": "ch32v4x7",
+    "variant": "ch32v467_evt"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32V4X7.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "freertos",
+    "harmony-liteos",
+    "rt-thread",
+    "tencent-os"
+  ],
+  "name": "Generic CH32V467VET6",
+  "upload": {
+    "maximum_ram_size": 204800,
+    "maximum_size": 524288,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link"
+    ]
+  },
+  "url": "http://www.wch.cn/products/CH32V407.html",
+  "vendor": "W.CH"
+}
