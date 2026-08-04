@@ -1,0 +1,42 @@
+{
+  "build": {
+    "clock_source": "hsi+pll",
+    "extra_flags": "-DCH32V205RC -DCH32V20X -DCH32V20x -DCH32V205",
+    "f_cpu": "192000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32",
+    "march": "rv32imc_zba_zbb_zbc_zbs_xw",
+    "mcu": "ch32v205rct6",
+    "series": "ch32v205",
+    "spl_series": "ch32v205"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg",
+    "svd_path": "CH32V205xx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk"
+  ],
+  "name": "Generic CH32V205RCT6",
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 262144,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "minichlink",
+      "isp",
+      "wlink"
+    ]
+  },
+  "url": "http://www.wch-ic.com/products/CH32V205.html",
+  "vendor": "W.CH"
+}

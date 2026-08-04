@@ -86,6 +86,7 @@ def get_startup_filename(board):
         "CH32X035": "startup_ch32x035.S",
         "CH32X033": "startup_ch32x035.S",
         "CH32L103": "startup_ch32l103.S",
+        "CH32V205": "startup_ch32v205.S",
     }
     startup_file = None
     for k, v in class_to_startup.items():

@@ -20,7 +20,7 @@ CH32V003 = WCHChipSeries("QingKe V2A", "rv32ecxw", "ilp32e", "CH32V003xx.svd", "
 CH32V00X_M007 = WCHChipSeries("QingKe V2A-M0", "rv32ec_zmmul_xw", "ilp32e", "CH32V00Xxx.svd", "ch32v00Xx", ["ch32v003fun"])
 CH32V103 = WCHChipSeries("QingKe V3A", "rv32imac", "ilp32", "CH32V103xx.svd", "ch32v10x", ALL_ADDITIONAL_FRAMEWORKS[:])
 CH32V203 = WCHChipSeries("QingKe V4B", "rv32imacxw", "ilp32", "CH32V203xx.svd", "ch32v20x", ALL_ADDITIONAL_FRAMEWORKS[:])
-# TODO CH32V205 series missing 
+CH32V205 = WCHChipSeries("QingKe V3B", "rv32imc_zba_zbb_zbc_zbs_xw", "ilp32", "CH32V205xx.svd", "ch32v205", [])
 CH32V208 = WCHChipSeries("QingKe V4C", "rv32imacxw", "ilp32", "CH32V208xx.svd", "ch32v20x", ALL_ADDITIONAL_FRAMEWORKS[:])
 CH32V303 = WCHChipSeries("QingKe V4C", "rv32imacxw", "ilp32", "CH32V303xx.svd", "ch32v30x", ALL_ADDITIONAL_FRAMEWORKS[:])
 CH32V305 = WCHChipSeries("QingKe V4C", "rv32imacxw", "ilp32", "CH32V305xx.svd", "ch32v30x", ALL_ADDITIONAL_FRAMEWORKS[:])
@@ -212,6 +212,10 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH32V203C8T6", 64, 20, 144, "LQFP48", CH32V203),
     ChipInfo("CH32V203C8U6", 64, 20, 144, "QFN48X7", CH32V203),
     ChipInfo("CH32V203RBT6", 128, 64, 144, "LQFP64M", CH32V203),
+    # CH32V205
+    ChipInfo("CH32V205CCT6", 256, 32, 192, "LQFP48", CH32V205),
+    ChipInfo("CH32V205RCT6", 256, 32, 192, "LQFP64", CH32V205),
+    ChipInfo("CH32V205VCT6", 256, 32, 192, "LQFP100", CH32V205),
     # CH32V208
     ChipInfo("CH32V208GBU6", 128, 64, 144, "QFN28X4", CH32V208),
     ChipInfo("CH32V208CBU6", 128, 64, 144, "QFN48X5", CH32V208),
