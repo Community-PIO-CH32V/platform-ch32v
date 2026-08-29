@@ -47,6 +47,11 @@ elif core == "openwch":
     build_script = join(
         env.PioPlatform().get_package_dir("framework-arduino-openwch-ch32"),
         "tools", "platformio-build.py")
+# https://github.com/Community-PIO-CH32V/arduino-core-ch32h4
+elif core == "ch32h4":
+    build_script = join(
+        env.PioPlatform().get_package_dir("framework-arduinoch32h4"),
+        "tools", "platformio-build.py")
 else:
     sys.stderr.write("Error: Don't know which Arduino core to use for %s!\n" % mcu)
     env.Exit(1)

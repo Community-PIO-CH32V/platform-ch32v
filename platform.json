@@ -124,6 +124,12 @@
       "owner": "platformio",
       "version": "https://github.com/Community-PIO-CH32V/arduino_core_ch32.git"
     },
+    "framework-arduinoch32h4": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/Community-PIO-CH32V/arduino-core-ch32h4.git"
+    },
     "framework-ch32v003fun": {
       "type": "framework",
       "optional": true,
