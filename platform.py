@@ -126,8 +126,16 @@ class Ch32vPlatform(PlatformBase):
             self.packages["tool-minichlink"]["version"] = Ch32vPlatform.minichlink_tool[sys_type]
         #elif variables.get("upload_protocol", default_protocol) == "wlink":
         # Always update the link to the tool-wlink tool, because for all uploads we want to have the "Enable SDI Print" available
-        self.packages["tool-wlink"]["optional"] = False        
+        self.packages["tool-wlink"]["optional"] = False
         self.packages["tool-wlink"]["version"] = Ch32vPlatform.wlink_tool[sys_type]
+        # mklittlefs, only when a filesystem image is actually being built.
+        # Leaving it optional otherwise means the great majority of builds,
+        # which have no data/ directory, never download it.
+        #
+        # uploadfs is listed as well as buildfs because it depends on the
+        # image, so it needs the tool that makes one.
+        if any(t in targets for t in ("buildfs", "uploadfs")):
+            self.packages["tool-mklittlefs-rp2040-earlephilhower"]["optional"] = False
         build_core = variables.get("board_build.core", board_config.get("build.core", "arduino"))
         if "arduino" in frameworks:
             if build_core == "ch32v003":

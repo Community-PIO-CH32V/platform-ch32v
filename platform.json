@@ -189,6 +189,12 @@
       "optional": true,
       "owner": "platformio",
       "version": "^3.0.0"
+    },
+    "tool-mklittlefs-rp2040-earlephilhower": {
+      "type": "uploader",
+      "optional": true,
+      "owner": "earlephilhower",
+      "version": "~5.100300.0"
     }
   }
 }
