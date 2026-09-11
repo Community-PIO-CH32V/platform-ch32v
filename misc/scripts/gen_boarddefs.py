@@ -107,6 +107,13 @@ class ChipInfo:
         # Hack: A ch32v317 uses the same SDK as the ch32v307.
         if self.name.lower().startswith("ch32v317"):
             return "ch32v307"
+        # Hack: the whole CH32H41x family is one SDK series. The vendor ships
+        # Core/ch32h417, System/ch32h417 and startup_ch32h417_v3f.S with no
+        # ch32h415 or ch32h416 counterpart, so a CH32H416RDU6 that asked for
+        # its own series would fail looking for a startup file that does not
+        # exist.
+        if self.name.lower().startswith("ch32h41"):
+            return "ch32h417"
         # CH32V407/CH32V467 share the "ch32v4x7" SDK series naming.
         if self.name.lower().startswith("ch32v407") or self.name.lower().startswith("ch32v467"):
             return "ch32v4x7"
@@ -259,11 +266,20 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH32L103G8R6", 64, 20, 96, "QSOP28", CH32L103),
     ChipInfo("CH32L103K8U6", 64, 20, 96, "QFN32", CH32L103),
     ChipInfo("CH32L103C8T6", 64, 20, 96, "LQFP48", CH32L103),
-    # CH32H417 (960K nonzero-wait-state flash), 960 SRAM, 400 MHz V5F, 150 MHz on V3F  
+    # CH32H41x (960K nonzero-wait-state flash), 400 MHz V5F, 100 MHz on V3F.
+    #
+    # Five parts, from the "Resource differences" table of the datasheet
+    # (CH32H417DS0, section 1) and the family list at
+    # https://www.wch-ic.com/products/CH32H417.html. The part numbers change
+    # with the series, not just the package: REU6 is a CH32H415 and RDU6 is a
+    # CH32H416. There is no CH32H417REU6, which this list used to claim.
+    #
+    # CH32H416RDU6 is the one with less flash: 480K where the rest have 960K.
     ChipInfo("CH32H417QEU6", 960, 128, 400, "QFN128", CH32H417),
     ChipInfo("CH32H417MEU6", 960, 128, 400, "QFN88", CH32H417),
     ChipInfo("CH32H417WEU6", 960, 128, 400, "QFN68", CH32H417),
-    ChipInfo("CH32H417REU6", 960, 128, 400, "QFN60X6", CH32H417),
+    ChipInfo("CH32H416RDU6", 480, 128, 400, "QFN60X6", CH32H417),
+    ChipInfo("CH32H415REU6", 960, 128, 400, "QFN60X6", CH32H417),
 ]
 
 def get_chip(name: str) -> Optional[ChipInfo]:
