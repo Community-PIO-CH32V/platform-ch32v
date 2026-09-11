@@ -167,7 +167,7 @@
     "tool-wlink": {
       "type": "uploader",
       "owner": "community-ch32v",
-      "version": "https://github.com/Community-PIO-CH32V/tool-wlink.git#windows",
+      "version": "https://github.com/Community-PIO-CH32V/tool-wlink.git#0.23.260911-windows",
       "optional": false
     },
     "tool-cmake": {
