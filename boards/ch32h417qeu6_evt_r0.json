@@ -16,7 +16,8 @@
     "mcu": "ch32h417qeu6",
     "series": "ch32h417",
     "spl_series": "ch32h417",
-    "variant": "CH32H417QEU6"
+    "variant": "CH32H417QEU6_EVT_R0",
+    "package": "CH32H417xx_QEU6"
   },
   "debug": {
     "onboard_tools": [
