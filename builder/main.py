@@ -358,13 +358,6 @@ if access_via_openocd and upload_protocol != "minichlink":
         "Check Flash Protection"
     )
 
-    env.AddPlatformTarget(
-        "erase", None, generate_openocd_action([
-            "-c", "\"flash probe 0\"",
-            "-c", "\"flash erase_sector 0 0 last\"",
-        ], "Erasing Flash"),
-        "Erase Flash"
-    )
 elif upload_protocol == "isp":
     env.AddPlatformTarget(
         "info", None, generate_wchisp_action([
@@ -383,12 +376,6 @@ elif upload_protocol == "isp":
             "config reset"
         ], "Resetting Configuration Registers"),
         "Reset Configuration Registers (ISP)"
-    )
-    env.AddPlatformTarget(
-        "erase", None, generate_wchisp_action([
-            "erase"
-        ], "Erasing Device"),
-        "Erase (ISP)"
     )
     env.AddPlatformTarget(
         "reset", None, generate_wchisp_action([
@@ -433,6 +420,58 @@ if upload_protocol == "wlink" or platform.get_package_dir("tool-wlink") != "":
         ], "Disabling SDI Printf"),
         "Disable SDI Printf (NoneSDK)"
     )
+
+#
+# Target: Erase Flash
+#
+# ONE registration, covering whichever upload method the project uses, so
+# "Erase Flash" is always offered and always means the same thing. It used to
+# be declared separately inside the openocd and the isp branches, which left
+# wlink and minichlink without it; adding two more copies would have meant
+# four places able to disagree, and a duplicate target name where two
+# conditions overlap.
+#
+# espota is the one method with no entry, and cannot have one: it uploads
+# through the sketch already running on the board, so erasing the flash is the
+# one thing it can never do.
+erase_action = None
+erase_label = "Erase Flash"
+
+# THE SELECTED PROTOCOL DECIDES, with one exception below. Erasing with a
+# tool the user has not got attached is no use: somebody uploading over the
+# USB bootloader has no probe, and somebody using a probe may have no
+# bootloader to fall back on.
+if upload_protocol == "wlink":
+    erase_action = generate_wlink_action(["erase"], "Erasing Flash")
+elif upload_protocol == "minichlink":
+    # -E is "Erase chip" in minichlink's own option table.
+    erase_action = generate_minichlink_action(
+        ["-E"], "Erasing Chip", is_minichlink)
+elif upload_protocol == "isp":
+    erase_action = generate_wchisp_action(["erase"], "Erasing Device")
+    erase_label = "Erase Flash (ISP)"
+elif access_via_openocd:
+    if chip_name.startswith("ch32h41"):
+        # THE EXCEPTION, and it is not a preference. An openocd erase on this
+        # part clears only the first 448 KB of the 960 KB user area, so
+        # anything a previous write left above that survives; what boots is
+        # then half old and half new, which presents as a boot loop rather
+        # than as a failed erase. The core's hardware harness erases with
+        # wlink for this reason and warns against mixing the two tools.
+        #
+        # Substituting wlink here is safe because this branch means a debug
+        # probe is already the upload path, and platform.py marks tool-wlink
+        # non-optional for every board, so it is always installed.
+        erase_action = generate_wlink_action(
+            ["erase"], "Erasing Flash (wlink: openocd erases only 448 KB here)")
+    else:
+        erase_action = generate_openocd_action([
+            "-c", "\"flash probe 0\"",
+            "-c", "\"flash erase_sector 0 0 last\"",
+        ], "Erasing Flash")
+
+if erase_action is not None:
+    env.AddPlatformTarget("erase", None, erase_action, erase_label)
 
 #
 # Setup default targets
