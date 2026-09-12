@@ -17,7 +17,7 @@
     "series": "ch32h417",
     "spl_series": "ch32h417",
     "variant": "CH32H417QEU6_EVT_R0",
-    "package": "CH32H417xx_QEU6"
+    "package": "CH32H417QEU6"
   },
   "debug": {
     "onboard_tools": [
