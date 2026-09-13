@@ -51,20 +51,37 @@ class Ch32vPlatform(PlatformBase):
         "darwin_x86_64": "https://github.com/Community-PIO-CH32V/tool-minichlink.git#mac",
         "darwin_arm64": "https://github.com/Community-PIO-CH32V/tool-minichlink.git#mac_arm64"
     }
+    # PINNED TO A TAG, NOT A BRANCH -- and the version in the tag name is the
+    # reason. PlatformIO installs a VCS package once and keys it by this exact
+    # string, so a branch name never changes and an existing installation
+    # keeps whatever binary it cloned. Everyone who had this platform before
+    # would have stayed on wlink 0.1.1, which reports "Probe is not attached to
+    # an MCU" on the CH32H41x and cannot program it at all. Changing the string
+    # is what makes the next build fetch the new tool.
+    #
+    # A tag rather than a commit id: PlatformIO shallow-clones a branch or tag
+    # (--depth 1 --branch <tag>) but does a FULL clone for a commit id, and
+    # this repo's master branch carries every package tarball ever built --
+    # about 15 MB of history to download for a 1 MB tool.
+    #
+    # Updating: push the new binaries to the OS branches, tag each one
+    # 0.<minor>.<datecode>-<branch>, and bump the four lines below.
     wlink_tool = {
-        # Windows
-        "windows_amd64": "https://github.com/Community-PIO-CH32V/tool-wlink.git#windows",
-        "windows_x86": "https://github.com/Community-PIO-CH32V/tool-wlink.git#windows",
+        # Windows. Both systypes get the x86 build: the x64 build of 0.1.2
+        # fails with a driver error on Windows, and x86 works against the WCH
+        # drivers as well.
+        "windows_amd64": "https://github.com/Community-PIO-CH32V/tool-wlink.git#0.23.260911-windows",
+        "windows_x86": "https://github.com/Community-PIO-CH32V/tool-wlink.git#0.23.260911-windows",
         # No Windows ARM64 or ARM32 builds.
         # Linux
-        "linux_x86_64": "https://github.com/Community-PIO-CH32V/tool-wlink.git#linux",
+        "linux_x86_64": "https://github.com/Community-PIO-CH32V/tool-wlink.git#0.23.260911-linux",
         #"linux_i686": "",
         #"linux_aarch64": "",
         #"linux_armv7l": "",
         #"linux_armv6l": "",
         # Mac (Intel and ARM are separate)
-        "darwin_x86_64": "https://github.com/Community-PIO-CH32V/tool-wlink.git#mac_x64",
-        "darwin_arm64": "https://github.com/Community-PIO-CH32V/tool-wlink.git#mac_arm64"
+        "darwin_x86_64": "https://github.com/Community-PIO-CH32V/tool-wlink.git#0.23.260911-mac_x64",
+        "darwin_arm64": "https://github.com/Community-PIO-CH32V/tool-wlink.git#0.23.260911-mac_arm64"
     }
 
     def get_boards(self, id_=None):
@@ -109,8 +126,16 @@ class Ch32vPlatform(PlatformBase):
             self.packages["tool-minichlink"]["version"] = Ch32vPlatform.minichlink_tool[sys_type]
         #elif variables.get("upload_protocol", default_protocol) == "wlink":
         # Always update the link to the tool-wlink tool, because for all uploads we want to have the "Enable SDI Print" available
-        self.packages["tool-wlink"]["optional"] = False        
+        self.packages["tool-wlink"]["optional"] = False
         self.packages["tool-wlink"]["version"] = Ch32vPlatform.wlink_tool[sys_type]
+        # mklittlefs, only when a filesystem image is actually being built.
+        # Leaving it optional otherwise means the great majority of builds,
+        # which have no data/ directory, never download it.
+        #
+        # uploadfs is listed as well as buildfs because it depends on the
+        # image, so it needs the tool that makes one.
+        if any(t in targets for t in ("buildfs", "uploadfs")):
+            self.packages["tool-mklittlefs-rp2040-earlephilhower"]["optional"] = False
         build_core = variables.get("board_build.core", board_config.get("build.core", "arduino"))
         if "arduino" in frameworks:
             if build_core == "ch32v003":
@@ -119,6 +144,11 @@ class Ch32vPlatform(PlatformBase):
                 self.frameworks["arduino"]["package"] = "framework-arduinoch32v"
             elif build_core == "openwch":
                self.frameworks["arduino"]["package"] = "framework-arduino-openwch-ch32"
+            elif build_core == "ch32h4":
+                # The CH32H4 core. Without this case the board fell through to
+                # the framework's default package, the CH32V003 core, and the
+                # builder then found no framework-arduinoch32h4 to build.
+                self.frameworks["arduino"]["package"] = "framework-arduinoch32h4"
         if "zephyr" in frameworks:
             for p in self.packages:
                 if p in ("tool-cmake", "tool-dtc", "tool-ninja"):

@@ -1,0 +1,43 @@
+{
+  "build": {
+    "core": "ch32h4",
+    "cpu_core": "v3f",
+    "clock_source": "hse+pll",
+    "extra_flags": "-DCH32H417 -DCH32H41x -DARDUINO_ARCH_CH32H4",
+    "f_cpu": "400000000L",
+    "hwids": [
+      [
+        "0x1A86",
+        "0x8010"
+      ]
+    ],
+    "mabi": "ilp32f",
+    "march": "rv32imafc_zba_zbb_zbc_zbs_xw",
+    "mcu": "ch32h417qeu6",
+    "series": "ch32h417",
+    "spl_series": "ch32h417",
+    "variant": "CH32H417QEU6_EVT_R0",
+    "package": "CH32H417QEU6"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_config": "wch-riscv.cfg"
+  },
+  "frameworks": [
+    "arduino"
+  ],
+  "name": "CH32H417QEU6-R0-1v1",
+  "upload": {
+    "maximum_ram_size": 917504,
+    "maximum_size": 933888,
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "isp"
+    ]
+  },
+  "url": "https://www.wch-ic.com/products/CH32H417.html",
+  "vendor": "WCH"
+}

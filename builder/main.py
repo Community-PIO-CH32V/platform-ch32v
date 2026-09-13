@@ -196,6 +196,61 @@ elif upload_protocol == "wlink":
         UPLOADCMD="$UPLOADER $UPLOADERFLAGS flash $SOURCE",
     )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
+# Over the air, via the sketch's own ArduinoOTA. Cores that support it ship
+# tools/espota.py and build a *_ota.bin next to the firmware; on the CH32H41x
+# the two differ, because the full binary carries a boot stub that an OTA image
+# must not.
+#
+#     upload_protocol = espota
+#     upload_port = 192.168.1.50      ; or ch32h4-a1b2c3.local
+#     upload_flags = --auth=secret    ; if the sketch sets a password
+#
+# THE SKETCH ON THE BOARD IS PART OF THE UPLOAD PATH: it has to be running and
+# calling ArduinoOTA.handle(). One that hangs or faults takes the network port
+# with it, and the next upload goes over the probe.
+elif upload_protocol == "espota":
+    framework_dir = ""
+    for pkg in ("framework-arduinoch32h4", "framework-arduinoch32v"):
+        try:
+            framework_dir = platform.get_package_dir(pkg) or ""
+        except Exception:
+            framework_dir = ""
+        if framework_dir and os.path.isfile(
+                os.path.join(framework_dir, "tools", "espota.py")):
+            break
+        framework_dir = ""
+    if not framework_dir:
+        sys.stderr.write(
+            "Error: upload_protocol = espota needs a core that ships "
+            "tools/espota.py, and this one does not.\n")
+        env.Exit(1)
+
+    if not env.subst("$UPLOAD_PORT"):
+        sys.stderr.write(
+            "Error: upload_protocol = espota needs upload_port set to the "
+            "board's address or its <name>.local name.\n")
+        env.Exit(1)
+
+    # The OTA image, not the full binary -- but the .bin stays the SCons
+    # target, because the OTA image is written as a side effect of building it
+    # and SCons has no rule that would produce it on its own.
+    #
+    # Resolved when the upload runs rather than now, so that a core which needs
+    # no split (its whole image is the sketch) falls back to the full binary.
+    def _ota_upload(source, target, env):
+        ota = env.subst(os.path.join("$BUILD_DIR", "${PROGNAME}_ota.bin"))
+        if not os.path.isfile(ota):
+            ota = env.subst(os.path.join("$BUILD_DIR", "${PROGNAME}.bin"))
+        return env.Execute(env.VerboseAction(
+            '$UPLOADER $UPLOADERFLAGS -f "%s"' % ota, "Uploading %s" % ota))
+
+    env.Replace(
+        UPLOADER='"$PYTHONEXE" "%s"' % os.path.join(
+            framework_dir, "tools", "espota.py"),
+        UPLOADERFLAGS=["-i", "$UPLOAD_PORT"] + env.get("UPLOAD_FLAGS", []),
+    )
+    upload_target = target_bin
+    upload_actions = [_ota_upload]
 # custom upload tool
 elif upload_protocol == "custom":
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
@@ -303,13 +358,6 @@ if access_via_openocd and upload_protocol != "minichlink":
         "Check Flash Protection"
     )
 
-    env.AddPlatformTarget(
-        "erase", None, generate_openocd_action([
-            "-c", "\"flash probe 0\"",
-            "-c", "\"flash erase_sector 0 0 last\"",
-        ], "Erasing Flash"),
-        "Erase Flash"
-    )
 elif upload_protocol == "isp":
     env.AddPlatformTarget(
         "info", None, generate_wchisp_action([
@@ -328,12 +376,6 @@ elif upload_protocol == "isp":
             "config reset"
         ], "Resetting Configuration Registers"),
         "Reset Configuration Registers (ISP)"
-    )
-    env.AddPlatformTarget(
-        "erase", None, generate_wchisp_action([
-            "erase"
-        ], "Erasing Device"),
-        "Erase (ISP)"
     )
     env.AddPlatformTarget(
         "reset", None, generate_wchisp_action([
@@ -380,7 +422,158 @@ if upload_protocol == "wlink" or platform.get_package_dir("tool-wlink") != "":
     )
 
 #
+# Target: Erase Flash
+#
+# ONE registration, covering whichever upload method the project uses, so
+# "Erase Flash" is always offered and always means the same thing. It used to
+# be declared separately inside the openocd and the isp branches, which left
+# wlink and minichlink without it; adding two more copies would have meant
+# four places able to disagree, and a duplicate target name where two
+# conditions overlap.
+#
+# espota is the one method with no entry, and cannot have one: it uploads
+# through the sketch already running on the board, so erasing the flash is the
+# one thing it can never do.
+erase_action = None
+erase_label = "Erase Flash"
+
+# THE SELECTED PROTOCOL DECIDES, with one exception below. Erasing with a
+# tool the user has not got attached is no use: somebody uploading over the
+# USB bootloader has no probe, and somebody using a probe may have no
+# bootloader to fall back on.
+if upload_protocol == "wlink":
+    erase_action = generate_wlink_action(["erase"], "Erasing Flash")
+elif upload_protocol == "minichlink":
+    # -E is "Erase chip" in minichlink's own option table.
+    erase_action = generate_minichlink_action(
+        ["-E"], "Erasing Chip", is_minichlink)
+elif upload_protocol == "isp":
+    erase_action = generate_wchisp_action(["erase"], "Erasing Device")
+    erase_label = "Erase Flash (ISP)"
+elif access_via_openocd:
+    if chip_name.startswith("ch32h41"):
+        # THE EXCEPTION, and it is not a preference. An openocd erase on this
+        # part clears only the first 448 KB of the 960 KB user area, so
+        # anything a previous write left above that survives; what boots is
+        # then half old and half new, which presents as a boot loop rather
+        # than as a failed erase. The core's hardware harness erases with
+        # wlink for this reason and warns against mixing the two tools.
+        #
+        # Substituting wlink here is safe because this branch means a debug
+        # probe is already the upload path, and platform.py marks tool-wlink
+        # non-optional for every board, so it is always installed.
+        erase_action = generate_wlink_action(
+            ["erase"], "Erasing Flash (wlink: openocd erases only 448 KB here)")
+    else:
+        erase_action = generate_openocd_action([
+            "-c", "\"flash probe 0\"",
+            "-c", "\"flash erase_sector 0 0 last\"",
+        ], "Erasing Flash")
+
+if erase_action is not None:
+    env.AddPlatformTarget("erase", None, erase_action, erase_label)
+
+#
 # Setup default targets
 #
+
+#
+# Targets: filesystem image (buildfs / uploadfs)
+#
+# Only for cores that reserve a filesystem partition and say where it is. The
+# ch32h4 Arduino core publishes CH32H4_FS_START and CH32H4_FS_SIZE from its own
+# build script, which derives them from the same constants the linker script
+# uses -- so there is exactly one definition of where the partition lives, and
+# an image can never be written over the sketch because two files disagreed.
+#
+# A size of zero means the sketch did not ask for a filesystem, and the targets
+# say so rather than silently building a zero-length image.
+
+fs_size = int(env.get("CH32H4_FS_SIZE", 0) or 0)
+fs_start = int(env.get("CH32H4_FS_START", 0) or 0)
+
+if fs_size > 0 and fs_start > 0:
+    # mklittlefs comes from earlephilhower's package, the same one
+    # platform-raspberrypi uses. Two reasons rather than the registry's
+    # platformio/tool-mklittlefs: that one is the 2021 ESP8266 build, and this
+    # one ships for every host PlatformIO runs on -- windows x86/amd64/arm64,
+    # macOS intel and Apple silicon, and linux x86_64/i686/aarch64/armv6l and
+    # armv7l. The "rp2040" in the name is where it was packaged, not what it
+    # can write; a LittleFS image is defined by the geometry arguments below.
+    #
+    # Resolved to a path, NOT invoked as a bare name. Relying on PATH works
+    # only on a machine that happens to have one installed, and silently picks
+    # up whichever version that is -- and the version decides the on-disk
+    # format.
+    mkfs_dir = platform.get_package_dir("tool-mklittlefs-rp2040-earlephilhower") or ""
+    mkfs_tool = os.path.join(mkfs_dir, "mklittlefs")
+
+    env.Replace(
+        MKFSTOOL=mkfs_tool,
+        # Geometry has to match what the core configures LittleFS with, or the
+        # image mounts as corrupt: 8 KB erase blocks and a 256-byte program
+        # page, which is this part's flash page-program size.
+        FSBLOCKSIZE=int(env.get("CH32H4_FS_BLOCK_SIZE", 8192)),
+        FSPAGESIZE=int(env.get("CH32H4_FS_PAGE_SIZE", 256)),
+    )
+
+    def _mkfs_action(target, source, env):
+        """Everything that should fail with a sentence, not a traceback."""
+        if not mkfs_dir:
+            sys.stderr.write(
+                "Error: tool-mklittlefs-rp2040-earlephilhower is not "
+                "installed, so no filesystem image can be built. It is "
+                "fetched on demand for the buildfs and uploadfs targets; if "
+                "you reached this another way, install it with 'pio pkg "
+                "install -t earlephilhower/"
+                "tool-mklittlefs-rp2040-earlephilhower'.\n")
+            env.Exit(1)
+        data_dir = env.subst("$PROJECT_DATA_DIR")
+        if not os.path.isdir(data_dir):
+            sys.stderr.write(
+                "Error: no data directory at %s. Put the files you want in the"
+                " filesystem there.\n" % data_dir)
+            env.Exit(1)
+        return None
+
+    target_fs_image = os.path.join("$BUILD_DIR", "littlefs.bin")
+
+    fs_image = env.Command(
+        target_fs_image,
+        "$PROJECT_DATA_DIR",
+        [
+            env.VerboseAction(_mkfs_action, None),
+            env.VerboseAction(
+                '"$MKFSTOOL" -c "$SOURCE" -b $FSBLOCKSIZE -p $FSPAGESIZE'
+                ' -s %d "$TARGET"' % fs_size,
+                "Building filesystem image $TARGET"),
+        ],
+    )
+    AlwaysBuild(fs_image)
+
+    env.AddPlatformTarget(
+        "buildfs", fs_image, None, "Build Filesystem Image",
+        "Build a LittleFS image from the data/ directory")
+
+    # Flashed at the partition's own address, NOT at the start of flash. The
+    # sketch is not touched.
+    #
+    # WLINK EXPLICITLY, not $UPLOADER. Two reasons, and the first one alone is
+    # fatal: on this board $UPLOADER is openocd, which does not take "flash
+    # --address" and fails with "unknown option -- address". And even with the
+    # right syntax openocd cannot program the upper flash, which is precisely
+    # where a filesystem partition lives -- 0x080CC000 for a 128 KB one. wlink
+    # is the tool that can write it, which is why the hardware harness uses it
+    # for everything.
+    wlink = os.path.join(platform.get_package_dir("tool-wlink") or "", "wlink")
+
+    env.AddPlatformTarget(
+        "uploadfs", fs_image,
+        [env.VerboseAction(
+            '"%s" flash --address 0x%08X "$SOURCE"' % (wlink, fs_start),
+            "Uploading filesystem image to 0x%08X" % fs_start)],
+        "Upload Filesystem Image",
+        "Write the LittleFS image into the flash partition")
+
 
 Default([target_buildprog, target_size])

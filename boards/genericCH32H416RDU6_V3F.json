@@ -2,7 +2,7 @@
   "build": {
     "clock_source": "hsi+pll",
     "cpu_core": "v3f",
-    "extra_flags": "-DCH32H417RE -DCH32H41X -DCH32H41x -DCH32H417 -DCore_V3F",
+    "extra_flags": "-DCH32H416RD -DCH32H41X -DCH32H41x -DCH32H416 -DCore_V3F",
     "f_cpu": "400000000L",
     "hwids": [
       [
@@ -12,7 +12,7 @@
     ],
     "mabi": "ilp32",
     "march": "rv32imac_zba_zbb_zbc_zbs_xw",
-    "mcu": "ch32h417reu6",
+    "mcu": "ch32h416rdu6",
     "series": "ch32h417",
     "spl_series": "ch32h417"
   },
@@ -27,10 +27,10 @@
     "noneos-sdk",
     "ch32v003fun"
   ],
-  "name": "Generic CH32H417REU6 (V3F Master)",
+  "name": "Generic CH32H416RDU6 (V3F Master)",
   "upload": {
     "maximum_ram_size": 131072,
-    "maximum_size": 983040,
+    "maximum_size": 491520,
     "protocol": "wch-link",
     "protocols": [
       "wch-link",
