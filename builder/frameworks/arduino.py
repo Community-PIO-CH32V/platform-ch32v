@@ -47,7 +47,7 @@ elif core == "openwch":
     build_script = join(
         env.PioPlatform().get_package_dir("framework-arduino-openwch-ch32"),
         "tools", "platformio-build.py")
-# https://github.com/Community-PIO-CH32V/arduino-core-ch32h4
+# https://github.com/Community-PIO-CH32V/ArduinoCore-CH32H4
 elif core == "ch32h4":
     build_script = join(
         env.PioPlatform().get_package_dir("framework-arduinoch32h4"),
