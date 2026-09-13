@@ -144,6 +144,11 @@ class Ch32vPlatform(PlatformBase):
                 self.frameworks["arduino"]["package"] = "framework-arduinoch32v"
             elif build_core == "openwch":
                self.frameworks["arduino"]["package"] = "framework-arduino-openwch-ch32"
+            elif build_core == "ch32h4":
+                # The CH32H4 core. Without this case the board fell through to
+                # the framework's default package, the CH32V003 core, and the
+                # builder then found no framework-arduinoch32h4 to build.
+                self.frameworks["arduino"]["package"] = "framework-arduinoch32h4"
         if "zephyr" in frameworks:
             for p in self.packages:
                 if p in ("tool-cmake", "tool-dtc", "tool-ninja"):
