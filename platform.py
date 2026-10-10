@@ -166,12 +166,17 @@ class Ch32vPlatform(PlatformBase):
             "wch-link",
             "minichlink",
         )
+        reset_run_cmds = ["   monitor reset"]
+        # on CH32X3x5, a plain "reset" of a halted core leaves it halted at the
+        # reset vector, so the target would not run after the debug session.
+        if str(board.manifest.get("build", {}).get("series", "")).startswith("ch32x3x5"):
+            reset_run_cmds = ["   monitor reset halt", "   monitor resume"]
         openocd_reset_cmds = [
             "define pio_reset_halt_target",
             "   monitor reset halt",
             "end",
             "define pio_reset_run_target",
-            "   monitor reset",
+            *reset_run_cmds,
             "end",
         ]
         minichlink_reset_cmds = [
@@ -312,6 +317,7 @@ class Ch32vPlatform(PlatformBase):
                 self.mcu.startswith("ch32v00") and not self.mcu.startswith("ch32v003")
             )
             self.is_v4x7 = self.mcu.startswith("ch32v407") or self.mcu.startswith("ch32v467")
+            self.is_x3x5 = self.mcu.startswith("ch32x315") or self.mcu.startswith("ch32x305")
             self.is_ch6x = self.mcu.startswith("ch6")
             self.is_ch5x = self.mcu.startswith("ch5")
             self.is_ch56x = self.series == "ch56x"
@@ -339,10 +345,12 @@ class Ch32vPlatform(PlatformBase):
                     "clock_enable": (
                         "RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOC, ENABLE)"
                         if chip_info.is_l10x or chip_info.is_v00xx or chip_info.is_v4x7
+                        else "RCC_HB2PeriphClockCmd(RCC_HB2Periph_GPIOC, ENABLE)"
+                        if chip_info.is_x3x5
                         else "RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE)"
                     ),
                     "speed": (
-                        "GPIO_Speed_High" if chip_info.is_v4x7
+                        "GPIO_Speed_High" if chip_info.is_v4x7 or chip_info.is_x3x5
                         else "GPIO_Speed_30MHz" if chip_info.is_v00xx
                         else "GPIO_Speed_50MHz"
                     )
@@ -547,7 +555,12 @@ int main(void)
 #define configUSE_PREEMPTION            1
 #define configUSE_IDLE_HOOK             0
 #define configUSE_TICK_HOOK             0
+#if defined(CH32X3X5)
+/* SysTick counts HCLK, which is half the core clock at 480 MHz */
+#define configCPU_CLOCK_HZ              HCLKClock
+#else
 #define configCPU_CLOCK_HZ              SystemCoreClock
+#endif
 #define configTICK_RATE_HZ              ( ( TickType_t ) 500 )
 #define configMAX_PRIORITIES            ( 15 )
 #define configMINIMAL_STACK_SIZE        ( ( unsigned short ) 256 ) /* Can be as low as 60 but some of the demo tasks that use this constant require it to be higher. */
@@ -761,6 +774,10 @@ header file. */
                 return "ch32v4x7.h"
             elif mcu.startswith("ch32v467"):
                 return "ch32v4x7.h"
+            elif mcu.startswith("ch32x315"):
+                return "ch32x3x5.h"
+            elif mcu.startswith("ch32x305"):
+                return "ch32x3x5.h"
             elif mcu.startswith("ch32l1"):
                 return "ch32l103.h"
             elif mcu.startswith("ch32x0"):

@@ -15,7 +15,8 @@ machine_arch = str(board.get("build.march"))
 # unsupported extensions. "xw" end "rv32ec" "rv32imc" are supported, the reset not.
 remap_arch = {
     "rv32ec_zmmul_xw": "rv32ecxw",
-    "rv32imc_zba_zbb_zbc_zbs_xw": "rv32imcxw"
+    "rv32imc_zba_zbb_zbc_zbs_xw": "rv32imcxw",
+    "rv32imac_zba_zbb_zbc_zbs_xw": "rv32imacxw"
 }
 is_gcc_12 = platform.get_package_version("toolchain-riscv").split(".")[1].startswith("12")
 if not is_gcc_12 and machine_arch in remap_arch:

@@ -51,6 +51,8 @@ extern "C" {
 #include <ch32v30x.h>
 #elif defined(CH32V4X7)
 #include <ch32v4x7.h>
+#elif defined(CH32X3X5)
+#include <ch32x3x5.h>
 #elif defined(CH32X035) || defined(CH32X033)
 #include <ch32x035.h>
 #elif defined(CH32L10X)
@@ -64,6 +66,9 @@ extern uint32_t SystemCoreClock;
 =============================================================================*/
 #if defined(CH32V10X)
 #define OS_SYS_CLOCK                                        (SystemCoreClock / 8)
+#elif defined(CH32X3X5)
+/* SysTick counts HCLK, which is half the core clock at 480 MHz */
+#define OS_SYS_CLOCK                                        (HCLKClock)
 #else
 #define OS_SYS_CLOCK                                        (SystemCoreClock)
 #endif

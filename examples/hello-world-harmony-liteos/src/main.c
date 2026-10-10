@@ -58,12 +58,14 @@ void EXTI0_INT_INIT(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
     EXTI_InitTypeDef EXTI_InitStructure = {0};
-#ifndef CH32V4X7
+#if !defined(CH32V4X7) && !defined(CH32X3X5)
     NVIC_InitTypeDef NVIC_InitStructure = {0};
 #endif
 
 #if defined(CH32L10X) || defined(CH32V4X7)
     RCC_PB2PeriphClockCmd(RCC_PB2Periph_AFIO | RCC_PB2Periph_GPIOA, ENABLE);
+#elif defined(CH32X3X5)
+    RCC_HB2PeriphClockCmd(RCC_HB2Periph_AFIO | RCC_HB2Periph_GPIOA, ENABLE);
 #else
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO | RCC_APB2Periph_GPIOA, ENABLE);
 #endif
@@ -83,6 +85,9 @@ void EXTI0_INT_INIT(void)
 #if defined(CH32V4X7)
     NVIC_SetPriority(EXTI0_IRQn, 0);
     NVIC_EnableIRQ(EXTI0_IRQn);
+#elif defined(CH32X3X5)
+    NVIC_SetPriority(EXTI7_0_IRQn, 0xf);
+    NVIC_EnableIRQ(EXTI7_0_IRQn);
 #else
 #if defined(CH32X035) || defined(CH32X033)
     NVIC_InitStructure.NVIC_IRQChannel = EXTI7_0_IRQn;
@@ -180,6 +185,10 @@ LITE_OS_SEC_TEXT_INIT int main(void)
  *
  * @return  none
  */
+#if defined(CH32X3X5)
+/* EXTI line 0 shares the EXTI7_0 vector on this series */
+#define EXTI0_IRQHandler EXTI7_0_IRQHandler
+#endif
 void EXTI0_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void EXTI0_IRQHandler(void)
 {

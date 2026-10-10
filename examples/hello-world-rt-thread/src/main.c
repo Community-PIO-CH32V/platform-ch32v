@@ -11,16 +11,28 @@
 *******************************************************************************/
 #if defined(CH32V10X)
 #include <ch32v10x.h>
+#define MCU_SERIES "CH32V10x"
 #elif defined(CH32V20X)
 #include <ch32v20x.h>
-#elif defined(CH32V30X) || defined(CH32V31X)
+#define MCU_SERIES "CH32V20x"
+#elif defined(CH32V30X)
 #include <ch32v30x.h>
+#define MCU_SERIES "CH32V30x"
+#elif defined(CH32V31X)
+#include <ch32v30x.h>
+#define MCU_SERIES "CH32V31x"
 #elif defined(CH32V4X7)
 #include <ch32v4x7.h>
+#define MCU_SERIES "CH32V4x7"
+#elif defined(CH32X3X5)
+#include <ch32x3x5.h>
+#define MCU_SERIES "CH32X3x5"
 #elif defined(CH32X035) || defined(CH32X033)
 #include <ch32x035.h>
+#define MCU_SERIES "CH32X03x"
 #elif defined(CH32L10X)
 #include <ch32l103.h>
+#define MCU_SERIES "CH32L10x"
 #endif
 #include <rtthread.h>
 #include <rthw.h>
@@ -47,12 +59,14 @@ void LED1_BLINK_INIT(void)
     GPIO_InitTypeDef GPIO_InitStructure={0};
 #if defined(CH32L10X) || defined(CH32V4X7)
     RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOA, ENABLE);
+#elif defined(CH32X3X5)
+    RCC_HB2PeriphClockCmd(RCC_HB2Periph_GPIOA, ENABLE);
 #else
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 #endif
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
 
-#if defined(CH32V4X7)
+#if defined(CH32V4X7) || defined(CH32X3X5)
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_High;
 #else
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -73,7 +87,7 @@ void LED1_BLINK_INIT(void)
  */
 int main(void)
 {
-    rt_kprintf("\r\n MCU: CH32V307\r\n");
+    rt_kprintf("\r\n MCU: " MCU_SERIES "\r\n");
     SystemCoreClockUpdate();
     rt_kprintf("SystemClk:%u\r\n", (unsigned)SystemCoreClock);
 #if defined(CH32V30X)
@@ -106,7 +120,7 @@ int led(void)
     rt_uint8_t count;
 
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
-    printf("led_SP:%08x\r\n", (unsigned) __get_SP());
+    rt_kprintf("led_SP:%08x\r\n", (unsigned) __get_SP());
     for(count = 0 ; count < 10 ;count++)
     {
         rt_pin_write(LED0_PIN, PIN_LOW);
