@@ -88,7 +88,9 @@ def validate_and_define_sysclk(env: Environment):
         if f_cpu not in SYSCLOCK_PLL_MACROS:
             raise UserError(f"Invalid frequency {f_cpu} Hz for {spl_series}. Allowed: {', '.join(str(f) for f in SYSCLOCK_PLL_MACROS.keys())} Hz")
         macro_name = SYSCLOCK_PLL_MACROS[f_cpu] + ("_HSI" if clock_source == "hsi+pll" else "_HSE")
-        defines.append((macro_name, f_cpu))
+        # f_cpu is HCLK, but the SDK takes the macro value as SYSCLK and
+        # derives SystemCoreClock (= HCLK) as half of it.
+        defines.append((macro_name, f_cpu * 2))
         applied_macro = macro_name
         applied_freq = f_cpu
     elif spl_series.startswith("ch32h41"):
