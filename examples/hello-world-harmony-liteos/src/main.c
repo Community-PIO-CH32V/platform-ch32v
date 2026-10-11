@@ -80,7 +80,10 @@ void EXTI0_INT_INIT(void)
     EXTI_InitStructure.EXTI_LineCmd = ENABLE;
     EXTI_Init(&EXTI_InitStructure);
 
-#ifndef CH32V4X7
+#if defined(CH32V4X7)
+    NVIC_SetPriority(EXTI0_IRQn, 0);
+    NVIC_EnableIRQ(EXTI0_IRQn);
+#else
 #if defined(CH32X035) || defined(CH32X033)
     NVIC_InitStructure.NVIC_IRQChannel = EXTI7_0_IRQn;
 #else

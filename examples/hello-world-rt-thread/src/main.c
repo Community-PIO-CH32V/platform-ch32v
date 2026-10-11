@@ -46,7 +46,7 @@ void LED1_BLINK_INIT(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure={0};
 #if defined(CH32L10X) || defined(CH32V4X7)
-    RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOC, ENABLE);
+    RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOA, ENABLE);
 #else
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 #endif
