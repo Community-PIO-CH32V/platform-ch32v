@@ -31,6 +31,12 @@ CH32V4X7_FRAMEWORKS = ["freertos", "harmony-liteos", "rt-thread", "tencent-os"]
 CH32V407 = WCHChipSeries("QingKe V3V", "rv32imacxw", "ilp32", "CH32V4X7.svd", "ch32v4x7", CH32V4X7_FRAMEWORKS[:])
 CH32V467 = WCHChipSeries("QingKe V3V", "rv32imacxw", "ilp32", "CH32V4X7.svd", "ch32v4x7", CH32V4X7_FRAMEWORKS[:])
 CH32X035 = WCHChipSeries("QingKe V4B", "rv32imacxw", "ilp32", "CH32X035xx.svd", "ch32x035", ALL_ADDITIONAL_FRAMEWORKS[:])
+# CH32X315 / CH32X305 (QingKe V3F core, shared "ch32x3x5" SDK series, no ch32v003fun / arduino support)
+# The core has the bit manipulation (B) extension; the WCH EVT projects enable it,
+# which MounRiver turns into _zba_zbb_zbc_zbs. Like the EVT, no hardware float ABI.
+CH32X3X5_FRAMEWORKS = ["freertos", "harmony-liteos", "rt-thread", "tencent-os"]
+CH32X315 = WCHChipSeries("QingKe V3F", "rv32imac_zba_zbb_zbc_zbs_xw", "ilp32", "CH32X315xx.svd", "ch32x3x5", CH32X3X5_FRAMEWORKS[:])
+CH32X305 = WCHChipSeries("QingKe V3F", "rv32imac_zba_zbb_zbc_zbs_xw", "ilp32", "CH32X315xx.svd", "ch32x3x5", CH32X3X5_FRAMEWORKS[:])
 CH32L103 = WCHChipSeries("QingKe V4B", "rv32imacxw", "ilp32", "CH32L103xx.svd", "ch32l10x", ALL_ADDITIONAL_FRAMEWORKS[:])
 CH32H417 = WCHChipSeries("QingKe V3F + V5F", "rv32imac_zba_zbb_zbc_zbs_xw", "ilp32", "CH32H417xx.svd", "ch32h417", ["ch32v003fun"])
 # actually CH565, CH569
@@ -117,6 +123,9 @@ class ChipInfo:
         # CH32V407/CH32V467 share the "ch32v4x7" SDK series naming.
         if self.name.lower().startswith("ch32v407") or self.name.lower().startswith("ch32v467"):
             return "ch32v4x7"
+        # CH32X315/CH32X305 share the "ch32x3x5" SDK series naming.
+        if self.name.lower().startswith("ch32x315") or self.name.lower().startswith("ch32x305"):
+            return "ch32x3x5"
         return self.name[0:len("ch32vxxx")]
     
     def get_svd_file(self) -> str:
@@ -252,6 +261,16 @@ chip_db: List[ChipInfo] = [
     ChipInfo("CH32V467RET6", 512, 200, 200, "LQFP64", CH32V467),
     ChipInfo("CH32V467VET6", 512, 200, 200, "LQFP100", CH32V467),
     ChipInfo("CH32V467WEU6", 512, 200, 200, "QFN68", CH32V467),
+    # CH32X315 / CH32X305 (64K SRAM). Their 480K flash is 192K of zero-wait application
+    # area plus 288K of non-zero-wait data area (CH32X315DS0); only the first
+    # is for code, as in the WCH linker scripts.
+    # The core runs at its rated 480 MHz with HCLK at 240 MHz (HCLK is limited to
+    # 312.5 MHz). The WCH EVT examples use 240 MHz for both.
+    ChipInfo("CH32X315MCU6", 192, 64, 480, "QFN76", CH32X315),
+    ChipInfo("CH32X315WCU6", 192, 64, 480, "QFN68X7", CH32X315),
+    ChipInfo("CH32X315CCU6", 192, 64, 480, "QFN48", CH32X315),
+    # CH32X305 (CH32X315 without the USB 3.0 / USBSS block)
+    ChipInfo("CH32X305RCT6", 192, 64, 480, "LQFP64", CH32X305),
     # CH32X035/3
     ChipInfo("CH32X035R8T6", 62, 20, 48, "LQFP64M", CH32X035),
     ChipInfo("CH32X035C8T6", 62, 20, 48, "LQFP48", CH32X035),
@@ -477,6 +496,13 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
         base_json["build"]["variant"] = "ch32v407_evt" if chip_l.startswith("ch32v407") else "ch32v467_evt"
         base_json["upload"]["protocols"] = ["wch-link"]
         base_json["url"] = "http://www.wch.cn/products/CH32V407.html"
+    if chip_l.startswith("ch32x315") or chip_l.startswith("ch32x305"):
+        base_json["build"]["core"] = "openwch"
+        base_json["build"]["clock_source"] = "hse+pll"
+        base_json["build"]["variant"] = "ch32x315_evt" if chip_l.startswith("ch32x315") else "ch32x305_evt"
+        # wlink support for ch32x3x5 is not released yet (ch32-rs/wlink#127)
+        base_json["upload"]["protocols"] = ["wch-link"]
+        base_json["url"] = "https://www.wch-ic.com/products/CH32X315.html"
     if board_name == "USB PDMon":
         # experiment
         base_json["frameworks"].append("zephyr")
@@ -505,6 +531,11 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: str, patch_in
             extra_flags += [
                 f"-DCH32V4X7",
                 f"-DCH32V4x7",
+            ]
+        elif info.chip_type in (CH32X315, CH32X305):
+            extra_flags += [
+                f"-DCH32X3X5",
+                f"-DCH32X3x5",
             ]
         else:
             extra_flags += [

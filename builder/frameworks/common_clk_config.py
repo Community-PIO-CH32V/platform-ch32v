@@ -93,6 +93,24 @@ def validate_and_define_sysclk(env: Environment):
         defines.append((macro_name, f_cpu * 2))
         applied_macro = macro_name
         applied_freq = f_cpu
+    elif spl_series.startswith("ch32x3x5"):
+        # interpret f_cpu as the core clock. At 240 MHz the SDK offers HCLK at
+        # 120 or 240 MHz; take the SDK's own default (HCLK = core clock).
+        # 625 MHz is left out: the SDK limits it to commercial use (<= 70 °C),
+        # and the datasheet only gives it to chips whose 5th lot digit is > 0.
+        SYSCLOCK_PLL_MACROS = {
+            240_000_000: "SYSCLK_240M_CoreCLK_240M_HCLK_240M",
+            312_500_000: "SYSCLK_312_5M_CoreCLK_312_5M_HCLK_312_5M",
+            480_000_000: "SYSCLK_480M_CoreCLK_480M_HCLK_240M",
+        }
+        if clock_source not in ("hsi+pll", "hse+pll"):
+            raise UserError(f"Invalid clock source {clock_source} for {spl_series}. Must be 'hsi+pll' or 'hse+pll'")
+        if f_cpu not in SYSCLOCK_PLL_MACROS:
+            raise UserError(f"Invalid frequency {f_cpu} Hz for {spl_series}. Allowed: {', '.join(str(f) for f in SYSCLOCK_PLL_MACROS.keys())} Hz")
+        macro_name = SYSCLOCK_PLL_MACROS[f_cpu] + ("_HSI" if clock_source == "hsi+pll" else "_HSE")
+        defines.append((macro_name, f_cpu))
+        applied_macro = macro_name
+        applied_freq = f_cpu
     elif spl_series.startswith("ch32h41"):
         # the V3F sets up the PLL for both itself and the V5F.
         # configuring SYSCLK mainly and the dividers.

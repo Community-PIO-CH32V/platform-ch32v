@@ -14,6 +14,8 @@
 #define BLINKY_GPIO_PIN_2 GPIO_Pin_1
 #if defined(CH32L10X) || defined(CH32V4X7)
 #define BLINKY_CLOCK_ENABLE RCC_PB2PeriphClockCmd(RCC_PB2Periph_GPIOC, ENABLE)
+#elif defined(CH32X3X5)
+#define BLINKY_CLOCK_ENABLE RCC_HB2PeriphClockCmd(RCC_HB2Periph_GPIOC, ENABLE)
 #else
 #define BLINKY_CLOCK_ENABLE RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE)
 #endif
@@ -29,7 +31,7 @@ void GPIO_Toggle_INIT(void)
     BLINKY_CLOCK_ENABLE;
     GPIO_InitStructure.GPIO_Pin = BLINKY_GPIO_PIN_1 | BLINKY_GPIO_PIN_2;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-#if defined(CH32V4X7)
+#if defined(CH32V4X7) || defined(CH32X3X5)
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_High;
 #else
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
