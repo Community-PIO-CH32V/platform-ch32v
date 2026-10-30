@@ -35,6 +35,8 @@ def get_linker_script(mcu: str, core: str) -> str:
     if mcu.lower().startswith("ch5"):
         if mcu.lower().startswith("ch585") or mcu.lower().startswith("ch584"):
             return join(FRAMEWORK_DIR, "platformio", "ldscripts", "Link_CH585") + ".ld"
+        if mcu.lower().startswith("ch572"):
+            return join(FRAMEWORK_DIR, "platformio", "ldscripts", "Link_CH572") + ".ld"
         return join(FRAMEWORK_DIR, "platformio", "ldscripts", "Link_" + board.get("build.series", "")[0:-1].upper() + "x") + ".ld"
     # again special stuff for H41x series, they share some FLASH and RAM and have seperate linker scripts
     # e.g., Link_CH32H417_v3f.ld or Link_CH32H417_v5f.ld
